@@ -80,19 +80,19 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:1/1;max-width:100%;back
 
 <script>
 const T={
- en:{demo:"Prototype: the AI judge is simulated on this build.",
+ en:{demo:"Prototype. If the AI is unreachable, a simulated judge steps in.",
   title:"Which dessert are you, really?",lede:"10 questions. An AI reads what you write, catches you if your MBTI is lying, and bakes your words into a dessert.",
   f1:"questions",f2:"desserts",f3:"min",start:"Start",
   mbtiQ:"Know your MBTI?",mbtiHint:"Optional. We'll check whether it's telling the truth.",skip:"I don't know",next:"Next",
   openHint:"Write like you'd text a friend. Specific beats clever.",openPh:"Type here…",skipQ:"Skip",
-  baking:"Baking you…",gotcha:"You said",notMe:"That's not me",notMeDone:"Re-judge used. (Live AI comes in the next build.)",
+  baking:"Baking you…",gotcha:"You said",notMe:"That's not me",notMeDone:"Re-judge used.",fbPh:"Tell us in one line why it's wrong",fbGo:"Judge me again",
   pair:"Pair with a friend",copied:"Link copied. Send it to a friend.",copyFail:"Copy the link from your address bar.",again:"Retake",yourWords:"Your words"},
- zh:{demo:"原型：这一版的 AI 判型是模拟的。",
+ zh:{demo:"原型。AI 连不上时，会自动换成模拟判型。",
   title:"你骨子里，是哪块甜点？",lede:"10 道题。AI 读你写的话，拆穿你自报的 MBTI，再把你的词烤成一块甜点。",
   f1:"道题",f2:"种甜点",f3:"分钟",start:"开始",
   mbtiQ:"知道自己的 MBTI 吗？",mbtiHint:"选填。我们会看看它有没有骗你。",skip:"不知道",next:"下一题",
   openHint:"像给朋友发消息那样写，越具体越好。",openPh:"写在这里…",skipQ:"跳过",
-  baking:"正在把你烤出来…",gotcha:"你说你是",notMe:"这不像我",notMeDone:"重判机会已用。（真 AI 下一版接入）",
+  baking:"正在把你烤出来…",gotcha:"你说你是",notMe:"这不像我",notMeDone:"重判机会已用。",fbPh:"一句话告诉我哪里不对",fbGo:"重新判我",
   pair:"拉朋友来配对",copied:"链接已复制，发给朋友吧。",copyFail:"请从地址栏复制链接。",again:"再测一次",yourWords:"你的词"}
 };
 const TYPES=["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"];
@@ -145,18 +145,32 @@ function render(){
       document.getElementById("nx").onclick=()=>answer({id:it.id,q:L(it),text:ta.value.trim()});
       document.getElementById("sk").onclick=()=>answer({id:it.id,q:L(it),text:""});
     }
+  }else if(s==="judging"){app.innerHTML=`<h2 class="fade">${t("baking")}</h2><div class="bar"><i style="width:100%"></i></div>`
   }else if(s==="result"){showResult()}
 }
-function answer(a){st.ans[st.i]=a;st.i++;if(st.i>=st.items.length){st.result=judge();st.screen="result"}render()}
+function answer(a){st.ans[st.i]=a;st.i++;if(st.i>=st.items.length){finish(null);return}render()}
+async function finish(feedback){
+  st.screen="judging";render();
+  const local=judge();let r=local;
+  try{
+    const ctl=new AbortController();setTimeout(()=>ctl.abort(),12000);
+    const res=await fetch("/api/judge",{method:"POST",headers:{"Content-Type":"application/json"},signal:ctl.signal,
+      body:JSON.stringify({claimed_mbti:st.claimed,locked:local.locked,ties:local.ties,lang,feedback,
+        open_answers:st.ans.filter(a=>a.text).map(a=>({q:a.q,a:a.text}))})});
+    if(res.ok){const j=await res.json();if(j&&j.final_type)r={...local,type:j.final_type,keywords:j.keywords&&j.keywords.length?j.keywords:local.keywords,callout:j.callout,line:j.personal_line,ai:true}}
+  }catch(e){}
+  st.result=r;st.revealed=false;st.screen="result";render();
+}
 
 /* Simulated judge: locked dims from votes; ties use claimed MBTI, else fallback I/N/F/P. Live build sends ties to the LLM. */
 function judge(){
   const v={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
   st.ans.forEach(a=>{if(a.pole)v[a.pole]++});
   const pairs=[["E","I",0],["S","N",1],["T","F",2],["J","P",3]],fb="INFP";
-  const type=pairs.map(([a,b,k])=>v[a]>v[b]?a:v[b]>v[a]?b:(st.claimed?st.claimed[k]:fb[k])).join("");
+  const locked={},ties=[];
+  const type=pairs.map(([a,b,k])=>{const d=a+b;if(v[a]!==v[b]){locked[d]=v[a]>v[b]?a:b;return locked[d]}ties.push(d);return st.claimed?st.claimed[k]:fb[k]}).join("");
   const texts=st.ans.filter(a=>a.text).map(a=>a.text);
-  return {type,keywords:keywords(texts),quote:texts.sort((a,b)=>b.length-a.length)[0]||""};
+  return {type,locked,ties,keywords:keywords(texts),quote:texts.slice().sort((a,b)=>b.length-a.length)[0]||""};
 }
 function keywords(texts){
   const stop=new Set("the and that this with have just like what when your about from they them then than been were would could really very into some only also more most".split(" "));
@@ -173,14 +187,14 @@ function keywords(texts){
 function showResult(){
   const r=st.result,d=D.desserts.find(x=>x.mbti===r.type);
   const kw=r.keywords.length?r.keywords:[L(d.name)];
-  const gotcha=st.claimed&&st.claimed!==r.type
+  const gotcha=r.ai?(r.callout?esc(r.callout):""):st.claimed&&st.claimed!==r.type
     ?(lang==="zh"?`${t("gotcha")} ${st.claimed}，可你写的${r.quote?`“${esc(r.quote.slice(0,30))}”`:"答案"}出卖了你。你骨子里是一块${esc(d.name.zh)}。`
                  :`${t("gotcha")} ${st.claimed}. But${r.quote?` "${esc(r.quote.slice(0,40))}"`:" your answers"} gave you away. You're a ${esc(d.name.en)}.`):"";
   app.innerHTML=`<div class="card"><canvas id="cv" width="900" height="900" aria-label="${esc(L(d.name))}"></canvas>
    <div class="body" id="rb" hidden>
     <div class="type"><span class="badge">${r.type}</span><span class="rare">${esc(L(d.rarity_line))}</span></div>
     <h2>${esc(L(d.name))}</h2>
-    <p class="praise">${esc(L(d.praise))}</p><p class="poke">${esc(L(d.poke))}</p>
+    <p class="praise">${esc(L(d.praise))}</p><p class="poke">${esc(r.line||L(d.poke))}</p>
     ${gotcha?`<p class="callout">${gotcha}</p>`:""}
     <div><p class="hint">${t("yourWords")}</p><div class="chips">${kw.map(k=>`<span>${esc(k)}</span>`).join("")}</div></div>
    </div></div>
@@ -194,7 +208,11 @@ function showResult(){
   bake(document.getElementById("cv"),kw,L(d.name),d.particle.palette,st.revealed?0:1,reveal);
   st.revealed=true;
   document.getElementById("again").onclick=()=>{st={screen:"home"};render();scrollTo(0,0)};
-  document.getElementById("nm").onclick=()=>{st.reJudged=true;render()};
+  document.getElementById("nm").onclick=()=>{
+    const m=document.getElementById("msg"),b=document.getElementById("nm");
+    if(!document.getElementById("fb")){b.insertAdjacentHTML("afterend",`<textarea id="fb" maxlength="120" placeholder="${t("fbPh")}" aria-label="${t("fbPh")}"></textarea><button class="btn" id="fbgo">${t("fbGo")}</button>`);
+      document.getElementById("fbgo").onclick=()=>{const v=document.getElementById("fb").value.trim();if(!v)return;st.reJudged=true;finish(v)};
+      document.getElementById("fb").focus()}};
   document.getElementById("pair").onclick=async()=>{
     const m=document.getElementById("msg");
     try{await navigator.clipboard.writeText(location.href.split("#")[0]);m.textContent=t("copied")}catch(e){m.textContent=t("copyFail")}};
