@@ -41,10 +41,10 @@ module.exports = async function handler(req, res) {
     const out = { model: MODEL, keySet: !!key, keyPrefix: key ? key.slice(0, 4) : null, keyLen: key ? key.length : 0 };
     for (const [name, url, h] of [
       ["noKey", "https://generativelanguage.googleapis.com/v1beta/models", {}],
-      ["withKey", "https://generativelanguage.googleapis.com/v1beta/models?pageSize=1", { "x-goog-api-key": key || "" }],
+      ["withKey", "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200", { "x-goog-api-key": key || "" }],
     ]) {
       const t = Date.now(); const c = new AbortController(); const tm = setTimeout(() => c.abort(), 4000);
-      try { const r = await fetch(url, { headers: h, signal: c.signal }); out[name] = { status: r.status, ms: Date.now() - t, body: (await r.text()).slice(0, 160) }; }
+      try { const r = await fetch(url, { headers: h, signal: c.signal }); const txt = await r.text(); let names = null; try { names = (JSON.parse(txt).models || []).map(m => m.name).filter(n => /flash|lite/.test(n)); } catch (e) {} out[name] = { status: r.status, ms: Date.now() - t, names, body: names ? undefined : txt.slice(0, 160) }; }
       catch (e) { out[name] = { error: e.name, ms: Date.now() - t }; }
       clearTimeout(tm);
     }
