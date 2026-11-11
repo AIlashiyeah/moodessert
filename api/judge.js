@@ -35,8 +35,22 @@ let day = "", dayCount = 0;
 function clip(s, n) { return typeof s === "string" ? s.slice(0, n) : ""; }
 
 module.exports = async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   const key = process.env.GEMINI_API_KEY;
+  if (req.method === "GET" && req.diag) {
+    // Health check: never returns the key, only its shape and Google's response code.
+    const out = { model: MODEL, keySet: !!key, keyPrefix: key ? key.slice(0, 4) : null, keyLen: key ? key.length : 0 };
+    for (const [name, url, h] of [
+      ["noKey", "https://generativelanguage.googleapis.com/v1beta/models", {}],
+      ["withKey", "https://generativelanguage.googleapis.com/v1beta/models?pageSize=1", { "x-goog-api-key": key || "" }],
+    ]) {
+      const t = Date.now(); const c = new AbortController(); const tm = setTimeout(() => c.abort(), 4000);
+      try { const r = await fetch(url, { headers: h, signal: c.signal }); out[name] = { status: r.status, ms: Date.now() - t, body: (await r.text()).slice(0, 160) }; }
+      catch (e) { out[name] = { error: e.name, ms: Date.now() - t }; }
+      clearTimeout(tm);
+    }
+    return res.status(200).json(out);
+  }
+  if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   if (!key) return res.status(503).json({ error: "AI not configured" });
 
   // Best-effort limits (per serverless instance).
