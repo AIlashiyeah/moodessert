@@ -273,7 +273,7 @@ async function finish() {
   go({ ...st, screen: "baking" });
   const res = { ownVotes: [], words: null, line: null, lang };
   try {
-    const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 7000);
+    const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 9500);
     const r = await fetch("/api/judge", {
       method: "POST", headers: { "Content-Type": "application/json" }, signal: ctl.signal,
       body: JSON.stringify({ mbti: st.type, mbti_known: !st.guessed, sign: sg ? sg[1] : null, dessert: L(ty.name), lang,
