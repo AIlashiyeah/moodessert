@@ -5,11 +5,12 @@ Pick your MBTI, answer five odd little questions, and watch your answers bake in
 GenHacks Open 2026 entry (Open track). Live at https://moodessert.netlify.app
 
 ## How it works
-1. You pick your MBTI. It is trusted, never second-guessed. Never took the test? Four quick taps stand in for it.
-2. You can add your star sign. It gets its own line on the card.
-3. Each type has its own five questions. If none of the answers fits, you write your own sentence and the AI places it. Your answers put you in one of four flavours of that type's dessert: 16 desserts, 64 results.
-4. The words from your answers fall into a bowl, burst into particles, and rise into a 3D point-cloud of your dessert.
-5. The card shows your flavour, your branch, a line of praise, and one line written for you by the AI from what you answered.
+1. Two ingredients first: your MBTI picks the cake base (never took the test? four quick taps stand in for it) and your star sign sets the texture. Neither is shown on the card.
+2. Five questions written for that base. If none of the answers fits, you write your own sentence.
+3. A reading layer tallies which way your answers lean, then asks the model to work like a personality psychologist: find the motive your answers share, the contradiction where they split, and close with praise that follows from both. It must cite your own answers and is not allowed to mention MBTI or star signs.
+4. The words from your answers fall into a bowl, burst into particles, and rise into a 3D point-cloud of your dessert: 16 desserts, 64 flavours.
+
+This is a reading of five answers, made for fun. It is not a psychological assessment.
 
 ## Files
 - `index.html`: the whole app (home, MBTI pick, questions, result card)
