@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Moodessert bake demo</title>
+<style>
+  :root { --page:#F4ECE1; --card:#FBF6EF; --ink:#2A1A12; --muted:#8C7B6E; --line:#E2D6C7; --accent:#8B5A3C; }
+  :root[data-theme="dark"] { --page:#141010; --card:#1E1917; --ink:#F3E9DC; --muted:#A39485; --line:#3A302B; --accent:#D9A066; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--page); color:var(--ink); font:16px/1.4 -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif; }
+  main { max-width:460px; margin:0 auto; padding:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:24px; overflow:hidden; }
+  #stage { width:100%; aspect-ratio:1/1; }
+  .result { padding:0 20px 18px; text-align:center; min-height:58px; opacity:0; transform:translateY(6px); transition:opacity .5s, transform .5s; }
+  .result.on { opacity:1; transform:none; }
+  .result b { display:block; font-size:20px; }
+  .result span { color:var(--muted); font-size:13px; }
+  .bar { display:grid; grid-template-columns:1fr auto auto; gap:8px; margin-top:12px; }
+  select, button { font:inherit; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px; min-height:48px; }
+  button { cursor:pointer; white-space:nowrap; }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  label.rm { display:flex; align-items:center; gap:8px; margin-top:12px; color:var(--muted); font-size:13px; }
+  @media (prefers-reduced-motion: reduce) { .result { transition:none; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <div id="stage"></div>
+    <div class="result" id="result"><b id="name"></b><span id="id"></span></div>
+  </div>
+  <div class="bar">
+    <select id="pick" aria-label="Dessert"></select>
+    <button id="next" aria-label="Next dessert">下一个</button>
+    <button id="replay" class="primary">Replay</button>
+  </div>
+  <label class="rm"><input type="checkbox" id="rm"> reducedMotion（直接显示成品）</label>
+  <label class="rm"><input type="checkbox" id="dark"> 深色卡片</label>
+</main>
+<script type="module">
+  import { bakeDessert } from "./bake.js";
+  const NAMES = {
+    "mille-feuille": "法式千层", opera: "歌剧院蛋糕", "dark-chocolate-tart": "黑巧克力挞", "strawberry-shortcake": "草莓奶油蛋糕",
+    tiramisu: "提拉米苏", "coffee-jelly": "咖啡冻", "basque-cheesecake": "巴斯克芝士", souffle: "舒芙蕾",
+    "creme-caramel": "焦糖布丁", donut: "甜甜圈", "mango-bingsu": "芒果绵绵冰", brownie: "布朗尼",
+    macaron: "马卡龙", "new-york-cheesecake": "纽约芝士蛋糕", "cream-puff": "奶油泡芙", "egg-tart": "蛋挞",
+  };
+  const WORDS = [["凌晨两点", "薄荷道歉", "晚霞", "已读不回"], ["3am", "overthinker", "last slice", "sorry not sorry", "plan B"], ["抬杠", "熬夜", "嘴硬心软", "deadline", "再睡五分钟", "社恐", "偷偷努力", "奶茶续命"]];
+  const $ = (id) => document.getElementById(id);
+  const pick = $("pick"), stage = $("stage"), result = $("result");
+  for (const id of Object.keys(NAMES)) pick.add(new Option(`${NAMES[id]} · ${id}`, id));
+  const q = new URLSearchParams(location.search);
+  if (NAMES[q.get("d")]) pick.value = q.get("d");
+  let current = null, run = 0;
+  function play() {
+    if (current) current.destroy();
+    result.classList.remove("on");
+    const id = pick.value;
+    $("name").textContent = NAMES[id]; $("id").textContent = id;
+    current = bakeDessert(stage, { dessert: id, words: WORDS[run++ % WORDS.length], reducedMotion: $("rm").checked, onDone: () => result.classList.add("on") });
+  }
+  pick.onchange = play; $("replay").onclick = play; $("rm").onchange = play;
+  $("next").onclick = () => { pick.selectedIndex = (pick.selectedIndex + 1) % pick.options.length; play(); };
+  $("dark").onchange = (e) => { document.documentElement.dataset.theme = e.target.checked ? "dark" : "light"; };
+  if (matchMedia("(prefers-color-scheme: dark)").matches) { $("dark").checked = true; document.documentElement.dataset.theme = "dark"; }
+  play();
+</script>
+</body>
+</html>

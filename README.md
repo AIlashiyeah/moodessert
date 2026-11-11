@@ -1,13 +1,21 @@
 # Moodessert
 
-Answer 10 questions. An AI reads what you wrote, decides who you really are, and turns your words into a dessert.
+Pick your MBTI, answer five odd little questions, and watch your answers bake into the dessert you are.
 
-GenHacks Open 2026 entry (Open track). Work started 11 Nov 2026.
+GenHacks Open 2026 entry (Open track). Live at https://moodessert.netlify.app
 
-## Files so far
-- `questions.json`: 60-question bilingual bank (48 multiple choice, 12 open-ended)
-- `desserts.json`: 16 dessert personalities with copy, rarity and particle hints
-- `judge-prompt.md`: the AI judging prompt and guardrails
+## How it works
+1. You pick your MBTI. It is trusted, never second-guessed.
+2. Each type has its own five questions. Your picks place you in one of four flavours of that type's dessert: 16 desserts, 64 results.
+3. The words from your answers fall into a bowl, burst into particles, and rise into a 3D point-cloud of your dessert.
+4. The card shows your flavour, your branch, a line of praise, and one line written for you by the AI from the answers you chose.
+
+## Files
+- `index.html`: the whole app (home, MBTI pick, questions, result card)
+- `bake.js`: the reveal animation, Three.js r160, 16 desserts built in code with no image or model files (`demo.html` shows them all; notes in `docs/bake-note.md`)
+- `quiz.json`: the bilingual question bank the app loads. Built by `node tools/build-quiz.mjs` from `docs/questions-v2-draft.md` (Chinese), `docs/questions-v2-en.md` (English) and `desserts.json`
+- `api/judge.js` + `netlify/functions/judge.js`: serverless function that asks Gemini for the personal line and the falling words. The key lives only in the `GEMINI_API_KEY` environment variable
+- `netlify.toml`: hosting config
 
 ## Tools used
-Claude (code, copy), Gemini (copy polish), Gemini API `gemini-3.5-flash-lite` (live judging), Netlify Functions (hosting). Live at https://moodessert.netlify.app
+Claude (code, copy, 3D particle desserts), Gemini (copy polish), Gemini API `gemini-3.5-flash-lite` (personal line on the result card), Three.js, Netlify Functions (hosting).
