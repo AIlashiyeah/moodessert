@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Moodessert</title>
-<meta name="description" content="Pick your MBTI, answer five odd questions, and watch your answers bake into the dessert you are.">
+<meta name="description" content="Tell us your MBTI and star sign, answer five odd questions, and watch your answers bake into the dessert you are.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -57,6 +57,17 @@ p{margin:0}
 .opt[aria-pressed="true"]{border-color:var(--accent);background:var(--chip)}
 .opt[disabled]{cursor:default}
 .opt[disabled]:not([aria-pressed="true"]){opacity:.38}
+.opt.own{border-style:dashed;color:var(--muted)}
+.ownf{display:flex;gap:8px}
+.ownf input{flex:1;min-width:0;padding:14px 16px;border-radius:14px;border:1.5px solid var(--accent);background:var(--surface);color:var(--ink);font:inherit}
+.ownf .btn{padding:14px 18px;white-space:nowrap}
+.signs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.signs button,.wide{all:unset;box-sizing:border-box;cursor:pointer;text-align:center;padding:14px 6px;border-radius:12px;border:1.5px solid var(--line);font-weight:600;font-size:15px;background:var(--surface)}
+.signs button small{display:block;font-weight:400;font-size:11px;color:var(--muted)}
+.wide{border-style:dashed;color:var(--muted)}
+.signs button:focus-visible,.wide:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.signs button:hover,.wide:hover{border-color:var(--accent)}
+.boost{font-size:14px;color:var(--muted)}
 .twist{padding:14px 16px;border-radius:14px;background:var(--ink);color:var(--bg);font-size:15px;font-weight:500}
 .hint{font-size:13px;color:var(--muted)}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:24px;overflow:hidden}
@@ -99,21 +110,52 @@ import { bakeDessert } from "./bake.js";
 
 const T = {
   en: { note: "GenHacks Open 2026 entry. If the AI is unreachable, the card uses its own line.",
-    title: "Which dessert are you?", lede: "Pick your MBTI. Answer five odd little questions. Watch your answers bake into the dessert you are.",
+    title: "Which dessert are you?", lede: "Tell us your MBTI and your star sign. Answer five odd little questions. Watch your answers bake into the dessert you are.",
     f1: "questions", f2: "desserts", f3: "flavours", start: "Start",
-    mbtiQ: "What's your MBTI?", mbtiHint: "Pick the one you call yours. We take your word for it.", next: "Next",
-    baking: "Preheating the oven…", forYou: "Written for you", flavour: "flavour",
+    mbtiQ: "What's your MBTI?", mbtiHint: "Pick the one you call yours. We take your word for it.", noMbti: "Never took the test", next: "Next",
+    guessHint: "No problem. Four quick taps and we'll find your dessert.",
+    signQ: "And your star sign?", signHint: "It adds one more line to your card.", skip: "Skip",
+    own: "None of these. I'll write my own", ownPh: "What would you actually do?", ownOk: "That's me",
+    baking: "Preheating the oven…", forYou: "Written for you", flavour: "flavour", ish: (x) => x + "-ish", boost: (n, l) => `${n} bonus: ${l}`,
     share: "Send to a friend", copied: "Link copied. Send it to a friend.", copyFail: "Copy the link from your address bar.", again: "Try another flavour",
     shareText: (d, t, b) => `I'm a ${d} (${t} · ${b}). Which dessert are you?`, loadFail: "Couldn't load the quiz. Refresh to try again." },
   zh: { note: "GenHacks Open 2026 参赛作品。AI 连不上时，结果卡会用预设的那句话。",
-    title: "你是哪块甜点？", lede: "选好你的 MBTI，答五道有点怪的小题，看你的答案被烤成一块甜点。",
+    title: "你是哪块甜点？", lede: "告诉我们你的 MBTI 和星座，答五道有点怪的小题，看你的答案被烤成一块甜点。",
     f1: "道题", f2: "种甜点", f3: "种口味", start: "开始",
-    mbtiQ: "你的 MBTI 是？", mbtiHint: "选你认的那个，我们完全信你。", next: "下一题",
-    baking: "烤箱预热中…", forYou: "写给你的一句", flavour: "口味",
+    mbtiQ: "你的 MBTI 是？", mbtiHint: "选你认的那个，我们完全信你。", noMbti: "我没测过", next: "下一题",
+    guessHint: "没关系，点四下，我们帮你找到你的甜点。",
+    signQ: "你的星座是？", signHint: "结果卡上会多一句专属于它的话。", skip: "跳过",
+    own: "都不像我，我自己写一句", ownPh: "换成你，你会怎么做？", ownOk: "就这个",
+    baking: "烤箱预热中…", forYou: "写给你的一句", flavour: "口味", ish: (x) => "像 " + x, boost: (n, l) => `${n}加成：${l}`,
     share: "发给朋友测一测", copied: "链接已复制，发给朋友吧。", copyFail: "请从地址栏复制链接。", again: "换个口味再测",
     shareText: (d, t, b) => `我是一块${d}（${t} · ${b}）。你是哪块甜点？`, loadFail: "题库没加载出来，刷新再试一次。" },
 };
 const TYPES = ["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP"];
+// For people who never took the MBTI: one everyday habit per axis, two answers each.
+const GUESS = [
+  { q: { zh: "一个很累的周五晚上，你更想", en: "A long Friday is finally over. You'd rather" },
+    a: [["E", { zh: "找人出去，见到人就回血了", en: "Go out. Seeing people recharges you" }], ["I", { zh: "谁也别找我，我要一个人待着", en: "Be left alone. Nobody call you" }]] },
+  { q: { zh: "别人给你讲一件事，你更在意", en: "Someone tells you a story. You care more about" },
+    a: [["S", { zh: "具体发生了什么，细节要对得上", en: "What exactly happened. The details have to add up" }], ["N", { zh: "这件事背后说明了什么", en: "What it means underneath" }]] },
+  { q: { zh: "朋友来找你吐槽，你的第一反应", en: "A friend comes to you to vent. Your first move" },
+    a: [["T", { zh: "帮他分析问题到底出在哪", en: "Work out where the problem really is" }], ["F", { zh: "先站他这边，陪他骂两句", en: "Take their side first and grumble along" }]] },
+  { q: { zh: "出门旅行，你是", en: "On a trip, you are" },
+    a: [["J", { zh: "行程提前排好，心里才踏实", en: "Calm only once the plan is set in advance" }], ["P", { zh: "到了再说，走到哪算哪", en: "Deciding when you get there" }]] },
+];
+const SIGNS = [
+  ["aries", "Aries", "白羊座", "3.21–4.19", "the spark that gets things started", "说干就干的那股冲劲"],
+  ["taurus", "Taurus", "金牛座", "4.20–5.20", "a steadiness that never lets go", "认准了就不松手的稳"],
+  ["gemini", "Gemini", "双子座", "5.21–6.21", "a mind quicker than the room", "比谁都转得快的脑子"],
+  ["cancer", "Cancer", "巨蟹座", "6.22–7.22", "the care that keeps people close", "把人放在心上的细腻"],
+  ["leo", "Leo", "狮子座", "7.23–8.22", "a light people notice when you walk in", "一出场就亮起来的光"],
+  ["virgo", "Virgo", "处女座", "8.23–9.22", "an eye for the detail others miss", "别人看不到的那份讲究"],
+  ["libra", "Libra", "天秤座", "9.23–10.23", "the grace that puts everyone at ease", "让谁都舒服的分寸感"],
+  ["scorpio", "Scorpio", "天蝎座", "10.24–11.22", "seeing straight through, and keeping it safe", "看得透，也守得住"],
+  ["sagittarius", "Sagittarius", "射手座", "11.23–12.21", "the freedom to just go", "说走就走的自由"],
+  ["capricorn", "Capricorn", "摩羯座", "12.22–1.19", "the grit to see it through", "咬着牙也要做成的韧劲"],
+  ["aquarius", "Aquarius", "水瓶座", "1.20–2.18", "a way of thinking nobody else has", "跟谁都不一样的脑回路"],
+  ["pisces", "Pisces", "双鱼座", "2.19–3.20", "one more layer of tenderness and imagination", "比别人多一层的温柔和想象"],
+];
 let lang = (navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en";
 let QUIZ = null, st = { screen: "home" }, oven = null, timer = 0;
 const app = document.getElementById("app"), $ = (id) => document.getElementById(id);
@@ -122,6 +164,7 @@ const L = (o) => o[lang] || o.en;
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const lowEnd = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
+const signOf = (id) => SIGNS.find((s) => s[0] === id);
 
 function setLang(l) {
   lang = l; document.documentElement.lang = l === "zh" ? "zh-CN" : "en";
@@ -132,6 +175,11 @@ $("lang-en").onclick = () => setLang("en");
 $("lang-zh").onclick = () => setLang("zh");
 
 function stopOven() { if (oven) { oven.destroy(); oven = null; } clearTimeout(timer); }
+function go(next) { st = next; render(); scrollTo(0, 0); }
+function startQuiz() {
+  const qs = QUIZ.types[st.type].questions;
+  go({ ...st, screen: "q", i: 0, picks: [], writing: false, order: qs.map(() => shuffle([0, 1, 2, 3])) });
+}
 
 function render() {
   if (!QUIZ) return;
@@ -141,86 +189,117 @@ function render() {
     app.innerHTML = `<h1 class="fade">${t("title")}</h1><p class="lede">${t("lede")}</p>
       <div class="facts"><span><b>5</b> ${t("f1")}</span><span><b>16</b> ${t("f2")}</span><span><b>64</b> ${t("f3")}</span></div>
       <button class="btn" id="go">${t("start")}</button>`;
-    $("go").onclick = () => { st = { screen: "mbti", type: null }; render(); };
+    $("go").onclick = () => go({ screen: "mbti" });
   } else if (s === "mbti") {
     app.innerHTML = `<h2>${t("mbtiQ")}</h2><p class="hint">${t("mbtiHint")}</p>
-      <div class="mbti">${TYPES.map((x) => `<button aria-pressed="${st.type === x}" data-t="${x}">${x}</button>`).join("")}</div>
-      <button class="btn" id="nx" ${st.type ? "" : "disabled"}>${t("next")}</button>`;
-    app.querySelectorAll(".mbti button").forEach((b) => (b.onclick = () => { st.type = b.dataset.t; render(); }));
-    $("nx").onclick = () => {
-      if (!st.type) return;
-      const qs = QUIZ.types[st.type].questions;
-      st = { screen: "q", type: st.type, i: 0, picks: [], order: qs.map(() => shuffle([0, 1, 2, 3])) };
-      render(); scrollTo(0, 0);
-    };
+      <div class="mbti">${TYPES.map((x) => `<button data-t="${x}">${x}</button>`).join("")}</div>
+      <button class="wide" id="none">${t("noMbti")}</button>`;
+    app.querySelectorAll(".mbti button").forEach((b) => (b.onclick = () => go({ screen: "sign", type: b.dataset.t, guessed: false, sign: st.sign })));
+    $("none").onclick = () => go({ screen: "guess", g: 0, letters: "", sign: st.sign });
+  } else if (s === "guess") {
+    const g = GUESS[st.g];
+    app.innerHTML = `<div class="progress"><span>${st.g + 1} / ${GUESS.length}</span></div>
+      <div class="bar"><i style="width:${(st.g / GUESS.length) * 100}%"></i></div>
+      ${st.g === 0 ? `<p class="hint">${t("guessHint")}</p>` : ""}
+      <h2 class="fade">${esc(L(g.q))}</h2>
+      <div class="stack">${g.a.map(([l, txt]) => `<button class="opt" data-l="${l}">${esc(L(txt))}</button>`).join("")}</div>`;
+    app.querySelectorAll(".opt").forEach((b) => (b.onclick = () => {
+      const letters = st.letters + b.dataset.l;
+      if (letters.length < 4) go({ ...st, g: st.g + 1, letters });
+      else go({ screen: "sign", type: letters, guessed: true, sign: st.sign });
+    }));
+  } else if (s === "sign") {
+    app.innerHTML = `<h2>${t("signQ")}</h2><p class="hint">${t("signHint")}</p>
+      <div class="signs">${SIGNS.map((x) => `<button data-s="${x[0]}">${lang === "zh" ? x[2] : x[1]}<small>${x[3]}</small></button>`).join("")}</div>
+      <button class="wide" id="skip">${t("skip")}</button>`;
+    app.querySelectorAll(".signs button").forEach((b) => (b.onclick = () => { st.sign = b.dataset.s; startQuiz(); }));
+    $("skip").onclick = () => { st.sign = null; startQuiz(); };
   } else if (s === "q") {
-    const qs = QUIZ.types[st.type].questions, q = qs[st.i], n = qs.length, picked = st.picks[st.i];
-    app.innerHTML = `<div class="progress"><span>${st.i + 1} / ${n}</span><span>${st.type}</span></div>
+    const qs = QUIZ.types[st.type].questions, q = qs[st.i], n = qs.length, picked = st.picks[st.i], done = picked != null, own = typeof picked === "string";
+    app.innerHTML = `<div class="progress"><span>${st.i + 1} / ${n}</span><span>${st.guessed ? "" : st.type}</span></div>
       <div class="bar"><i style="width:${(st.i / n) * 100}%"></i></div>
       <h2 class="fade">${esc(L(q.q))}</h2>
-      <div class="stack">${st.order[st.i].map((k) => `<button class="opt" data-k="${k}" aria-pressed="${picked === k}" ${picked != null ? "disabled" : ""}>${esc(L(q.options[k]))}</button>`).join("")}</div>
-      ${picked != null && q.twist ? `<p class="twist fade" role="status">${esc(L(q.twist))}</p><button class="btn" id="nx">${t("next")}</button>` : ""}`;
-    app.querySelectorAll(".opt").forEach((b) => (b.onclick = () => choose(+b.dataset.k)));
+      <div class="stack">${st.order[st.i].map((k) => `<button class="opt" data-k="${k}" aria-pressed="${picked === k}" ${done ? "disabled" : ""}>${esc(L(q.options[k]))}</button>`).join("")}
+      ${own ? `<button class="opt" aria-pressed="true" disabled>${esc(picked)}</button>`
+        : done ? "" : st.writing
+          ? `<form class="ownf" id="ownf"><input id="owni" maxlength="60" autocomplete="off" enterkeyhint="done" aria-label="${t("ownPh")}" placeholder="${t("ownPh")}"><button class="btn">${t("ownOk")}</button></form>`
+          : `<button class="opt own" id="own">${t("own")}</button>`}</div>
+      ${done && q.twist ? `<p class="twist fade" role="status">${esc(L(q.twist))}</p><button class="btn" id="nx">${t("next")}</button>` : ""}`;
+    app.querySelectorAll(".opt[data-k]").forEach((b) => (b.onclick = () => choose(+b.dataset.k)));
+    if ($("own")) $("own").onclick = () => { st.writing = true; render(); $("owni").focus(); };
+    if ($("ownf")) $("ownf").onsubmit = (e) => { e.preventDefault(); const v = $("owni").value.trim().slice(0, 60); if (v) choose(v); };
     if ($("nx")) $("nx").onclick = advance;
   } else if (s === "baking") {
     app.innerHTML = `<div class="oven fade"><div class="dots"><i></i><i></i><i></i></div><h2>${t("baking")}</h2></div>`;
   } else if (s === "result") showResult();
 }
 
+// k is an option index, or the sentence the person wrote themselves
 function choose(k) {
   if (st.picks[st.i] != null) return;
-  st.picks[st.i] = k;
+  st.picks[st.i] = k; st.writing = false;
   const q = QUIZ.types[st.type].questions[st.i];
   render();
   // a twist stays on screen until the reader moves on; other questions flow straight through
-  if (!q.twist) timer = setTimeout(advance, 420);
+  if (!q.twist) timer = setTimeout(advance, typeof k === "string" ? 650 : 420);
 }
 function advance() {
   clearTimeout(timer);
   if (st.picks[st.i] == null) return;
-  st.i++;
+  st.i++; st.writing = false;
   if (st.i >= QUIZ.types[st.type].questions.length) { st.i--; finish(); return; }
   render(); scrollTo(0, 0);
 }
 
-// The branch with the most picks wins; a tie goes to the one picked most recently.
-function branchOf(type, picks) {
+// The branch with the most votes wins; a tie goes to the one voted for most recently.
+// Written answers have no branch of their own: the AI places them (ownVotes), or they don't count.
+function branchOf(type, picks, ownVotes) {
   const qs = QUIZ.types[type].questions, votes = [0, 0, 0, 0], last = [-1, -1, -1, -1];
-  picks.forEach((k, i) => { const b = qs[i].options[k].b; votes[b]++; last[b] = i; });
+  let o = 0;
+  picks.forEach((k, i) => {
+    const b = typeof k === "string" ? ownVotes[o++] : qs[i].options[k].b;
+    if (b >= 0 && b <= 3) { votes[b]++; last[b] = i; }
+  });
   let best = 0;
   for (let b = 1; b < 4; b++) if (votes[b] > votes[best] || (votes[b] === votes[best] && last[b] > last[best])) best = b;
+  if (votes[best] === 0) best = picks.join("").length % 4;
   return best;
 }
 
 async function finish() {
-  const ty = QUIZ.types[st.type], b = branchOf(st.type, st.picks), br = ty.branches[b];
-  st.screen = "baking"; render(); scrollTo(0, 0);
-  const res = { branch: b, words: ty.questions.map((q) => L(q.tag)).concat(L(br.flavour)), line: null, lang };
+  const ty = QUIZ.types[st.type], sg = signOf(st.sign);
+  go({ ...st, screen: "baking" });
+  const res = { ownVotes: [], words: null, line: null, lang };
   try {
-    const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 6000);
+    const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 7000);
     const r = await fetch("/api/judge", {
       method: "POST", headers: { "Content-Type": "application/json" }, signal: ctl.signal,
-      body: JSON.stringify({ mbti: st.type, dessert: L(ty.name), flavour: L(br.flavour), branch: L(br.name), lang,
-        picks: ty.questions.map((q, i) => ({ q: L(q.q), a: L(q.options[st.picks[i]]) })) }),
+      body: JSON.stringify({ mbti: st.type, mbti_known: !st.guessed, sign: sg ? sg[1] : null, dessert: L(ty.name), lang,
+        branches: ty.branches.map((b) => `${L(b.flavour)} · ${L(b.name)}`),
+        picks: ty.questions.map((q, i) => { const k = st.picks[i]; return typeof k === "string" ? { q: L(q.q), a: k, own: true } : { q: L(q.q), a: L(q.options[k]), branch: q.options[k].b }; }) }),
     });
     clearTimeout(to);
-    if (r.ok) { const j = await r.json(); if (j.personal_line) res.line = j.personal_line; if (j.keywords && j.keywords.length >= 3) res.words = j.keywords; }
+    if (r.ok) { const j = await r.json(); if (j.personal_line) res.line = j.personal_line; if (j.keywords && j.keywords.length >= 3) res.words = j.keywords; if (Array.isArray(j.own_votes)) res.ownVotes = j.own_votes; }
   } catch (e) { /* the card falls back to the branch's own line */ }
   if (st.screen !== "baking") return;
+  res.branch = branchOf(st.type, st.picks, res.ownVotes);
+  if (!res.words) res.words = ty.questions.map((q, i) => (typeof st.picks[i] === "string" ? st.picks[i].slice(0, 8) : L(q.tag))).concat(L(ty.branches[res.branch].flavour));
   st.result = res; st.shown = false; st.screen = "result"; render();
 }
 
 function showResult() {
-  const ty = QUIZ.types[st.type], r = st.result, br = ty.branches[r.branch];
+  const ty = QUIZ.types[st.type], r = st.result, br = ty.branches[r.branch], sg = signOf(st.sign);
   const aiLine = r.line && r.lang === lang ? r.line : null;
+  const sgName = sg ? (lang === "zh" ? sg[2] : sg[1]) : "";
   app.innerHTML = `<div class="card">
       <div id="stage" role="img" aria-label="${esc(L(br.flavour))} ${esc(L(ty.name))}"></div>
       <div class="body" id="rb" hidden>
-        <div class="type"><span class="badge">${st.type}</span><span class="rare">${esc(L(ty.rarity_line))}</span></div>
+        <div class="type"><span class="badge">${st.guessed ? t("ish")(st.type) : st.type}</span>${sg ? `<span class="badge">${sgName}</span>` : ""}<span class="rare">${esc(L(ty.rarity_line))}</span></div>
         <h2>${esc(L(ty.name))}</h2>
         <div class="chips"><span class="hot">${esc(L(br.flavour))}${lang === "zh" ? t("flavour") : " " + t("flavour")}</span><span>${esc(L(br.name))}</span></div>
         <p class="praise">${esc(L(br.line))}</p>
         ${aiLine ? `<p class="callout"><small>${t("forYou")}</small>${esc(aiLine)}</p>` : ""}
+        ${sg ? `<p class="boost">${esc(t("boost")(sgName, lang === "zh" ? sg[5] : sg[4]))}</p>` : ""}
       </div></div>
     <div class="stack" id="acts" hidden>
       <button class="btn" id="share">${t("share")}</button>
@@ -232,9 +311,9 @@ function showResult() {
     reducedMotion: st.shown, particles: lowEnd ? 9000 : 18000, onDone: reveal,
   });
   st.shown = true;
-  $("again").onclick = () => { st = { screen: "mbti", type: st.type }; render(); scrollTo(0, 0); };
+  $("again").onclick = () => go({ screen: "mbti", sign: st.sign });
   $("share").onclick = async () => {
-    const url = location.origin + location.pathname, text = t("shareText")(L(ty.name), st.type, L(br.name));
+    const url = location.origin + location.pathname, text = t("shareText")(L(ty.name), st.guessed ? t("ish")(st.type) : st.type, L(br.name));
     try {
       if (navigator.share) await navigator.share({ title: "Moodessert", text, url });
       else { await navigator.clipboard.writeText(text + " " + url); $("msg").textContent = t("copied"); }
