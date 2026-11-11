@@ -29,12 +29,12 @@ const PALETTES = {
   ENFJ: [_, ["#FBEDE4", _, "#F6A58A"], [_, _, "#4C5BAF"], [_, "#A9BF6A", _]],                                                     // shortcake: cream, sponge, berries
   ENFP: [_, [_, "#F7EFE2", _], [_, "#5A3220", _], [_, "#F6DC4A", _]],                                                             // donut: dough, glaze, light
   INFP: [_, [_, "#6B3F26", _], [_, "#9DB25C", _], [_, "#EFC94A", _]],                                                             // soufflé: ramekin, rise, sugar
-  ISFJ: [_, [_, "#F9DC5C", "#EFC548"], [_, "#F3E9C8", "#D9A860"], [_, "#B9CC6E", "#7E9440"]],                                     // egg tart: pastry, custard, spots
+  ISFJ: [_, [_, "#F9DC5C", "#EFC548"], [_, "#F3E9C8", "#D9A860"], [_, "#D9E09C", _]],                                             // egg tart: pastry, custard, spots
   ESTJ: [_, [_, "#A9794E", _], [_, "#9A6A4A", _], [_, "#C68E4A", _]],                                                             // brownie: chocolate, crust, cracks
   ESFJ: [_, [_, "#F7B9C8", _], [_, "#7A4A32", "#8A5A3A"], [_, "#B5C977", "#C9CF8A"]],                                             // cream puff: choux, cream, cookie
   ISTP: [_, ["#C9A27A", "#6B3A1C", "#3A1E0E"], ["#F6EFDD", _, _], ["#F0D58A", "#D9962E", _]],                                     // crème caramel: custard, caramel, dark
   ISFP: [["#F2A9BE", _, "#E58FA8"], _, ["#B9CF8A", _, "#A3BD72"], ["#F5DC6A", _, "#E9C94F"]],                                     // macaron: shell, filling, feet
-  ESTP: [_, [_, "#C9D48A", _], [_, "#A8BF6E", _], [_, "#5A3524", "#3A2015"]],                                                     // basque: burnt top, custard, caramel
+  ESTP: [_, [_, "#F4E7AE", "#B98A3A"], [_, "#CDE27C", "#9C9A3C"], [_, "#5A3524", "#3A2015"]],                                                     // basque: burnt top, custard, caramel
 };
 
 const die = (m) => { console.error("build-quiz: " + m); process.exit(1); };
