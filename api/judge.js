@@ -5,6 +5,7 @@
 
 const TYPES = new Set(["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"]);
 const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
+const FALLBACKS = ["gemini-3.1-flash-lite", "gemini-flash-lite-latest"];
 const DAILY_CAP = Number(process.env.DAILY_CAP || 1500);
 const PER_IP_PER_HOUR = 20;
 const BLOCK = /(胖|瘦|丑|身材|长相|颜值|恋爱|男朋友|女朋友|对象|约会|性感|性生活|\bugly\b|\bfat\b|\bskinny\b|\bsexy\b|\bdating\b|\bboyfriend\b|\bgirlfriend\b|\bcrush\b)/i;
@@ -22,7 +23,7 @@ INPUT: JSON with
 
 TASKS
 1. personal_line: ONE sentence of sincere praise that could only have been written for this person. It MUST use a concrete detail from their picks, and if there is an "own" answer, build the line around that one, in their words, because it is the truest thing they said. If sign is given, tie that detail to one trait people of that sign are proud of, naming the sign once; never predict anything and never mention luck, fate or compatibility. A "people say X, but Y" shape is welcome: X is a small quirk seen from outside, Y turns it into a strength, in the words this kind of person uses about themselves (seeking truth, not arguing; reliable, not rigid; living in the moment, not flaky). It must read as a compliment from start to finish. Max 40 Chinese characters or 28 English words.
-2. keywords: 5 to 7 vivid, concrete words or short phrases lifted from the answers, "own" answers first, in the user's language. Each is 2-6 Chinese characters or 1-3 English words. Never cut a phrase mid-word. No full sentences.
+2. keywords: 5 to 7 vivid, concrete words or short phrases lifted from the answers, "own" answers first, in the user's language. Each is 2-6 Chinese characters or 1-3 English words: shorten a long answer to its most vivid few words ("给同梯的陌生人讲冷笑话" becomes "讲冷笑话"). No full sentences.
 3. own_votes: for each "own" answer, in order, the number (0-3) of the branch it sounds most like. Empty array if there are none.
 
 TONE: a warm friend who knows them well. Specific, a little playful, never mocking, never doubting who they say they are.
@@ -81,18 +82,30 @@ module.exports = async function handler(req, res) {
   if (!input.picks.length) return res.status(400).json({ error: "picks required" });
 
   try {
-    const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 9200);
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`, {
-      method: "POST", signal: ctl.signal,
-      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: SYSTEM }] },
-        contents: [{ role: "user", parts: [{ text: JSON.stringify(input) }] }],
-        generationConfig: { temperature: 0.8, maxOutputTokens: 400, responseMimeType: "application/json" },
-      }),
+    // The primary model is sometimes overloaded (503). Try it, then two lighter stand-ins, inside one 8.5 s budget.
+    const models = [MODEL, MODEL, ...FALLBACKS.filter(m => m !== MODEL)];
+    const payload = JSON.stringify({
+      systemInstruction: { parts: [{ text: SYSTEM }] },
+      contents: [{ role: "user", parts: [{ text: JSON.stringify(input) }] }],
+      generationConfig: { temperature: 0.8, maxOutputTokens: 400, responseMimeType: "application/json" },
     });
-    clearTimeout(timer);
-    if (!r.ok) { console.log("upstream", r.status, (await r.text()).slice(0, 300)); return res.status(502).json({ error: "AI upstream " + r.status }); }
+    const deadline = Date.now() + 8500;
+    let r = null, lastStatus = 0;
+    for (const m of models) {
+      const left = deadline - Date.now();
+      if (left < 1200) break;
+      const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), left);
+      try {
+        const x = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`, {
+          method: "POST", signal: ctl.signal, headers: { "Content-Type": "application/json", "x-goog-api-key": key }, body: payload,
+        });
+        clearTimeout(timer);
+        if (x.ok) { r = x; break; }
+        lastStatus = x.status; console.log("upstream", m, x.status, (await x.text()).slice(0, 200));
+        if (x.status < 500 && x.status !== 429) break;
+      } catch (e) { clearTimeout(timer); lastStatus = 504; console.log("upstream", m, e.name); }
+    }
+    if (!r) return res.status(502).json({ error: "AI upstream " + lastStatus });
     const j = await r.json();
     const text = j?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("") || "";
     const out = JSON.parse(text.replace(/^```(json)?|```$/g, "").trim());
@@ -101,7 +114,7 @@ module.exports = async function handler(req, res) {
     res.setHeader("Cache-Control", "no-store");
     return res.status(200).json({
       personal_line: safe(out.personal_line),
-      keywords: (Array.isArray(out.keywords) ? out.keywords : []).map(k => safe(String(k))).filter(Boolean).map(k => k.slice(0, 24)).slice(0, 7),
+      keywords: (Array.isArray(out.keywords) ? out.keywords : []).map(k => safe(String(k))).filter(k => k && k.length <= (input.lang === "zh" ? 8 : 24)).slice(0, 7),
       own_votes: (Array.isArray(out.own_votes) ? out.own_votes : []).slice(0, owns).map(v => (Number.isInteger(v) && v >= 0 && v <= 3 ? v : -1)),
     });
   } catch (e) {
