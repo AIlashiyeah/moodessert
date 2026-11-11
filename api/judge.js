@@ -84,7 +84,7 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: SYSTEM }] },
         contents: [{ role: "user", parts: [{ text: JSON.stringify(input) }] }],
-        generationConfig: { temperature: 0.8, maxOutputTokens: 700, responseMimeType: "application/json", thinkingConfig: { thinkingLevel: "minimal" } },
+        generationConfig: { temperature: 0.8, maxOutputTokens: 700, responseMimeType: "application/json", thinkingConfig: { thinkingLevel: "low" } },
       }),
     });
     clearTimeout(timer);
