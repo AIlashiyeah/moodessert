@@ -4,7 +4,7 @@
 
 const TYPES = new Set(["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"]);
 const DIMS = ["EI", "SN", "TF", "JP"];
-const MODEL = process.env.GEMINI_MODEL || "gemini-flash-latest";
+const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 const DAILY_CAP = Number(process.env.DAILY_CAP || 1500);
 const PER_IP_PER_HOUR = 20;
 const BLOCK = /(胖|瘦|丑|身材|长相|颜值|恋爱|男朋友|女朋友|对象|约会|性感|性生活|\bugly\b|\bfat\b|\bskinny\b|\bsexy\b|\bdating\b|\bboyfriend\b|\bgirlfriend\b|\bcrush\b)/i;
