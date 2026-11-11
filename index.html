@@ -83,6 +83,10 @@ p{margin:0}
 .callout{padding:12px 14px;border-radius:14px;background:var(--chip);font-size:15px}
 .callout small{display:block;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:2px}
 .rare{font-size:13px;color:var(--muted)}
+.match{border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;gap:2px;font-size:15px}
+.match small{font-size:12px;font-weight:600;color:var(--accent)}
+.match b{font-family:var(--display);font-size:20px}
+.match span{color:var(--muted)}
 .oven{display:flex;flex-direction:column;align-items:center;gap:16px;padding:64px 0}
 .dots{display:flex;gap:8px}
 .dots i{width:10px;height:10px;border-radius:50%;background:var(--accent);animation:rise 1s ease-in-out infinite}
@@ -117,9 +121,9 @@ const T = {
     guessHint: "No problem. Four quick taps and we'll find your dessert.",
     signQ: "Second ingredient: your star sign", signHint: "It decides the texture of your dessert.", skip: "Skip",
     own: "None of these. I'll write my own", ownPh: "What would you actually do?", ownOk: "That's me",
-    baking: "Preheating the oven…", flavour: "flavour", why: "Why this dessert", whyT: (q, d, n) => `You chose "${q}". That is ${d} all over: ${n}.`, drive: "What drives you", pull: "Your contradiction", also: (f, n) => `Mostly this, with a streak of ${f}: ${n}.`,
+    baking: "Preheating the oven…", flavour: "flavour", why: "Why this dessert", whyT: (q, d, n) => `You chose "${q}". That is ${d} all over: ${n}.`, match: "Goes best with", find: (d) => `Find the ${d} in your life`, drive: "What drives you", pull: "Your contradiction", also: (f, n) => `Mostly this, with a streak of ${f}: ${n}.`,
     share: "Send to a friend", copied: "Link copied. Send it to a friend.", copyFail: "Copy the link from your address bar.", again: "Try another flavour",
-    shareText: (f, d, b) => `I'm a ${f} ${d}: ${b}. Which dessert are you?`, loadFail: "Couldn't load the quiz. Refresh to try again." },
+    shareText: (f, d, b, m) => `I'm a ${f} ${d} (${b}), and I go best with a ${m}. Which dessert are you?`, loadFail: "Couldn't load the quiz. Refresh to try again." },
   zh: { note: "GenHacks Open 2026 参赛作品。图个开心：这是对五个回答的解读，不是心理测评。",
     title: "你是哪块甜点？", lede: "答五道有点怪的小题，我们读出你的选择背后在乎什么，再把它烤成一块甜点。",
     f1: "道题", f2: "种甜点", f3: "种口味", start: "开始",
@@ -127,9 +131,9 @@ const T = {
     guessHint: "没关系，点四下，我们帮你找到你的甜点。",
     signQ: "第二样原料：你的星座", signHint: "它决定这块甜点的口感。", skip: "跳过",
     own: "都不像我，我自己写一句", ownPh: "换成你，你会怎么做？", ownOk: "就这个",
-    baking: "烤箱预热中…", flavour: "口味", why: "为什么是这块", whyT: (q, d, n) => `你选了“${q}”。${d}就是这样：${n}。`, drive: "你在乎的", pull: "你的反差", also: (f, n) => `主味之外，你还藏着一点${f}：${n}。`,
+    baking: "烤箱预热中…", flavour: "口味", why: "为什么是这块", whyT: (q, d, n) => `你选了“${q}”。${d}就是这样：${n}。`, match: "你最配", find: (d) => `找找身边谁是${d}`, drive: "你在乎的", pull: "你的反差", also: (f, n) => `主味之外，你还藏着一点${f}：${n}。`,
     share: "发给朋友测一测", copied: "链接已复制，发给朋友吧。", copyFail: "请从地址栏复制链接。", again: "换个口味再测",
-    shareText: (f, d, b) => `我是一块${f}${d}：${b}。你是哪块甜点？`, loadFail: "题库没加载出来，刷新再试一次。" },
+    shareText: (f, d, b, m) => `我是一块${f}${d}（${b}），最配${m}。你是哪块甜点？`, loadFail: "题库没加载出来，刷新再试一次。" },
 };
 const TYPES = ["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP"];
 // For people who never took the MBTI: one everyday habit per axis, two answers each.
@@ -293,6 +297,7 @@ async function finish() {
 
 function showResult() {
   const ty = QUIZ.types[st.type], r = st.result, br = ty.branches[r.branch], tx = textureOf(st.sign);
+  const mt = QUIZ.types[ty.match.type];
   const ai = r.lang === lang, sec = r.second >= 0 ? ty.branches[r.second] : null;
   // "Why this dessert": the AI's sentence, or a template that quotes the answer which decided the flavour
   const short = (x, n) => { const y = String(x).split(/[，,：:。；;]|\. /)[0].trim(); return y.length > n ? y.slice(0, n) + "…" : y; };
@@ -310,9 +315,10 @@ function showResult() {
         <div class="chips"><span class="hot">${esc(L(br.flavour))}${lang === "zh" ? t("flavour") : " " + t("flavour")}</span>${tx ? `<span>${esc(L(tx))}</span>` : ""}<span>${esc(L(br.name))}</span></div>
         ${why ? `<p class="callout"><small>${t("why")}</small>${esc(why)}</p>` : ""}
         ${ai && r.line && (r.core || r.tension) ? `${reading}<p class="praise">${esc(r.line)}</p>` : `<p class="praise">${esc(ai && r.line ? r.line : L(br.line))}</p>${reading}`}
+        <div class="match"><small>${t("match")}</small><b>${esc(L(mt.name))}</b><span>${esc(L(ty.match.line))}</span></div>
       </div></div>
     <div class="stack" id="acts" hidden>
-      <button class="btn" id="share">${t("share")}</button>
+      <button class="btn" id="share">${esc(t("find")(L(mt.name)))}</button>
       <button class="btn ghost" id="again">${t("again")}</button>
       <p class="hint" id="msg" role="status"></p></div>`;
   const reveal = () => { const rb = $("rb"), ac = $("acts"); if (!rb) return; rb.hidden = false; ac.hidden = false; rb.classList.add("fade"); ac.classList.add("fade"); };
@@ -323,7 +329,7 @@ function showResult() {
   st.shown = true;
   $("again").onclick = () => go({ screen: "mbti", sign: st.sign });
   $("share").onclick = async () => {
-    const url = location.origin + location.pathname, text = t("shareText")(L(br.flavour), L(ty.name), L(br.name));
+    const url = location.origin + location.pathname, text = t("shareText")(L(br.flavour), L(ty.name), L(br.name), L(mt.name));
     try {
       if (navigator.share) await navigator.share({ title: "Moodessert", text, url });
       else { await navigator.clipboard.writeText(text + " " + url); $("msg").textContent = t("copied"); }

@@ -57,27 +57,27 @@ Q A parcel turns up at your door. It's addressed to you. You didn't order anythi
 - You leave it sealed in case it's a mistake, and wait for someone to claim it
 - You wonder: is an unsigned gift for you, or for the feeling of being thought of?
 T Turns out you ordered it yourself at 3am three months ago, and forgot.
-Q It's 2am. You are | 2am | 凌晨两点
-- Writing a long note in your phone that you will never send
-- Replaying everyone's face from today and giving each one a soundtrack
-- Writing "you'll be okay" to a friend with an exam tomorrow, scheduled for 7am
-- Staring at the ceiling, asking "who am I, really?" for the thirty-seventh time
-Q Someone suddenly starts crying in front of you | sudden tears | 突然哭了
-- You ask nothing. You pass a tissue and sit there until they want to talk
-- You knew why they were crying before they did
-- You feel it with them, and you're still writing their lines for them on the way home
-- You start wondering: are tears for yourself, or for someone to see?
+Q In a conversation, what you're actually doing is | mid-conversation | 聊天的时候
+- Listening to what they say, and to the sentence they aren't saying
+- Trying to steer it from "what happened" to "what it means"
+- Watching who's been left out, and passing them the conversation
+- Replying out loud while your mind has drifted to another world
+Q Hidden in your notes or drafts | drafts folder | 草稿箱
+- Notes on a few people, accurate enough that you'd never show them
+- Things written at midnight that feel too deep in daylight
+- A caring message to someone, rewritten many times, still unsent
+- A story you've been writing for ages that nobody knows about
 
 ## ISTJ
 B Original | The Reliable One | You have more principles than anyone can remember, but everyone knows that following you never goes wrong.
 B Blueberry | The Always-Prepared | Your notes app is longer than most people's diaries, but when things go wrong, the fix comes out of your pocket.
 B Salted Caramel | The Kind-in-Action | You never say anything soft, but everything you do is warmer than soft words.
 B Matcha | The Craftsman | You'll grind at one thing till past midnight, but nobody ever has to redo what you hand in.
-Q The furniture is built. One screw is missing | missing screw | 少颗螺丝
-- Photo, annotation, email to support, with the order number and the manual page
-- You buy a matching one at the hardware shop, then sort every screw in the house into labelled boxes
-- You swear once, then go and check the neighbour's furniture for them too
-- You say "forget it", and at 1am you're still researching a workaround
+Q Before leaving the house, you always | leaving the house | 出门前
+- Check keys, phone, wallet, in that order. The order matters
+- Pack one "just in case" item. It has, in fact, been needed
+- Put the thing your flatmate forgot by the door for them
+- Go back and straighten the one thing that was crooked
 Q A friend says: "Let's just eat anywhere" | "eat anywhere" | 随便吃
 - "Anywhere" doesn't exist. Same place as last time
 - Three options already in the chat, with price, rating and queue time
@@ -89,11 +89,11 @@ Q The train stops in the tunnel. No announcement | stuck train | 地铁停了
 - You tell the nervous auntie next to you "nothing to panic about", then give her your seat
 - You carry on with today's to-do list. No signal, so you do it offline
 T Turns out it was just waiting for the train ahead. It moved twenty seconds later.
-Q It's 2am. You are | 2am | 凌晨两点
-- Asleep. 2am is for sleeping
-- Up for the toilet, and you clear the expired food out of the fridge on the way back
-- Wondering if what you said today was too harsh, and deciding to make it right tomorrow
-- Still fixing the spreadsheet. One border away from perfect
+Q Someone hands you a task. You say "sure". Inside, | handed a task | 接到任务
+- the deadline is noted, and you've assumed one day early
+- you're listing what could go wrong, with a fix for each
+- you wonder if they're swamped, and whether to quietly do a bit more
+- you're working out how to make it worthy of your name
 Q Someone cuts the queue, right in front of you | queue cutter | 有人插队
 - Polite, but loud: "The queue starts back there."
 - You silently note the time, the place and the colour of their shirt
@@ -110,22 +110,22 @@ Q Karaoke. Nobody dares to pick the first song | first song | 第一首歌
 - You pick a song in a language nobody speaks and commit to the end
 - You hand the mic to the shyest person, then sing it with them
 - You queue ten songs, sing two lines, and wander off to play with the lighting modes
-Q Sudden downpour. You're stuck outside a convenience store | downpour | 突然下雨
-- You form a temporary gang with the cashier and everyone else sheltering, and start betting on when it stops
-- You run straight into it: free shower
-- You lend your umbrella to a stranger in a hurry and keep waiting
-- You buy an ice cream. The rain stops halfway through. You buy another
+Q Your camera roll is mostly | camera roll | 你的相册
+- Group shots, with you in the middle or pulling a face
+- Blurry in-the-moment shots you can't bring yourself to delete
+- Unflattering photos of friends, saved as future meme material
+- Places you went once and things you tried once
 Q You're in a mall. Every light goes out at once, and the music stops | mall blackout | 商场熄灯
 - First to scream, first to laugh
 - Phone torch on. It's a concert now
 - You check your friends are all still next to you
 - You post a pitch-black photo: "Guess where I am"
 T Turns out the mall was setting up a birthday surprise. The cake is rolling out. It's not for you.
-Q It's 2am. You are | 2am | 凌晨两点
-- Still out. The friends you made tonight want a third supper spot
-- In a cab to the beach to wait for sunrise. You decided ten minutes ago
-- On a video call with a sad friend, making them laugh until they snort
-- Opening your shopping cart. Closing it. Opening it again
+Q A plan gets cancelled at the last minute. You | cancelled plans | 临时取消
+- have a new plan going in the group chat within five minutes
+- shrug, head out anyway and see what the day offers
+- go and cheer up whoever is most disappointed
+- take it as a sign to finally try that new place
 Q Someone gives you a potted plant | potted plant | 一盆植物
 - You name it and bring it to the party this weekend
 - Next day you move it to the sunniest spot on the balcony: "time you saw the world"
@@ -142,11 +142,11 @@ Q First group-project meeting. Forty minutes in, still not on topic | group meet
 - You quietly predict which week this group falls apart, and prepare a backup plan
 - You say "I'll take this part", go home and finish half the project alone
 - You stare at the misaligned fonts on someone's slides, and hold it in for a long time
-Q A friend excitedly drags you to buy trendy blind boxes | blind box | 网红盲盒
-- First you work out the expected cost of landing the secret figure
-- You judge that nobody will remember this character in six months, and politely pass
-- "You go ahead, I'll watch." You watch all afternoon
-- You pick one up, inspect the build quality, and put it back
+Q In meetings, the sentence you don't say out loud is usually | left unsaid | 没说出口的话
+- "This gets stuck three steps from now."
+- "In six months none of this will matter."
+- "I could do this faster alone."
+- "That bar is far too low."
 Q Midnight. Your phone lights up: "New login to your account from another location" | strange login | 异地登录
 - Three calm steps: change password, check history, turn on two-factor
 - While you're at it, you change the password on every account you own, for next time
@@ -158,11 +158,11 @@ Q Someone asks: "Where do you see yourself in five years?" | five-year plan | �
 - You ask back: will this industry still exist in five years?
 - "I'll know when I get there."
 - You think: whoever asks this probably hasn't figured out their own answer
-Q It's 2am. You are | 2am | 凌晨两点
-- Revising your life plan for the fourth time
-- Reading a long essay about the world in ten years, and concluding everyone is too optimistic
-- Finishing, alone, the thing you put off for three days
-- Rewriting the first line of an email. Draft seven
+Q There's a file on your computer nobody knows about. It is | secret file | 秘密文件
+- a life plan, broken down by year, many versions in
+- a list of predictions, waiting to be proved right
+- a project you've worked on for ages and shown to no one
+- something on its umpteenth draft that still isn't good enough
 
 ## ENTJ
 B Classic Coffee | The Commander | The moment you speak, people start dividing up the work, but that's exactly why things actually get done.
@@ -185,27 +185,27 @@ Q The power cuts out at school. Everyone is standing around in the corridor | po
 - You move everyone to the café downstairs, and the meeting goes better there
 - You re-sort the rest of today's tasks by "needs power" and "doesn't"
 T Turns out a fuse tripped on this one floor. The building office fixed it in three minutes.
-Q Board game night. Everyone says it's just for fun | board game | 随便玩玩
-- Three rounds in, you're directing the whole table's moves
-- You find a loophole in the rules and end the game in one turn
-- "Just for fun" doesn't exist. You win
-- You're already working out the optimal strategy. Next time you bring notes
-Q It's 2am. You are | 2am | 凌晨两点
-- Replying to everything due tomorrow, and scheduling each message to send
-- Finally cracking the problem that's been stuck for a week, and writing it down at once
-- Watching a founder interview, then raising your five-year target one notch
-- Building a new Notion system to manage your entire life
+Q Stuck in a queue or waiting for someone, you can't help | while waiting | 等的时候
+- mentally re-staffing the shop and redesigning how it runs
+- hunting for the shortcut: switch lines, scan the code, ask the staff
+- answering messages and moving things along. These ten minutes won't be wasted
+- re-planning the whole coming week
+Q Someone says "you're amazing". What you're actually thinking is | being praised | 被夸的时候
+- it was a team effort. And yes, I led it
+- it all hinged on one thing. Unblock that and the rest flows
+- this is nothing yet. I'm nowhere near where I want to be
+- the system did it. Anyone could run it now
 
 ## INTP
 B Black Coffee | The Root Questioner | You ask "why" until people want to run, but when you understand something, you understand it to the bottom.
 B Condensed Milk | The Idea Universe | Your brain has fifty tabs open, but any one of them is more interesting than most people's whole plan.
 B Coconut Milk | The Precise One | You'll correct a single word, but it's almost impossible to find a hole in what you say.
 B Caramel | The Deep Diver | Your interests are too niche to chat about, but you know more in that one field than most people learn in a lifetime.
-Q Someone says: "Everybody knows that." | "everybody knows" | 大家都懂
-- You ask: which thing exactly, and how well do they know it?
-- You start wondering: if everybody knows it, why say it out loud?
-- You correct them: "everybody" is a big claim. What's the sample size?
-- It reminds you of a related obscure fact. You talk for twenty minutes
+Q You only meant to look up one small thing. Instead | one small search | 查个小问题
+- you chased it all the way down to the basic definition
+- it reminded you of something unrelated, and now you're on that
+- three sources disagreed, so you're comparing which is right
+- two hours later you're half an expert on a niche topic
 Q You meant to reply to a message | unsent reply | 没回的消息
 - You type three paragraphs and delete them all, because the question itself was wrong
 - You wrote the reply in your head, so you believe you sent it
@@ -222,11 +222,11 @@ Q Someone recommends a hugely popular show | hit show | 很火的剧
 - Halfway through, you start designing an ending that makes more sense
 - You find three logic holes in the world-building and log them in your notes
 - You watch one episode, then go and research how it was filmed
-Q It's 2am. You are | 2am | 凌晨两点
-- Solving a question that's bothered you for three years, then realising there's nobody to tell
-- Designing a new language that is completely useless and logically perfect
-- Rewriting a piece of code just to make it one line shorter
-- Forty Wikipedia links deep. You started at coffee and you're now at Roman tax policy
+Q Someone asks "what are you thinking about?" The truth is | "what's on your mind" | 你在想什么
+- you're stuck on why something is the way it is
+- several threads are running at once and you can't summarise them
+- a word in the last sentence wasn't quite accurate
+- it's something only you care about, and explaining would take too long
 
 ## ENFJ
 B Classic Strawberry | The Heart of the Group | You're always checking whether everyone's happy, but that's why this group is still a group.
@@ -249,16 +249,16 @@ Q The group chat has been silent all day | silent chat | 群聊安静了
 - You come up with a weekend plan everyone will like and drop it in
 - You message each person privately to check they're okay
 T Turns out you'd muted the chat. The messages were all there. You just never saw them.
-Q Group project. One person is very slow | slow teammate | 做得很慢
-- You reshuffle the work so everyone does what they're best at
-- You praise, in front of the group, the part they've already done well
-- You give a short speech about how this assignment could actually mean something
-- You sit down and do it with them, teaching the method as you go
-Q It's 2am. You are | 2am | 凌晨两点
-- Writing several people's birthday messages in advance and saving them in your notes
-- Suddenly remembering who did well today, and deciding to tell them tomorrow for sure
-- Reading a book about changing the world, eyes getting warm
-- Replying to a friend's long message about their troubles. Your reply is longer
+Q The group chat goes quiet. You're usually the one who breaks it, because | quiet group chat | 群里没人说话
+- you can't stand watching this group drift apart
+- you just saw something and want to praise one of them for it
+- you've thought of something meaningful you could all do together
+- someone seems off lately, and you want an excuse to check
+Q After a friend opens up to you, you | after they open up | 听完倾诉
+- quietly bring in another friend so they have more company
+- find a moment to tell them they're stronger than they think
+- keep wondering how to stop this kind of thing from happening
+- check in a few days later to ask how it turned out
 
 ## ENFP
 B Strawberry Glaze | The Possibility Finder | Your plans change every three days, but your world always has one more door than everyone else's.
@@ -281,27 +281,27 @@ Q You're walking down the street. A stranger calls out your name | your name | �
 - You admit you can't place them, and apologise like you mean it
 - You go for coffee with them on the spot. Your original plans are cancelled
 T Turns out you added them at an event three years ago. You've spoken once.
-Q You're in a very long queue | long queue | 排长队
-- You come up with an app idea: mini-games for people stuck in queues
-- You befriend the people in front and behind, and swap accounts
-- You carry an old lady's shopping for her the whole way
-- Halfway through you spot something more fun next door, and switch queues
-Q It's 2am. You are | 2am | 凌晨两点
-- Listing "47 things to do this year", getting more excited with each one
-- Sending a friend a string of voice notes about the brilliant idea you just had
-- Remembering someone you haven't spoken to in ages, and texting "thought of you"
-- Changing tomorrow's plan, because you suddenly want to go somewhere you've never been
+Q On your "definitely next time" list sit | "next time for sure" | 下次一定
+- a dozen things you want to make, each with only a beginning
+- lots of "let's hang out soon"s, every one of them sincere
+- things you want to tell a few people, still waiting for the moment
+- several spontaneous trips that haven't happened yet
+Q Ten minutes after meeting someone new, you have already | new friend | 新朋友
+- thought of three things you could do together
+- been chatting like old friends, laughing the loudest
+- told them something personal
+- agreed on a plan neither of you had five minutes ago
 
 ## INFP
 B Vanilla | The Pure Heart | People say you're too idealistic, but the purity you guard is the rarest thing there is.
 B Chocolate | The Empath | Other people's sadness walks straight into you, but everyone you caught remembers how warm it felt.
 B Matcha | The World-Builder | You drift off in the real world, but the one in your head is far better.
 B Yuzu | The Gently Stubborn | You look soft, but nobody can move you once you've decided.
-Q You see a stray cat out in the rain | cat in the rain | 淋雨的猫
-- You wonder whether it's waiting for someone too
-- You stop and hold your umbrella over it while you get wet
-- You've already written its entire backstory in your head
-- You come back the next day with cat food. And every day that week
+Q People think you're zoning out. You're actually | zoning out | 发呆的时候
+- working out whether something is right, whatever others think
+- replaying something someone said, and aching for them
+- running a scene from a story only you know
+- telling yourself you're still going to do that thing
 Q Someone says your dream is "not very realistic" | "not realistic" | 不太现实
 - You think: reality was never meant to be the only measure
 - You understand why they said it. They gave something up once too
@@ -318,11 +318,11 @@ Q A song comes on, and suddenly you want to cry | that song | 一首歌
 - You loop it until the small hours and find yourself in the lyrics
 - You imagine a music video for it. You're the lead
 - You note it down and decide that one day you'll write a song like that
-Q It's 2am. You are | 2am | 凌晨两点
-- Writing a diary entry nobody will ever read
-- Rereading something a friend said today, worried they weren't okay
-- Continuing, in your head, a story you've been writing for years
-- Secretly adding one more page to a project nobody knows about
+Q There's something you've never shown anyone. It's | never shown anyone | 没给人看过
+- words to yourself about who you want to be
+- a letter to someone that you will never send
+- a world, character or story you've been building for a long time
+- a piece of work you've been making, slowly, for ages
 
 ## ISFJ
 B Portuguese | The One Who Remembers | You remember every little thing people mention in passing, but those little things are how they know they matter to you.
@@ -345,16 +345,16 @@ Q Family calls in the middle of the night. Three rings, then it cuts off | midni
 - You're already looking up the first train home
 - Deep breath first. Then you call each family member in order
 T Turns out your mum rolled onto her phone in her sleep.
-Q The group project is finished | project done | 作业结束
-- You're the only one who remembered to back up every file
-- You send each teammate a "thank you for the hard work"
-- You secretly finished the parts others left undone, and told nobody
-- You turn the process into a template for next time
-Q It's 2am. You are | 2am | 凌晨两点
-- Noting down the small wishes your friends mentioned lately
-- Going back over today, checking whether anything you said made someone uncomfortable
-- Deciding who to bring breakfast for tomorrow
-- Asleep. After checking the lock, the gas and tomorrow's alarm
+Q Someone says "don't trouble yourself". You still | "don't trouble yourself" | 不用麻烦了
+- make a note, so next time it's ready before they ask
+- insist on seeing them all the way to their door
+- say okay, then quietly do it anyway
+- do it the usual way, with nothing skipped
+Q Saved on your phone are | saved on your phone | 手机里存着
+- friends' likes and dislikes, noted the moment they mentioned them
+- emergency contacts and addresses for the people close to you
+- things you looked up for someone, kept for when they need them
+- the same alarms and routines, unchanged for years
 
 ## ESTJ
 B Classic | The Executor | You're always first to chase the deadline, but behind every project delivered on time, there's you.
@@ -366,11 +366,11 @@ Q First group-project meeting. Nobody speaks | silent meeting | 没人说话
 - You volunteer for the hardest part
 - The shared folder is set up, naming rules included
 - You open: "Roles first. Deadline fixed in ten minutes."
-Q A friend's place is a mess. "Sit anywhere," they say | messy flat | 乱成一团
-- You take their rubbish down with you when you leave
-- You think: they must be swamped lately. Next time you'll cook them a meal
-- You sit. It takes ten minutes of effort not to start tidying
-- You recommend a storage system and promise to inspect next week
+Q Watching someone work slowly, the hardest thing to hold back is | slow worker | 别人做得慢
+- stepping in: "Let me. Two minutes."
+- the worry. So you stand by quietly as backup
+- re-ordering the steps for them
+- telling them the faster way: one, two, three
 Q You arrive at the restaurant you booked. They can't find your reservation | lost booking | 查不到预订
 - Within two minutes you've found another place nearby with a free table
 - You apologise to everyone first: you should have double-checked
@@ -382,11 +382,11 @@ Q In a meeting, someone says: "Let's discuss it next time." | "next time" | 下�
 - "I'll follow up after." And you do
 - You write down the action item and its owner on the spot
 - You take over and push the discussion through to a decision
-Q It's 2am. You are | 2am | 凌晨两点
-- Checking tomorrow's submission, item by item
-- Still answering a teammate's question, because they need it tomorrow
-- Asleep. You're up at seven
-- Planning next month, and spotting a risk nobody else has seen
+Q Your to-do list | to-do list | 待办清单
+- is cleared daily. The day isn't over until the last item is crossed off
+- is half made of things you're tracking for other people
+- is sorted by priority, time and category
+- comes with a second one, for the whole team
 
 ## ESFJ
 B Vanilla | The Caretaker | You're always asking whether people have eaten, but that's why every gathering feels warm.
@@ -409,27 +409,27 @@ Q You sent a friend a birthday message. No reply all day | no reply | 没回祝�
 - You ask a few mutual friends to make sure they're okay
 - Never mind. You turn up the next day with a cake
 T Turns out their phone fell in the toilet. It's currently recovering in a bag of rice.
-Q Someone new joins your circle | newcomer | 新人入伙
-- You note what they drink, and bring them one next time
-- You keep an eye on whether they're being left out
-- On day one you explain every group chat and every inside joke
-- You throw them a tiny welcome party
-Q It's 2am. You are | 2am | 凌晨两点
-- Working out how to cheer up a friend who's down tomorrow
-- Choosing how to phrase one sentence so nobody is hurt by it
-- Replying to a dozen people, every message with care
-- Marking everyone's birthdays for next month on the calendar
+Q Home after a get-together, you | after the party | 聚会之后
+- message everyone to check they got home
+- go back over whether anything said made someone uncomfortable
+- add everyone new you met, with a note on each
+- sort the photos and post them to the group with a few words
+Q The small thing you can't stand is | can't stand | 受不了的小事
+- someone going hungry or cold while nobody notices
+- someone clearly unhappy at the table while everyone pretends not to see
+- two people who'd get on, never getting the chance to meet
+- an important day passing with nothing to mark it
 
 ## ISTP
 B Classic | The Calm One | You look the least worried when things are at their messiest, but you're the one who cleans it up in the end.
 B Coffee | The Tinkerer | You have a drawer of things you took apart and never put back, but you've fixed more than you've bought.
 B Coconut Milk | The Free Roamer | You vanish for a whole afternoon without a word, but you always come back with something nobody's seen.
 B Sea Salt | The Minimalist Fixer | You never say more than three sentences, but those three solve the problem.
-Q A friend's phone goes black and won't turn on | dead phone | 手机黑屏
-- You take it, say nothing, and start trying button combinations
-- You're already wondering whether to open it up
-- You tell them not to panic, go for a walk, and deal with it when your head is clear
-- "The shop downstairs. Thirty bucks. Send it in."
+Q Something breaks. Your first reaction | something broke | 东西坏了
+- Don't touch it. Look, and find exactly what failed
+- Finally, an excuse to open it up
+- Leave it. Go out for a while and deal with it later
+- If it works, it works. Tape it and carry on
 Q You're pulled into an endless voice meeting | endless meeting | 超长会议
 - When everyone's done arguing, you say one thing: "So what's the next step?"
 - During the meeting, you repair the frayed wire on your earphones
@@ -446,11 +446,11 @@ Q You bought something new | new gadget | 新买的东西
 - After a week you start researching how to modify it
 - You take it somewhere nobody goes, to test it
 - No manual. You've figured it out in ten minutes
-Q It's 2am. You are | 2am | 凌晨两点
-- Fixing the bug that stumped the whole team all day. Telling nobody
-- Taking apart an old pair of earphones, just to see what's inside
-- Cycling out alone for supper
-- Asleep. Or looking at the ceiling, which is also fine
+Q People think you're quiet. In fact | why so quiet | 话少的原因
+- you're watching, and you'll speak once you've understood
+- your hands are busy with something. No time to talk
+- you're here, but your mind is already on where to go this weekend
+- one sentence covered it. No need for more
 
 ## ISFP
 B Rose | The Eye for Beauty | You take so long choosing that your friends want to leave, but what you choose is never wrong.
@@ -462,11 +462,11 @@ Q You walk into a café | café | 走进咖啡店
 - You take the quietest corner and stay all afternoon
 - You order the strangest thing on the menu, and love it at the first sip
 - You came for coffee. You leave having bought one of their cups
-Q A friend asks you to help pick clothes | picking clothes | 挑衣服
-- You spot the one that suits them best at a glance. They hadn't even considered it
-- You go along, thinking about what you'll paint tonight
-- You feel the fabric: "This one will be comfortable."
-- By the end you've bought three things for yourself
+Q What makes you buy something is usually | why you buy | 买东西
+- the packaging and the colour. Whether you need it comes later
+- it feels like "this is me"
+- the way it feels, smells or tastes
+- you suddenly wanted it. No reason
 Q The little shop you always go to is suddenly shut. Nothing on the door | closed shop | 小店关门
 - You take a photo of the closed door. It comes out unexpectedly beautiful
 - You're sad all day, like you've lost a secret hideout
@@ -478,11 +478,11 @@ Q Your room | your room | 你的房间
 - There's one corner that is yours alone. Nobody touches it
 - Scent, blanket, warm light. Once you lie down you're not getting up
 - You rearrange it every month to match your mood
-Q It's 2am. You are | 2am | 凌晨两点
-- Colour-grading one photo. Version twelve
-- Headphones on, dancing slowly alone in your room
-- Making hot chocolate and watching the night from the window
-- Suddenly wanting a haircut. You get one the next day
+Q Your saved posts are mostly | saved posts | 收藏夹
+- colour palettes, compositions and outfits
+- quiet places you could go alone
+- things to eat, smell and touch
+- "I should try this" ideas. You've tried very few
 
 ## ESTP
 B Classic Burnt | The Doer | You charge in before you think, but by the time others finish thinking, you're done and back.
@@ -494,11 +494,11 @@ Q A friend says: "Shall we go hiking this weekend?" | hiking | 去爬山
 - You propose an unmarked trail instead
 - You set off with nothing and buy what you need on the way
 - You check the forecast, see rain on the weekend, and move it to today
-Q You're at a party where you know nobody | strangers' party | 谁都不认识
-- Five minutes in you're helping the host move a table. Ten minutes in you're choosing the music
-- You propose a game with some risk in it
-- The room goes quiet, and one line from you rescues it
-- You've already worked out who in this crowd calls the shots
+Q While everyone's still debating whether to do it, you have already | still debating | 还在讨论
+- done half of it
+- started wondering if it could be bigger
+- decided: start now, fix problems as they come
+- worked out whether it's worth it. If not, you're out
 Q You're cycling. Halfway there, the navigation goes silent | silent sat-nav | 导航没声音
 - You stop for two seconds, fix it in three taps, and ride on
 - You switch it off and see where you end up
@@ -510,8 +510,8 @@ Q Someone tells you: "You'll never manage that." | "you can't" | 你做不到
 - You do it, and you make it harder
 - You come up with a way they hadn't thought of, on the spot
 - You work it out, agree it can't be done, and beat them a smarter way
-Q It's 2am. You are | 2am | 凌晨两点
-- Just home. Today was a good one
-- Deciding with friends to go somewhere none of you have been
-- At a party that started out of nowhere, having the best time of anyone
-- Asleep. There's real work tomorrow
+Q The thing you're worst at is | worst at | 不擅长的事
+- sitting and waiting
+- taking the route everyone else takes
+- preparing what to say in advance
+- pretending something pointless is useful

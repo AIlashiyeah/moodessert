@@ -57,6 +57,26 @@ const NATURE = {
   ISFJ: ["一圈酥皮把里面护得好好的，端上来永远是热的", "a ring of pastry guards the centre, and it always arrives warm"],
 };
 
+// "Goes best with": the popular opposite-pair lore (INTJ-ENFP, INFJ-ENTP, ...), shown as a second dessert.
+const MATCH = {
+  INTJ: ["ENFP", "浓度这么高的你，需要一个把彩色撒得到处都是的甜甜圈。", "Someone this concentrated needs a donut that scatters colour everywhere."],
+  ENFP: ["INTJ", "你的点子满天飞，需要一块沉得住、苦得清醒的黑巧挞帮你落地。", "Your ideas fly everywhere. You need a dark chocolate tart, steady and clear-headed, to land them."],
+  INFJ: ["ENTP", "你想得太深、说得太少，需要一块每一层都敢聊的提拉米苏。", "You think deep and say little. You need a tiramisu that will talk through every layer."],
+  ENTP: ["INFJ", "你的话停不下来，需要一块安静、层数多到够你拆的法式千层。", "You never stop talking. You need a mille-feuille: quiet, with enough layers to keep you busy."],
+  INTP: ["ENTJ", "你想明白了却懒得动，需要一块层层到位、说做就做的歌剧院蛋糕。", "You've worked it all out and not moved. You need an opera cake that gets every layer done."],
+  ENTJ: ["INTP", "你一路往前冲，需要一杯冷静、总会问“为什么”的咖啡冻。", "You charge ahead. You need a coffee jelly, cool-headed and always asking why."],
+  INFP: ["ENFJ", "你心里的话总说不出口，需要一块会把最好的草莓递给你的草莓蛋糕。", "You can't say what's in your heart. You need a shortcake that hands you its best strawberry."],
+  ENFJ: ["INFP", "你一直在照顾别人，需要一个轻轻的舒芙蕾，让你也被小心对待一次。", "You're always looking after others. You need a soufflé, so someone handles you with care for once."],
+  ISTJ: ["ESFP", "你什么都排得好好的，需要一碗说来就来、热热闹闹的芒果绵绵冰。", "Everything of yours is planned. You need a mango bingsu that just shows up, loud and fun."],
+  ESFP: ["ISTJ", "你玩起来太疯，需要一块底子厚、从不出错的纽约芝士蛋糕托住你。", "You go all out. You need a New York cheesecake, thick-based and unfailing, to hold you up."],
+  ISFJ: ["ESTP", "你总是小心翼翼，需要一块敢把自己烤焦的巴斯克带你出去闯。", "You're always careful. You need a Basque cheesecake, burnt on purpose, to drag you out."],
+  ESTP: ["ISFJ", "你冲得太快，需要一个永远热着等你回来的蛋挞。", "You move too fast. You need an egg tart that's still warm when you come back."],
+  ISTP: ["ESFJ", "你话少又爱独处，需要一个一掰开全是关心的奶油泡芙。", "You're quiet and like your own company. You need a cream puff that's all care once it opens."],
+  ESFJ: ["ISTP", "你操心所有人，需要一个稳稳当当、话不多但靠得住的焦糖布丁。", "You worry about everyone. You need a crème caramel: steady, few words, dependable."],
+  ISFP: ["ESTJ", "你跟着感觉走，需要一块方方正正、陪你把事办成的布朗尼。", "You follow your feelings. You need a brownie, square and solid, to get things done with you."],
+  ESTJ: ["ISFP", "你把一切都安排好了，需要一颗提醒你“好看也很重要”的马卡龙。", "You've organised everything. You need a macaron to remind you that beauty matters too."],
+};
+
 const die = (m) => { console.error("build-quiz: " + m); process.exit(1); };
 const sections = (doc) => doc.split(/^## /m).slice(1).map((s) => { const [head, ...rest] = s.split("\n"); return { type: head.trim().slice(0, 4), head: head.trim(), lines: rest.map((l) => l.trim()).filter(Boolean) }; });
 
@@ -104,6 +124,7 @@ for (const d of desserts) {
     dessert: DESSERT[T][0],
     name: { zh: d.name.zh, en: DESSERT[T][1] },
     nature: { zh: NATURE[T][0], en: NATURE[T][1] },
+    match: { type: MATCH[T][0], line: { zh: MATCH[T][1], en: MATCH[T][2] } },
     rarity: d.rarity,
     rarity_line: d.rarity_line,
     branches: z.branches.map((b, i) => {
@@ -128,5 +149,6 @@ for (const d of desserts) {
   if (out.types[T].questions.filter((q) => q.twist).length !== 1) die(`${T}: need exactly 1 twist`);
 }
 if (Object.keys(out.types).length !== 16) die("need 16 types");
+for (const T in out.types) if (out.types[out.types[T].match.type].match.type !== T) die(`${T}: match must be mutual`);
 fs.writeFileSync("quiz.json", JSON.stringify(out));
 console.log("quiz.json:", Object.keys(out.types).length, "types,", fs.statSync("quiz.json").size, "bytes");
