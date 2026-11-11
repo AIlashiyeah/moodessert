@@ -14,22 +14,22 @@ Q You've been lost in the IKEA showroom maze for two hours | IKEA maze | 宜家�
 - You're doing the maths: wages lost, deliveries missed, and, based on that glass of water, the exact time you'll need a toilet
 - You call a friend to rant, and by the time you hang up you've moved from IKEA to the failure of modern city planning
 - You quietly wipe a booger under the showroom sofa
-Q Someone in the group chat earnestly forwards: "Goldfish only have a 7-second memory" | 7-second goldfish | 金鱼七秒
-- You track down the original source, and the content farm that made it up in the first place
-- You screenshot it into another group chat: "Someone in the other chat believes this"
-- You start wondering: if it really is 7 seconds, the tank is a brand-new world every day. Is the fish happier than me?
-- You don't correct it. You add an even wilder "fact" and count how many people buy it
+Q You have a deadline. You're doing something else. What you're doing is | dodging a deadline | 躲 deadline
+- Chasing a question that has nothing to do with the assignment. Twenty-odd tabs open, and the more you read the more it has to be settled
+- Jotting down a new idea "just quickly". It is now a full page
+- Re-planning the most efficient way to do the task. The planning has taken longer than the task would have
+- Investigating whether the deadline is even real: what happens if it's late, and whether that's negotiable
 Q The lift suddenly stops. It stays stopped. Then the lights go out | dead lift | 电梯停了
 - Torch on, and you film yourself first: "Lift stuck, minute zero. For the record."
 - You estimate the oxygen from the headcount and the size of the lift, find there's plenty, and feel slightly let down
 - You debate the stranger next to you: alarm button first, or phone call first?
 - You press every button, including the keyhole thing nobody understands
 T Turns out you never pressed a floor. The lights just went into power-saving mode.
-Q It's 2am. You are | 2am | 凌晨两点
-- In a comment section asking someone for their source, until they run out of answers and block you
-- Recording a "me at 2am" voice-over to post tomorrow
-- Planning a startup you will never build. The logo is done
-- Sending the family chat an emoji-only riddle, to see who cracks it by morning
+Q This is the state of your phone right now | your phone | 你的手机
+- A row of browser tabs, every one of them something you're going to "get to the bottom of later"
+- Dozens of one-line ideas in your notes app. Some you can no longer decode
+- Folders you've reorganised several times. You're not happy with this version either
+- Hidden settings in several apps that you dug out and changed, just to see what would happen
 Q You've been dragged to a painfully boring talk | boring talk | 无聊讲座
 - Hand up, again and again, until the speaker starts flipping through their own slides for answers
 - You secretly film a few clips to cut into a review video at home
