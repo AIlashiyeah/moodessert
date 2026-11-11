@@ -37,6 +37,26 @@ const PALETTES = {
   ESTP: [_, [_, "#F4E7AE", "#B98A3A"], [_, "#CDE27C", "#9C9A3C"], [_, "#5A3524", "#3A2015"]],                                                     // basque: burnt top, custard, caramel
 };
 
+// What each dessert is physically like, in the words the result card uses to explain "why this one".
+const NATURE = {
+  INFJ: ["看着安静，里面一层叠着一层", "quiet on the outside, layer upon layer inside"],
+  ENTJ: ["每一层都摆得整整齐齐，没有一层是多余的", "every layer in line, and not one of them wasted"],
+  INTJ: ["不靠甜讨好谁，苦得干净利落", "it never sweetens itself to please anyone; the bitterness is clean and exact"],
+  ENFJ: ["最好的那颗草莓，永远放在最上面给别人", "the best strawberry always goes on top, for someone else"],
+  ENTP: ["一层一层浸到底，甜的下面藏着苦和酒", "soaked through layer by layer, with bitter and boozy under the sweet"],
+  INTP: ["冷冷的、透透的，一戳就晃，自己待着就很好", "cool and clear, wobbles when poked, perfectly fine on its own"],
+  ESTP: ["故意烤焦、不守规矩，切开却是最软的", "burnt on purpose, breaks the rules, and softest of all once you cut in"],
+  INFP: ["轻得像一口气，却是最难做成的那一个", "light as a breath, and the hardest one to get right"],
+  ISTP: ["稳稳地立着，晃一下又回到原位", "it stands steady: give it a shake and it settles right back"],
+  ENFP: ["把彩色全撒在外面，谁路过都想伸手", "all its colour is on the outside, and nobody walks past without reaching for one"],
+  ESFP: ["堆得高高的，要趁热闹大家一起吃", "piled high, and meant to be shared right now while everyone's here"],
+  ESTJ: ["方方正正、实打实，一口就知道分量", "square and solid: one bite and you know its weight"],
+  ISFP: ["颜色挑得刚刚好，壳很薄，里面很软", "the colour is chosen exactly right; thin shell, soft centre"],
+  ISTJ: ["底子打得厚，配方几十年不改，从不出错", "a thick base, a recipe unchanged for decades, and it never fails"],
+  ESFJ: ["一掰开，里面满满的都是给别人的奶油", "break it open and it's full of cream, all of it for other people"],
+  ISFJ: ["一圈酥皮把里面护得好好的，端上来永远是热的", "a ring of pastry guards the centre, and it always arrives warm"],
+};
+
 const die = (m) => { console.error("build-quiz: " + m); process.exit(1); };
 const sections = (doc) => doc.split(/^## /m).slice(1).map((s) => { const [head, ...rest] = s.split("\n"); return { type: head.trim().slice(0, 4), head: head.trim(), lines: rest.map((l) => l.trim()).filter(Boolean) }; });
 
@@ -83,6 +103,7 @@ for (const d of desserts) {
   out.types[T] = {
     dessert: DESSERT[T][0],
     name: { zh: d.name.zh, en: DESSERT[T][1] },
+    nature: { zh: NATURE[T][0], en: NATURE[T][1] },
     rarity: d.rarity,
     rarity_line: d.rarity_line,
     branches: z.branches.map((b, i) => {

@@ -117,7 +117,7 @@ const T = {
     guessHint: "No problem. Four quick taps and we'll find your dessert.",
     signQ: "Second ingredient: your star sign", signHint: "It decides the texture of your dessert.", skip: "Skip",
     own: "None of these. I'll write my own", ownPh: "What would you actually do?", ownOk: "That's me",
-    baking: "Preheating the oven…", flavour: "flavour", drive: "What drives you", pull: "Your contradiction", also: (f, n) => `Mostly this, with a streak of ${f}: ${n}.`,
+    baking: "Preheating the oven…", flavour: "flavour", why: "Why this dessert", whyT: (q, d, n) => `You chose "${q}". That is ${d} all over: ${n}.`, drive: "What drives you", pull: "Your contradiction", also: (f, n) => `Mostly this, with a streak of ${f}: ${n}.`,
     share: "Send to a friend", copied: "Link copied. Send it to a friend.", copyFail: "Copy the link from your address bar.", again: "Try another flavour",
     shareText: (f, d, b) => `I'm a ${f} ${d}: ${b}. Which dessert are you?`, loadFail: "Couldn't load the quiz. Refresh to try again." },
   zh: { note: "GenHacks Open 2026 参赛作品。图个开心：这是对五个回答的解读，不是心理测评。",
@@ -127,7 +127,7 @@ const T = {
     guessHint: "没关系，点四下，我们帮你找到你的甜点。",
     signQ: "第二样原料：你的星座", signHint: "它决定这块甜点的口感。", skip: "跳过",
     own: "都不像我，我自己写一句", ownPh: "换成你，你会怎么做？", ownOk: "就这个",
-    baking: "烤箱预热中…", flavour: "口味", drive: "你在乎的", pull: "你的反差", also: (f, n) => `主味之外，你还藏着一点${f}：${n}。`,
+    baking: "烤箱预热中…", flavour: "口味", why: "为什么是这块", whyT: (q, d, n) => `你选了“${q}”。${d}就是这样：${n}。`, drive: "你在乎的", pull: "你的反差", also: (f, n) => `主味之外，你还藏着一点${f}：${n}。`,
     share: "发给朋友测一测", copied: "链接已复制，发给朋友吧。", copyFail: "请从地址栏复制链接。", again: "换个口味再测",
     shareText: (f, d, b) => `我是一块${f}${d}：${b}。你是哪块甜点？`, loadFail: "题库没加载出来，刷新再试一次。" },
 };
@@ -276,15 +276,17 @@ async function finish() {
     const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 9500);
     const r = await fetch("/api/judge", {
       method: "POST", headers: { "Content-Type": "application/json" }, signal: ctl.signal,
-      body: JSON.stringify({ mbti: st.type, mbti_known: !st.guessed, sign: sg ? sg[1] : null, dessert: L(ty.name), lang,
+      body: JSON.stringify({ mbti: st.type, mbti_known: !st.guessed, sign: sg ? sg[1] : null, dessert: L(ty.name), nature: L(ty.nature), lang,
         branches: ty.branches.map((b) => `${L(b.flavour)} · ${L(b.name)}`),
         picks: ty.questions.map((q, i) => { const k = st.picks[i]; return typeof k === "string" ? { q: L(q.q), a: k, own: true } : { q: L(q.q), a: L(q.options[k]), branch: q.options[k].b }; }) }),
     });
     clearTimeout(to);
-    if (r.ok) { const j = await r.json(); if (j.personal_line) res.line = j.personal_line; if (j.core) res.core = j.core; if (j.tension) res.tension = j.tension; if (j.keywords && j.keywords.length >= 3) res.words = j.keywords; if (Array.isArray(j.own_votes)) res.ownVotes = j.own_votes; }
+    if (r.ok) { const j = await r.json(); if (j.personal_line) res.line = j.personal_line; if (j.why) res.why = j.why; if (j.core) res.core = j.core; if (j.tension) res.tension = j.tension; if (j.keywords && j.keywords.length >= 3) res.words = j.keywords; if (Array.isArray(j.own_votes)) res.ownVotes = j.own_votes; }
   } catch (e) { /* the card falls back to the branch's own line */ }
   if (st.screen !== "baking") return;
   const bo = branchOf(st.type, st.picks, res.ownVotes); res.branch = bo.best; res.second = bo.second;
+  const qs = ty.questions;
+  for (let i = st.picks.length - 1; i >= 0; i--) if (typeof st.picks[i] !== "string" && qs[i].options[st.picks[i]].b === res.branch) { res.quoteQ = i; break; }
   if (!res.words) res.words = ty.questions.map((q, i) => (typeof st.picks[i] === "string" ? st.picks[i].slice(0, 8) : L(q.tag))).concat(L(ty.branches[res.branch].flavour));
   st.result = res; st.shown = false; st.screen = "result"; render();
 }
@@ -292,6 +294,11 @@ async function finish() {
 function showResult() {
   const ty = QUIZ.types[st.type], r = st.result, br = ty.branches[r.branch], tx = textureOf(st.sign);
   const ai = r.lang === lang, sec = r.second >= 0 ? ty.branches[r.second] : null;
+  // "Why this dessert": the AI's sentence, or a template that quotes the answer which decided the flavour
+  const short = (x, n) => { const y = String(x).split(/[，,：:。；;]|\. /)[0].trim(); return y.length > n ? y.slice(0, n) + "…" : y; };
+  const ownQuote = st.picks.find((k) => typeof k === "string");
+  const q0 = r.quoteQ != null ? L(ty.questions[r.quoteQ].options[st.picks[r.quoteQ]]) : ownQuote;
+  const why = ai && r.why ? r.why : q0 ? t("whyT")(short(q0, lang === "zh" ? 18 : 60), L(ty.name), L(ty.nature)) : "";
   const reading = ai && (r.core || r.tension)
     ? `${r.core ? `<p class="callout"><small>${t("drive")}</small>${esc(r.core)}</p>` : ""}${r.tension ? `<p class="callout"><small>${t("pull")}</small>${esc(r.tension)}</p>` : ""}`
     : sec ? `<p class="callout">${esc(t("also")(L(sec.flavour), L(sec.name)))}</p>` : "";
@@ -301,6 +308,7 @@ function showResult() {
         <span class="rare">${esc(L(ty.rarity_line))}</span>
         <h2>${esc(L(ty.name))}</h2>
         <div class="chips"><span class="hot">${esc(L(br.flavour))}${lang === "zh" ? t("flavour") : " " + t("flavour")}</span>${tx ? `<span>${esc(L(tx))}</span>` : ""}<span>${esc(L(br.name))}</span></div>
+        ${why ? `<p class="callout"><small>${t("why")}</small>${esc(why)}</p>` : ""}
         ${ai && r.line && (r.core || r.tension) ? `${reading}<p class="praise">${esc(r.line)}</p>` : `<p class="praise">${esc(ai && r.line ? r.line : L(br.line))}</p>${reading}`}
       </div></div>
     <div class="stack" id="acts" hidden>
