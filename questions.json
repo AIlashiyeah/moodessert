@@ -1,0 +1,267 @@
+{
+  "version": "m2-draft-1",
+  "draw_rule": {
+    "mc_per_dimension": 2,
+    "open": 2,
+    "note": "每次随机抽 8 道点选（EI/SN/TF/JP 各 2 道）+ 2 道开放题，共 10 题"
+  },
+  "mc": [
+    {"id": "EI01", "dim": "EI",
+     "zh": "朋友临时发消息：今晚出来吃饭？", "en": "A friend texts last-minute: \"Dinner tonight?\"",
+     "options": [
+       {"pole": "E", "zh": "已经在挑衣服了", "en": "Already picking an outfit"},
+       {"pole": "I", "zh": "假装还没看到", "en": "Pretend I haven't seen it yet"}]},
+    {"id": "EI02", "dim": "EI",
+     "zh": "电梯里遇到半熟的同学", "en": "You share a lift with a classmate you half-know",
+     "options": [
+       {"pole": "E", "zh": "聊到出电梯都没聊完", "en": "We're still chatting after the doors open"},
+       {"pole": "I", "zh": "突然对手机里的天气预报很感兴趣", "en": "Suddenly fascinated by the weather app"}]},
+    {"id": "EI03", "dim": "EI",
+     "zh": "周末怎么充电？", "en": "How do you recharge on weekends?",
+     "options": [
+       {"pole": "E", "zh": "约一桌人吃火锅", "en": "Hotpot with a full table of friends"},
+       {"pole": "I", "zh": "关灯、拉窗帘、谁也别找我", "en": "Lights off, curtains shut, nobody find me"}]},
+    {"id": "EI04", "dim": "EI",
+     "zh": "小组群里一片安静", "en": "The group chat has gone completely silent",
+     "options": [
+       {"pole": "E", "zh": "我先开口打破沉默", "en": "I break the silence first"},
+       {"pole": "I", "zh": "等别人开口，我再点个赞", "en": "Wait for someone else, then react with a thumbs-up"}]},
+    {"id": "EI05", "dim": "EI",
+     "zh": "生日派对上你只认识寿星", "en": "At a birthday party, you only know the host",
+     "options": [
+       {"pole": "E", "zh": "半小时后认识了一半的人", "en": "Half an hour later I know half the room"},
+       {"pole": "I", "zh": "和寿星家的猫成了好朋友", "en": "I'm best friends with the host's cat"}]},
+    {"id": "EI06", "dim": "EI",
+     "zh": "外卖小哥打来电话", "en": "The delivery rider is calling you",
+     "options": [
+       {"pole": "E", "zh": "直接接，顺便聊两句", "en": "Pick up and chat a bit"},
+       {"pole": "I", "zh": "等它自己挂断，再回短信", "en": "Let it ring out, then text back"}]},
+    {"id": "EI07", "dim": "EI",
+     "zh": "一个人去 hawker centre 吃饭", "en": "Eating alone at a hawker centre",
+     "options": [
+       {"pole": "E", "zh": "无所谓，还能跟 auntie 聊天", "en": "No problem, I'll chat with the auntie"},
+       {"pole": "I", "zh": "戴上耳机，假装在开很重要的会", "en": "Earphones in, pretending I'm on an important call"}]},
+    {"id": "EI08", "dim": "EI",
+     "zh": "旁边有人大声打电话", "en": "Someone next to you is on a loud phone call",
+     "options": [
+       {"pole": "E", "zh": "已经听懂剧情，还想插一句", "en": "I've followed the plot and want to weigh in"},
+       {"pole": "I", "zh": "默默挪远两个座位", "en": "Quietly move two seats away"}]},
+    {"id": "EI09", "dim": "EI",
+     "zh": "你理想的假期", "en": "Your ideal holiday",
+     "options": [
+       {"pole": "E", "zh": "青旅、新朋友、每晚都有局", "en": "Hostel, new friends, plans every night"},
+       {"pole": "I", "zh": "民宿、一个人、整天不说话", "en": "Quiet rental, solo, not a word all day"}]},
+    {"id": "EI10", "dim": "EI",
+     "zh": "老师问：有谁想分享一下？", "en": "The teacher asks: \"Anyone want to share?\"",
+     "options": [
+       {"pole": "E", "zh": "手已经举起来了", "en": "My hand is already up"},
+       {"pole": "I", "zh": "低头研究笔的构造", "en": "Deeply studying how my pen works"}]},
+    {"id": "EI11", "dim": "EI",
+     "zh": "语音还是打字？", "en": "Voice note or typing?",
+     "options": [
+       {"pole": "E", "zh": "能发语音绝不打字", "en": "Voice notes, always"},
+       {"pole": "I", "zh": "能打字绝不发语音", "en": "Typing, always. Voice notes get transcribed"}]},
+    {"id": "EI12", "dim": "EI",
+     "zh": "聚会结束后", "en": "After a party ends",
+     "options": [
+       {"pole": "E", "zh": "还想续摊", "en": "Where's the after-party?"},
+       {"pole": "I", "zh": "开始复盘自己哪句话说得尴尬", "en": "Replaying every awkward thing I said"}]},
+
+    {"id": "SN01", "dim": "SN",
+     "zh": "抬头看到一朵云", "en": "You look up and see a cloud",
+     "options": [
+       {"pole": "S", "zh": "积雨云，等下要下雨", "en": "Rain cloud. It's going to pour soon"},
+       {"pole": "N", "zh": "像一只在思考人生的鸭子", "en": "Looks like a duck questioning its life choices"}]},
+    {"id": "SN02", "dim": "SN",
+     "zh": "拼宜家家具", "en": "Assembling IKEA furniture",
+     "options": [
+       {"pole": "S", "zh": "按说明书一步一步来", "en": "Step by step, following the manual"},
+       {"pole": "N", "zh": "凭感觉装，最后剩三颗螺丝", "en": "Freestyle it, end up with three spare screws"}]},
+    {"id": "SN03", "dim": "SN",
+     "zh": "听到一首新歌", "en": "You hear a new song",
+     "options": [
+       {"pole": "S", "zh": "先听旋律好不好听", "en": "First I notice if the melody is good"},
+       {"pole": "N", "zh": "已经在脑补 MV 剧情", "en": "I'm already imagining the music video"}]},
+    {"id": "SN04", "dim": "SN",
+     "zh": "跟别人描述昨天发生的事", "en": "Telling someone about yesterday",
+     "options": [
+       {"pole": "S", "zh": "几点、在哪、吃了什么", "en": "What time, where, what I ate"},
+       {"pole": "N", "zh": "只记得那种感觉，细节全忘了", "en": "I remember the vibe, not the details"}]},
+    {"id": "SN05", "dim": "SN",
+     "zh": "选甜点先看什么？", "en": "Picking a dessert, you look at...",
+     "options": [
+       {"pole": "S", "zh": "评分和销量", "en": "Ratings and how many sold"},
+       {"pole": "N", "zh": "名字起得够不够奇怪", "en": "Whether the name is weird enough"}]},
+    {"id": "SN06", "dim": "SN",
+     "zh": "新手机到手", "en": "Your new phone just arrived",
+     "options": [
+       {"pole": "S", "zh": "先把设置一项项调好", "en": "Set up every setting one by one"},
+       {"pole": "N", "zh": "先想它能拿来做什么奇怪的事", "en": "Think of weird things I could do with it"}]},
+    {"id": "SN07", "dim": "SN",
+     "zh": "迷路了", "en": "You're lost",
+     "options": [
+       {"pole": "S", "zh": "看地图、找路牌", "en": "Check the map, find street signs"},
+       {"pole": "N", "zh": "跟着直觉走，顺便发现一家新店", "en": "Follow my gut and find a new shop on the way"}]},
+    {"id": "SN08", "dim": "SN",
+     "zh": "照着菜谱做饭", "en": "Cooking from a recipe",
+     "options": [
+       {"pole": "S", "zh": "盐 3 克就是 3 克", "en": "3g of salt means exactly 3g"},
+       {"pole": "N", "zh": "“适量”是我的人生哲学", "en": "\"To taste\" is my life philosophy"}]},
+    {"id": "SN09", "dim": "SN",
+     "zh": "读到一条新闻", "en": "You read a news story",
+     "options": [
+       {"pole": "S", "zh": "我关心发生了什么", "en": "I care about what happened"},
+       {"pole": "N", "zh": "我关心这背后意味着什么", "en": "I care about what it means"}]},
+    {"id": "SN10", "dim": "SN",
+     "zh": "凌晨两点你在想", "en": "At 2am you're thinking about",
+     "options": [
+       {"pole": "S", "zh": "明天早餐吃什么", "en": "What to eat for breakfast"},
+       {"pole": "N", "zh": "如果人类没有发明时钟会怎样", "en": "What if humans never invented clocks"}]},
+    {"id": "SN11", "dim": "SN",
+     "zh": "老师布置了一道开放题", "en": "The teacher gives an open-ended assignment",
+     "options": [
+       {"pole": "S", "zh": "能给个范例吗？", "en": "Can we get an example?"},
+       {"pole": "N", "zh": "太好了，终于可以乱写了", "en": "Finally, freedom to go wild"}]},
+    {"id": "SN12", "dim": "SN",
+     "zh": "买东西", "en": "When shopping",
+     "options": [
+       {"pole": "S", "zh": "买用过的老牌子", "en": "Stick to the brand I know"},
+       {"pole": "N", "zh": "新出的、没人试过的，我先来", "en": "Brand new and untested? I'll go first"}]},
+
+    {"id": "TF01", "dim": "TF",
+     "zh": "朋友考砸了来找你", "en": "A friend bombed an exam and comes to you",
+     "options": [
+       {"pole": "T", "zh": "先帮他分析错在哪", "en": "Help them figure out what went wrong"},
+       {"pole": "F", "zh": "先递纸巾，分析明天再说", "en": "Tissues first, analysis tomorrow"}]},
+    {"id": "TF02", "dim": "TF",
+     "zh": "小组作业有人没交", "en": "A groupmate didn't submit their part",
+     "options": [
+       {"pole": "T", "zh": "直接在群里点名", "en": "Call it out in the group chat"},
+       {"pole": "F", "zh": "私聊问他是不是遇到什么事", "en": "Message them privately to check they're okay"}]},
+    {"id": "TF03", "dim": "TF",
+     "zh": "和别人争论时你更在意", "en": "In an argument, you care more about",
+     "options": [
+       {"pole": "T", "zh": "谁是对的", "en": "Who's right"},
+       {"pole": "F", "zh": "关系有没有受伤", "en": "Whether the friendship is okay"}]},
+    {"id": "TF04", "dim": "TF",
+     "zh": "朋友兴奋地给你看创业点子，但你觉得不行", "en": "A friend excitedly pitches a startup idea you think won't work",
+     "options": [
+       {"pole": "T", "zh": "直接说哪里不行", "en": "Tell them exactly why it won't work"},
+       {"pole": "F", "zh": "先夸亮点，再委婉提一点", "en": "Praise the good parts, then gently raise one concern"}]},
+    {"id": "TF05", "dim": "TF",
+     "zh": "一部电影最打动你的是", "en": "What moves you most in a film",
+     "options": [
+       {"pole": "T", "zh": "剧情逻辑严丝合缝", "en": "A plot with zero holes"},
+       {"pole": "F", "zh": "某个角色的一句台词", "en": "One line from one character"}]},
+    {"id": "TF06", "dim": "TF",
+     "zh": "做决定靠什么？", "en": "How do you make decisions?",
+     "options": [
+       {"pole": "T", "zh": "列优缺点表", "en": "A pros and cons list"},
+       {"pole": "F", "zh": "问自己：我会开心吗", "en": "Ask myself: will this make me happy?"}]},
+    {"id": "TF07", "dim": "TF",
+     "zh": "室友用了你的洗发水没说", "en": "Your roommate used your shampoo without asking",
+     "options": [
+       {"pole": "T", "zh": "算一下用了多少，准备 AA", "en": "Calculate how much and split the cost"},
+       {"pole": "F", "zh": "算了，下次他也会借我", "en": "It's fine, they'll lend me stuff too"}]},
+    {"id": "TF08", "dim": "TF",
+     "zh": "有人说你太直了", "en": "Someone says you're too blunt",
+     "options": [
+       {"pole": "T", "zh": "我只是在说事实", "en": "I'm just stating facts"},
+       {"pole": "F", "zh": "开始反省是不是伤到人了", "en": "Start wondering if I hurt someone"}]},
+    {"id": "TF09", "dim": "TF",
+     "zh": "挑礼物", "en": "Choosing a gift",
+     "options": [
+       {"pole": "T", "zh": "实用，对方真的用得上", "en": "Practical, something they'll actually use"},
+       {"pole": "F", "zh": "有纪念意义，能让对方感动到哭", "en": "Meaningful enough to make them cry"}]},
+    {"id": "TF10", "dim": "TF",
+     "zh": "你的手机备忘录里大多是", "en": "Your phone's notes app is mostly",
+     "options": [
+       {"pole": "T", "zh": "待办清单和数字", "en": "To-do lists and numbers"},
+       {"pole": "F", "zh": "一句戳中你的话", "en": "A line that hit me somewhere"}]},
+    {"id": "TF11", "dim": "TF",
+     "zh": "路上看到一只流浪猫", "en": "You spot a stray cat",
+     "options": [
+       {"pole": "T", "zh": "先想它会不会咬人", "en": "First thought: does it bite?"},
+       {"pole": "F", "zh": "已经在给它起名字了", "en": "I've already named it"}]},
+    {"id": "TF12", "dim": "TF",
+     "zh": "别人夸你", "en": "Someone compliments you",
+     "options": [
+       {"pole": "T", "zh": "想想夸得有没有道理", "en": "Check whether the compliment is accurate"},
+       {"pole": "F", "zh": "开心一整天", "en": "Happy for the whole day"}]},
+
+    {"id": "JP01", "dim": "JP",
+     "zh": "旅行出发前", "en": "Before a trip",
+     "options": [
+       {"pole": "J", "zh": "Excel 行程精确到分钟", "en": "Spreadsheet itinerary down to the minute"},
+       {"pole": "P", "zh": "机票买了，其他到了再说", "en": "Flights booked, figure out the rest there"}]},
+    {"id": "JP02", "dim": "JP",
+     "zh": "你的电脑桌面", "en": "Your computer desktop",
+     "options": [
+       {"pole": "J", "zh": "文件夹分门别类", "en": "Everything sorted into folders"},
+       {"pole": "P", "zh": "东西都在，只有我知道在哪", "en": "It's all there, only I know where"}]},
+    {"id": "JP03", "dim": "JP",
+     "zh": "作业截止前一周", "en": "One week before the deadline",
+     "options": [
+       {"pole": "J", "zh": "已经交了", "en": "Already submitted"},
+       {"pole": "P", "zh": "还不知道题目是什么", "en": "Still don't know what the topic is"}]},
+    {"id": "JP04", "dim": "JP",
+     "zh": "去超市", "en": "Going to the supermarket",
+     "options": [
+       {"pole": "J", "zh": "带着清单，买完就走", "en": "List in hand, in and out"},
+       {"pole": "P", "zh": "进去买牛奶，出来拎了一袋零食", "en": "Went in for milk, left with a bag of snacks"}]},
+    {"id": "JP05", "dim": "JP",
+     "zh": "计划被临时改了", "en": "Your plans change last-minute",
+     "options": [
+       {"pole": "J", "zh": "有点烦，要重新排", "en": "Annoyed, need to re-plan"},
+       {"pole": "P", "zh": "刺激，正好", "en": "Exciting, even better"}]},
+    {"id": "JP06", "dim": "JP",
+     "zh": "你的闹钟", "en": "Your alarm setup",
+     "options": [
+       {"pole": "J", "zh": "一个，准时起", "en": "One alarm, up on time"},
+       {"pole": "P", "zh": "七个，每五分钟一个", "en": "Seven alarms, five minutes apart"}]},
+    {"id": "JP07", "dim": "JP",
+     "zh": "点菜", "en": "Ordering food",
+     "options": [
+       {"pole": "J", "zh": "每次都点同一家同一道", "en": "Same place, same dish, every time"},
+       {"pole": "P", "zh": "看到新的都想试", "en": "Anything new, I want to try"}]},
+    {"id": "JP08", "dim": "JP",
+     "zh": "你的衣柜", "en": "Your wardrobe",
+     "options": [
+       {"pole": "J", "zh": "按颜色和季节排好", "en": "Sorted by colour and season"},
+       {"pole": "P", "zh": "椅子才是我真正的衣柜", "en": "The chair is my real wardrobe"}]},
+    {"id": "JP09", "dim": "JP",
+     "zh": "追剧", "en": "Watching a series",
+     "options": [
+       {"pole": "J", "zh": "一集一集按顺序看完", "en": "Episode by episode, in order"},
+       {"pole": "P", "zh": "先看结局再决定看不看", "en": "Watch the ending first, then decide"}]},
+    {"id": "JP10", "dim": "JP",
+     "zh": "收到消息", "en": "When messages come in",
+     "options": [
+       {"pole": "J", "zh": "马上回，清空红点", "en": "Reply right away, clear every badge"},
+       {"pole": "P", "zh": "999+ 红点，和平共处", "en": "999+ unread, we live in peace"}]},
+    {"id": "JP11", "dim": "JP",
+     "zh": "周末要干嘛？", "en": "Weekend plans?",
+     "options": [
+       {"pole": "J", "zh": "早就定好了", "en": "Decided days ago"},
+       {"pole": "P", "zh": "醒来再说", "en": "I'll decide when I wake up"}]},
+    {"id": "JP12", "dim": "JP",
+     "zh": "开始写作业", "en": "Starting an essay",
+     "options": [
+       {"pole": "J", "zh": "先列大纲", "en": "Outline first"},
+       {"pole": "P", "zh": "先写最想写的那段", "en": "Write the fun part first"}]}
+  ],
+  "open": [
+    {"id": "OP01", "zh": "凌晨两点的你，通常在干嘛？", "en": "What are you usually doing at 2am?", "probes": ["EI", "JP"]},
+    {"id": "OP02", "zh": "你的手机屏保是什么？", "en": "What's your phone wallpaper?", "probes": ["SN", "TF"]},
+    {"id": "OP03", "zh": "如果你的冰箱会说话，它会怎么吐槽你？", "en": "If your fridge could talk, how would it roast you?", "probes": ["JP", "SN"]},
+    {"id": "OP04", "zh": "你最近一次心想“我为什么要这样”，是因为什么？", "en": "The last time you thought \"why am I like this\", what happened?", "probes": ["TF", "JP"]},
+    {"id": "OP05", "zh": "用三个词形容你的周末。", "en": "Describe your weekend in three words.", "probes": ["EI", "SN"]},
+    {"id": "OP06", "zh": "你有什么别人觉得奇怪、你却一直坚持的小习惯？", "en": "What's a habit others find weird but you'll never quit?", "probes": ["SN", "JP"]},
+    {"id": "OP07", "zh": "朋友最常对你说的一句话是什么？", "en": "What do your friends say to you most often?", "probes": ["EI", "TF"]},
+    {"id": "OP08", "zh": "给你一整天完全空白的时间，你会做什么？", "en": "You get one completely empty day. What do you do?", "probes": ["EI", "JP"]},
+    {"id": "OP09", "zh": "你最近一次熬夜是为了什么？", "en": "What did you last stay up late for?", "probes": ["JP", "SN"]},
+    {"id": "OP10", "zh": "你愿意为什么东西排队一小时？", "en": "What would you queue an hour for?", "probes": ["SN", "TF"]},
+    {"id": "OP11", "zh": "你在群聊里通常是什么角色？", "en": "What's your role in the group chat?", "probes": ["EI", "TF"]},
+    {"id": "OP12", "zh": "最近什么小事让你开心了一整天？", "en": "What small thing made your whole day recently?", "probes": ["TF", "EI"]}
+  ]
+}

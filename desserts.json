@@ -1,0 +1,455 @@
+{
+ "version": "m2-draft-2",
+ "rarity_source": "MBTI Manual US sample (horkan.com/?p=2434)",
+ "rarity_rule": "rarity <= 3.3 用 rare 句式；其余用 common 句式，换角度夸，不说普通",
+ "desserts": [
+  {
+   "mbti": "INFJ",
+   "rarity": 1.5,
+   "name": {
+    "zh": "法式千层",
+    "en": "Mille-feuille"
+   },
+   "praise": {
+    "zh": "一千层心事叠得整整齐齐，不说话也镇得住场。",
+    "en": "A thousand neat layers of thought. Quiet, and still the heaviest thing on the table."
+   },
+   "poke": {
+    "zh": "别人回你一个“哦”，你能复盘到天亮。",
+    "en": "Someone texts \"k\" and you replay it till sunrise."
+   },
+   "rarity_line": {
+    "zh": "全世界只有 1.5% 的人是这块千层。",
+    "en": "Only 1.5% of people are this mille-feuille."
+   },
+   "particle": {
+    "shape": "stacked-layers",
+    "palette": [
+     "#F3E3C3",
+     "#C8935A",
+     "#FFF8EC"
+    ]
+   }
+  },
+  {
+   "mbti": "ENTJ",
+   "rarity": 1.8,
+   "name": {
+    "zh": "歌剧院蛋糕",
+    "en": "Opera cake"
+   },
+   "praise": {
+    "zh": "层层精准，一上桌就是今晚的主角。",
+    "en": "Precise to the last layer. The moment you land, you're the main event."
+   },
+   "poke": {
+    "zh": "聚餐切蛋糕，你都想先排个甘特图。",
+    "en": "You'd make a Gantt chart for cutting the cake."
+   },
+   "rarity_line": {
+    "zh": "全世界只有 1.8% 的人能撑起这块歌剧院。",
+    "en": "Only 1.8% of people can carry an opera cake."
+   },
+   "particle": {
+    "shape": "rectangle-layers",
+    "palette": [
+     "#2B1A12",
+     "#6B4226",
+     "#C9A227"
+    ]
+   }
+  },
+  {
+   "mbti": "INTJ",
+   "rarity": 2.1,
+   "name": {
+    "zh": "黑巧克力挞",
+    "en": "Dark chocolate tart"
+   },
+   "praise": {
+    "zh": "浓度拉满，走一步已经算好后面十步。",
+    "en": "Full-strength dark chocolate. Ten moves ahead before anyone takes a bite."
+   },
+   "poke": {
+    "zh": "谁动你的配方，你能记他三个学期。",
+    "en": "Touch your recipe and you'll remember it for three semesters."
+   },
+   "rarity_line": {
+    "zh": "全世界只有 2.1% 的人是这块黑巧挞。",
+    "en": "Only 2.1% of people are this dark chocolate tart."
+   },
+   "particle": {
+    "shape": "round-tart",
+    "palette": [
+     "#1E120C",
+     "#4A2C1D",
+     "#D9B38C"
+    ]
+   }
+  },
+  {
+   "mbti": "ENFJ",
+   "rarity": 2.5,
+   "name": {
+    "zh": "草莓奶油蛋糕",
+    "en": "Strawberry shortcake"
+   },
+   "praise": {
+    "zh": "行走的情绪价值，有你的局从不冷场。",
+    "en": "Walking good vibes. No party goes cold when you're there."
+   },
+   "poke": {
+    "zh": "操心全场开不开心，散场比主办还累。",
+    "en": "You check everyone's having fun, then go home more tired than the host."
+   },
+   "rarity_line": {
+    "zh": "全世界只有 2.5% 的人是这块草莓蛋糕。",
+    "en": "Only 2.5% of people are this strawberry shortcake."
+   },
+   "particle": {
+    "shape": "round-cake-berries",
+    "palette": [
+     "#FFF5F0",
+     "#E63946",
+     "#F4C2C2"
+    ]
+   }
+  },
+  {
+   "mbti": "ENTP",
+   "rarity": 3.2,
+   "name": {
+    "zh": "提拉米苏",
+    "en": "Tiramisu"
+   },
+   "praise": {
+    "zh": "又野又有梗，甜里带苦，还有点酒劲。",
+    "en": "Wild, witty, sweet with a bitter kick and a little booze."
+   },
+   "poke": {
+    "zh": "凌晨两点不睡，在评论区跟陌生人较真。",
+    "en": "2am, still arguing with a stranger in the comments. For fun."
+   },
+   "rarity_line": {
+    "zh": "全世界只有 3.2% 的人是这杯提拉米苏。",
+    "en": "Only 3.2% of people are this tiramisu."
+   },
+   "particle": {
+    "shape": "cup-layers-cocoa",
+    "palette": [
+     "#3B2416",
+     "#F5E6D3",
+     "#8B5A3C"
+    ]
+   }
+  },
+  {
+   "mbti": "INTP",
+   "rarity": 3.3,
+   "name": {
+    "zh": "咖啡冻",
+    "en": "Coffee jelly"
+   },
+   "praise": {
+    "zh": "脑子八百马力，冷笑话一刀切中要害。",
+    "en": "A brain on overdrive, and deadpan jokes that hit dead center."
+   },
+   "poke": {
+    "zh": "消息在脑子里回过了，手机里没有。",
+    "en": "You replied in your head three days ago. Your phone never got it."
+   },
+   "rarity_line": {
+    "zh": "全世界只有 3.3% 的人是这块咖啡冻。",
+    "en": "Only 3.3% of people are this coffee jelly."
+   },
+   "particle": {
+    "shape": "cubes-in-glass",
+    "palette": [
+     "#2A1810",
+     "#5C3A21",
+     "#FFFFFF"
+    ]
+   }
+  },
+  {
+   "mbti": "ESTP",
+   "rarity": 4.3,
+   "name": {
+    "zh": "巴斯克芝士",
+    "en": "Basque burnt cheesecake"
+   },
+   "praise": {
+    "zh": "敢想敢冲，焦的那面都是你的勋章。",
+    "en": "Burnt on purpose and proud of it. First one in, every time."
+   },
+   "poke": {
+    "zh": "脑子还没开机，人已经冲进现场了。",
+    "en": "Your body's already there. Your brain is still loading."
+   },
+   "rarity_line": {
+    "zh": "100 个人里只有 4 个是这块巴斯克，懂的人都在抢。",
+    "en": "Only 4 in 100 people are this Basque. The ones who know, fight for it."
+   },
+   "particle": {
+    "shape": "wedge-burnt-top",
+    "palette": [
+     "#3D2314",
+     "#E8C07D",
+     "#FFF3DC"
+    ]
+   }
+  },
+  {
+   "mbti": "INFP",
+   "rarity": 4.4,
+   "name": {
+    "zh": "舒芙蕾",
+    "en": "Soufflé"
+   },
+   "praise": {
+    "zh": "像云朵写的情诗，脑内自带一整个宇宙。",
+    "en": "A love letter written in clouds, with a whole universe inside."
+   },
+   "poke": {
+    "zh": "群里安静三秒，你就开始默默塌陷。",
+    "en": "Group chat goes quiet for three seconds and you start to deflate."
+   },
+   "rarity_line": {
+    "zh": "100 个人里只有 4 个是这份舒芙蕾，要趁热。",
+    "en": "Only 4 in 100 people are this soufflé. Catch it while it's warm."
+   },
+   "particle": {
+    "shape": "rising-ramekin",
+    "palette": [
+     "#FFF1D6",
+     "#E8B86D",
+     "#FFFFFF"
+    ]
+   }
+  },
+  {
+   "mbti": "ISTP",
+   "rarity": 5.4,
+   "name": {
+    "zh": "焦糖布丁",
+    "en": "Crème caramel"
+   },
+   "praise": {
+    "zh": "表面波澜不惊，一出手就是硬核技能。",
+    "en": "Cool on top, quietly fixing what nobody else can."
+   },
+   "poke": {
+    "zh": "能回一个字，绝不打第二个。",
+    "en": "If one word works, you're not typing two."
+   },
+   "rarity_line": {
+    "zh": "100 个人里只有 5 个是这碗布丁，话少但靠谱。",
+    "en": "Only 5 in 100 people are this crème caramel. Few words, all reliable."
+   },
+   "particle": {
+    "shape": "dome-caramel",
+    "palette": [
+     "#F2D49B",
+     "#B5651D",
+     "#FFF8E7"
+    ]
+   }
+  },
+  {
+   "mbti": "ENFP",
+   "rarity": 8.1,
+   "name": {
+    "zh": "甜甜圈",
+    "en": "Donut"
+   },
+   "praise": {
+    "zh": "行走的多巴胺，连发呆都是彩色的。",
+    "en": "Walking dopamine. Even your daydreams come with sprinkles."
+   },
+   "poke": {
+    "zh": "一周开八个新坑，一个都没填完。",
+    "en": "Eight new hobbies this week. Zero finished."
+   },
+   "rarity_line": {
+    "zh": "全世界 8.1% 的人都是快乐来源，你是其中一个。",
+    "en": "8.1% of people are walking happiness. You're one of them."
+   },
+   "particle": {
+    "shape": "torus-sprinkles",
+    "palette": [
+     "#F7A8C4",
+     "#FFD166",
+     "#7BDFF2"
+    ]
+   }
+  },
+  {
+   "mbti": "ESFP",
+   "rarity": 8.5,
+   "name": {
+    "zh": "芒果绵绵冰",
+    "en": "Mango bingsu"
+   },
+   "praise": {
+    "zh": "天生聚光灯，有你的地方就是派对。",
+    "en": "Born under the spotlight. Wherever you are, it's a party."
+   },
+   "poke": {
+    "zh": "嗨完三小时，原地化成一滩。",
+    "en": "Three hours at full blast, then a puddle on the sofa."
+   },
+   "rarity_line": {
+    "zh": "全世界 8.5% 的人负责让夏天变好玩，你是其中一个。",
+    "en": "8.5% of people make summer fun. You're one of them."
+   },
+   "particle": {
+    "shape": "snow-mound-cubes",
+    "palette": [
+     "#FFC93C",
+     "#FF8C42",
+     "#FFFFFF"
+    ]
+   }
+  },
+  {
+   "mbti": "ESTJ",
+   "rarity": 8.7,
+   "name": {
+    "zh": "布朗尼",
+    "en": "Brownie"
+   },
+   "praise": {
+    "zh": "靠谱到离谱，天塌了你先列清单。",
+    "en": "Ridiculously reliable. Sky falls, you make a checklist."
+   },
+   "poke": {
+    "zh": "催进度上瘾，群公告的标点你都要改。",
+    "en": "You'll fix the punctuation in the group announcement."
+   },
+   "rarity_line": {
+    "zh": "全世界 8.7% 的人撑着所有小组作业，你是其中一个。",
+    "en": "8.7% of people hold every group project together. You're one of them."
+   },
+   "particle": {
+    "shape": "square-block",
+    "palette": [
+     "#3E2415",
+     "#6F4E37",
+     "#2B1A10"
+    ]
+   }
+  },
+  {
+   "mbti": "ISFP",
+   "rarity": 8.8,
+   "name": {
+    "zh": "马卡龙",
+    "en": "Macaron"
+   },
+   "praise": {
+    "zh": "审美从不翻车，日子被你过成了展览。",
+    "en": "Never a style miss. Your life looks like an exhibition."
+   },
+   "poke": {
+    "zh": "气场不对，立刻人间蒸发。",
+    "en": "Vibe feels off? You vanish without a trace."
+   },
+   "rarity_line": {
+    "zh": "全世界 8.8% 的人负责让世界好看，你是其中一个。",
+    "en": "8.8% of people keep the world beautiful. You're one of them."
+   },
+   "particle": {
+    "shape": "sandwich-disc",
+    "palette": [
+     "#C3B1E1",
+     "#A8E6CF",
+     "#FFD3B6"
+    ]
+   }
+  },
+  {
+   "mbti": "ISTJ",
+   "rarity": 11.6,
+   "name": {
+    "zh": "纽约芝士蛋糕",
+    "en": "New York cheesecake"
+   },
+   "praise": {
+    "zh": "定海神针，准时稳定得让人安心。",
+    "en": "The rock everyone leans on. Always on time, always the same great taste."
+   },
+   "poke": {
+    "zh": "午饭换一家店，能别扭一整天。",
+    "en": "The lunch spot changed and it threw off your whole day."
+   },
+   "rarity_line": {
+    "zh": "全世界 11.6% 的人在撑着这个世界正常运转，你是其中一个。",
+    "en": "11.6% of people keep the world running on time. You're one of them."
+   },
+   "particle": {
+    "shape": "tall-wedge",
+    "palette": [
+     "#FFF4D6",
+     "#D9A55B",
+     "#8B5E34"
+    ]
+   }
+  },
+  {
+   "mbti": "ESFJ",
+   "rarity": 12.3,
+   "name": {
+    "zh": "奶油泡芙",
+    "en": "Cream puff"
+   },
+   "praise": {
+    "zh": "一口一个的暖阳，谁都被你照顾到了。",
+    "en": "Bite-sized sunshine. Somehow everyone feels looked after."
+   },
+   "poke": {
+    "zh": "连别人回的大拇指，你都要再回一个。",
+    "en": "You reply to a thumbs-up. With another thumbs-up."
+   },
+   "rarity_line": {
+    "zh": "全世界 12.3% 的人负责让大家聚在一起，你是其中一个。",
+    "en": "12.3% of people bring everyone together. You're one of them."
+   },
+   "particle": {
+    "shape": "puff-sphere",
+    "palette": [
+     "#F5D6A0",
+     "#FFFFFF",
+     "#E0A96D"
+    ]
+   }
+  },
+  {
+   "mbti": "ISFJ",
+   "rarity": 13.8,
+   "name": {
+    "zh": "蛋挞",
+    "en": "Egg tart"
+   },
+   "praise": {
+    "zh": "恒温的安全感，总在细节处托住所有人。",
+    "en": "Always warm, quietly holding everyone together in the small details."
+   },
+   "poke": {
+    "zh": "嘴上说没事，其实已经撑到最后一口了。",
+    "en": "\"No worries!\" Said while running on the last crumb."
+   },
+   "rarity_line": {
+    "zh": "全世界 13.8% 的人离不开你，你是最多人的安心感。",
+    "en": "13.8% of people are you, and the rest can't live without you."
+   },
+   "particle": {
+    "shape": "tart-shell-custard",
+    "palette": [
+     "#FFD86B",
+     "#E9A23B",
+     "#FFF3C4"
+    ]
+   }
+  }
+ ]
+}
