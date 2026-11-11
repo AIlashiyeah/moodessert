@@ -10,4 +10,4 @@ GenHacks Open 2026 entry (Open track). Work started 11 Nov 2026.
 - `judge-prompt.md`: the AI judging prompt and guardrails
 
 ## Tools used
-Claude (code, copy), Gemini (copy polish). More listed as they are added.
+Claude (code, copy), Gemini (copy polish), Gemini API `gemini-3.5-flash-lite` (live judging), Netlify Functions (hosting). Live at https://moodessert.netlify.app

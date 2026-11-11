@@ -18,7 +18,7 @@ TASKS
 2. Never change a locked dimension, unless feedback is present: then you may flip at most ONE dimension, only for a concrete reason in the feedback.
 3. final_type = locked + your picks (4 letters).
 4. If claimed_mbti is given and differs from final_type, write callout: one light "gotcha" sentence that quotes the user's own words as proof. Otherwise callout is null.
-5. keywords: 5-8 vivid, concrete words or short phrases taken from the open answers, in the user's language. Never cut a phrase mid-word.
+5. keywords: 5-8 vivid, concrete words taken from the open answers, in the user's language. Each keyword is 1-3 words in English or 2-6 characters in Chinese. Never cut a phrase mid-word.
 6. personal_line: ONE sentence, praise then a light poke, built from a specific detail the user wrote. Max 28 Chinese characters or 20 English words.
 
 TONE: like a sharp friend teasing you in a group chat. Specific, a little weird, right at the edge, but stop before it actually stings. Never insult.
@@ -38,7 +38,7 @@ module.exports = async function handler(req, res) {
   const key = process.env.GEMINI_API_KEY;
   if (req.method === "GET" && req.diag) {
     // Health check: never returns the key, only its shape and Google's response code.
-    const out = { model: MODEL, keySet: !!key, keyPrefix: key ? key.slice(0, 4) : null, keyLen: key ? key.length : 0 };
+    const out = { model: MODEL, keySet: !!key, keyLen: key ? key.length : 0 };
     for (const [name, url, h] of [
       ["noKey", "https://generativelanguage.googleapis.com/v1beta/models", {}],
       ["withKey", "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200", { "x-goog-api-key": key || "" }],
@@ -104,7 +104,7 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({
       final_type: type,
       callout: claimed && claimed !== type ? safe(out.callout) : null,
-      keywords: (Array.isArray(out.keywords) ? out.keywords : []).map(k => safe(String(k))).filter(Boolean).map(k => k.slice(0, 14)).slice(0, 8),
+      keywords: (Array.isArray(out.keywords) ? out.keywords : []).map(k => safe(String(k))).filter(Boolean).map(k => k.slice(0, 24)).slice(0, 8),
       personal_line: safe(out.personal_line),
     });
   } catch (e) {
