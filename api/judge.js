@@ -97,7 +97,7 @@ module.exports = async function handler(req, res) {
 
   try {
     // The primary model is sometimes overloaded (503). Try it, then two lighter stand-ins, inside one 8.5 s budget.
-    const models = [MODEL, MODEL, ...FALLBACKS.filter(m => m !== MODEL)];
+    const models = [MODEL, ...FALLBACKS.filter(m => m !== MODEL), MODEL];
     const payload = JSON.stringify({
       systemInstruction: { parts: [{ text: SYSTEM }] },
       contents: [{ role: "user", parts: [{ text: JSON.stringify(input) }] }],
@@ -108,7 +108,7 @@ module.exports = async function handler(req, res) {
     for (const m of models) {
       const left = deadline - Date.now();
       if (left < 1200) break;
-      const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), left);
+      const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), Math.min(left, 4200)); // a hung model must not eat the whole budget
       try {
         const x = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`, {
           method: "POST", signal: ctl.signal, headers: { "Content-Type": "application/json", "x-goog-api-key": key }, body: payload,
