@@ -1,0 +1,249 @@
+<meta charset="utf-8">
+<title>Moodessert</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* Layout: one narrow column, one screen at a time, like a phone-sized pastry box */
+:root{
+  --bg:#EEF1E8; --surface:#FFFFFF; --ink:#2A1D17; --muted:#6D6259;
+  --accent:#C2185B; --accent-ink:#FFFFFF; --line:#D6DACC; --chip:#F3E9EE;
+  --display:"Bricolage Grotesque","Noto Sans SC",system-ui,sans-serif;
+  --body:"Inter","Noto Sans SC",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#17120F; --surface:#221A16; --ink:#F3ECE6; --muted:#A89B92;
+  --accent:#FF6F9C; --accent-ink:#1A0F0B; --line:#3A2E28; --chip:#33232A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#17120F; --surface:#221A16; --ink:#F3ECE6; --muted:#A89B92;
+  --accent:#FF6F9C; --accent-ink:#1A0F0B; --line:#3A2E28; --chip:#33232A; color-scheme:dark}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 32px}
+.wrap{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+header{display:flex;align-items:center;justify-content:space-between;padding-block:16px 4px}
+.brand{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.01em}
+.brand span{color:var(--accent)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{all:unset;cursor:pointer;padding:4px 12px;font-size:13px;font-weight:600;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.demo{font-size:12px;color:var(--muted);text-align:center}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,10vw,46px);line-height:1.02;letter-spacing:-.02em;margin:8px 0 0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,7vw,30px);line-height:1.15;margin:0;text-wrap:balance}
+p{margin:0}
+.lede{color:var(--muted);font-size:17px;max-width:38ch}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;text-align:center;font-weight:600;padding:15px 20px;border-radius:14px;background:var(--accent);color:var(--accent-ink);font-size:16px}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn:focus-visible,.opt:focus-visible,.mbti button:focus-visible,.lang button:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn[disabled]{opacity:.45;cursor:default}
+.stack{display:flex;flex-direction:column;gap:10px}
+.facts{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+.facts b{color:var(--ink);font-variant-numeric:tabular-nums}
+.mbti{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mbti button{all:unset;cursor:pointer;text-align:center;padding:12px 0;border-radius:12px;border:1.5px solid var(--line);font-family:var(--display);font-weight:800;font-size:15px;background:var(--surface)}
+.mbti button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+.progress{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;display:block;padding:18px;border-radius:16px;background:var(--surface);border:1.5px solid var(--line);font-size:17px;font-weight:500}
+.opt:hover{border-color:var(--accent)}
+textarea{box-sizing:border-box;width:100%;min-height:120px;padding:14px;border-radius:16px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;resize:vertical}
+.hint{font-size:13px;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:24px;overflow:hidden}
+canvas{display:block;width:100%;height:auto;aspect-ratio:1/1;max-width:100%;background:var(--surface)}
+.card .body{padding:20px;display:flex;flex-direction:column;gap:14px}
+.type{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.badge{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.08em;padding:4px 10px;border-radius:999px;background:var(--ink);color:var(--bg)}
+.rare{font-size:14px;color:var(--muted)}
+.praise{font-size:19px;font-weight:600;line-height:1.4}
+.poke{font-size:17px;color:var(--muted)}
+.callout{padding:12px 14px;border-radius:14px;background:var(--chip);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:13px;padding:4px 10px;border-radius:999px;border:1px solid var(--line)}
+.fade{animation:fade .5s ease both}
+@keyframes fade{from{opacity:.0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}.bar i{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">Moo<span>dessert</span></div>
+    <div class="lang" role="group" aria-label="Language">
+      <button id="lang-en" aria-pressed="true">EN</button>
+      <button id="lang-zh" aria-pressed="false">中文</button>
+    </div>
+  </header>
+  <main id="app" class="stack" aria-live="polite"></main>
+  <p class="demo" id="demo"></p>
+</div>
+
+<script>
+const T={
+ en:{demo:"Prototype: the AI judge is simulated on this build.",
+  title:"Which dessert are you, really?",lede:"10 questions. An AI reads what you write, catches you if your MBTI is lying, and bakes your words into a dessert.",
+  f1:"questions",f2:"desserts",f3:"min",start:"Start",
+  mbtiQ:"Know your MBTI?",mbtiHint:"Optional. We'll check whether it's telling the truth.",skip:"I don't know",next:"Next",
+  openHint:"Write like you'd text a friend. Specific beats clever.",openPh:"Type here…",skipQ:"Skip",
+  baking:"Baking you…",gotcha:"You said",notMe:"That's not me",notMeDone:"Re-judge used. (Live AI comes in the next build.)",
+  pair:"Pair with a friend",copied:"Link copied. Send it to a friend.",copyFail:"Copy the link from your address bar.",again:"Retake",yourWords:"Your words"},
+ zh:{demo:"原型：这一版的 AI 判型是模拟的。",
+  title:"你骨子里，是哪块甜点？",lede:"10 道题。AI 读你写的话，拆穿你自报的 MBTI，再把你的词烤成一块甜点。",
+  f1:"道题",f2:"种甜点",f3:"分钟",start:"开始",
+  mbtiQ:"知道自己的 MBTI 吗？",mbtiHint:"选填。我们会看看它有没有骗你。",skip:"不知道",next:"下一题",
+  openHint:"像给朋友发消息那样写，越具体越好。",openPh:"写在这里…",skipQ:"跳过",
+  baking:"正在把你烤出来…",gotcha:"你说你是",notMe:"这不像我",notMeDone:"重判机会已用。（真 AI 下一版接入）",
+  pair:"拉朋友来配对",copied:"链接已复制，发给朋友吧。",copyFail:"请从地址栏复制链接。",again:"再测一次",yourWords:"你的词"}
+};
+const TYPES=["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"];
+let lang="en",Q=null,D=null,st={};
+const app=document.getElementById("app");
+const t=k=>T[lang][k];
+const L=o=>o[lang]||o.en;
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function setLang(l){lang=l;document.documentElement.lang=l==="zh"?"zh-CN":"en";
+  document.getElementById("lang-en").setAttribute("aria-pressed",l==="en");
+  document.getElementById("lang-zh").setAttribute("aria-pressed",l==="zh");
+  document.getElementById("demo").textContent=t("demo");render()}
+document.getElementById("lang-en").onclick=()=>setLang("en");
+document.getElementById("lang-zh").onclick=()=>setLang("zh");
+
+function newRun(){
+  const mc=["EI","SN","TF","JP"].flatMap(d=>shuffle(Q.mc.filter(q=>q.dim===d)).slice(0,2));
+  const m=shuffle(mc),o=shuffle(Q.open).slice(0,2);
+  st={screen:"mbti",claimed:null,items:[...m.slice(0,4),o[0],...m.slice(4),o[1]],i:0,ans:[],reJudged:false};
+}
+
+function render(){
+  if(!Q){app.innerHTML="";return}
+  const s=st.screen;
+  if(!s||s==="home"){
+    app.innerHTML=`<h1 class="fade">${t("title")}</h1><p class="lede">${t("lede")}</p>
+    <div class="facts"><span><b>10</b> ${t("f1")}</span><span><b>16</b> ${t("f2")}</span><span><b>2</b> ${t("f3")}</span></div>
+    <button class="btn" id="go">${t("start")}</button>`;
+    document.getElementById("go").onclick=()=>{newRun();render()};
+  }else if(s==="mbti"){
+    app.innerHTML=`<h2>${t("mbtiQ")}</h2><p class="hint">${t("mbtiHint")}</p>
+    <div class="mbti">${TYPES.map(x=>`<button aria-pressed="${st.claimed===x}" data-t="${x}">${x}</button>`).join("")}</div>
+    <div class="stack"><button class="btn" id="nx">${t("next")}</button><button class="btn ghost" id="sk">${t("skip")}</button></div>`;
+    app.querySelectorAll(".mbti button").forEach(b=>b.onclick=()=>{st.claimed=st.claimed===b.dataset.t?null:b.dataset.t;render()});
+    document.getElementById("nx").onclick=()=>{st.screen="q";render()};
+    document.getElementById("sk").onclick=()=>{st.claimed=null;st.screen="q";render()};
+  }else if(s==="q"){
+    const it=st.items[st.i],n=st.items.length;
+    const head=`<div class="progress"><span>${st.i+1} / ${n}</span><span>${it.dim||""}</span></div><div class="bar"><i style="width:${(st.i)/n*100}%"></i></div>`;
+    if(it.options){
+      app.innerHTML=`${head}<h2 class="fade">${esc(L(it))}</h2><div class="stack">${shuffle(it.options).map(o=>`<button class="opt" data-p="${o.pole}">${esc(L(o))}</button>`).join("")}</div>`;
+      app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer({id:it.id,dim:it.dim,pole:b.dataset.p}));
+    }else{
+      const prev=(st.ans[st.i]||{}).text||"";
+      app.innerHTML=`${head}<h2 class="fade">${esc(L(it))}</h2><textarea id="ta" maxlength="200" placeholder="${t("openPh")}" aria-label="${esc(L(it))}">${esc(prev)}</textarea>
+      <p class="hint">${t("openHint")}</p><div class="stack"><button class="btn" id="nx">${t("next")}</button><button class="btn ghost" id="sk">${t("skipQ")}</button></div>`;
+      const ta=document.getElementById("ta");ta.focus({preventScroll:true});
+      document.getElementById("nx").onclick=()=>answer({id:it.id,q:L(it),text:ta.value.trim()});
+      document.getElementById("sk").onclick=()=>answer({id:it.id,q:L(it),text:""});
+    }
+  }else if(s==="result"){showResult()}
+}
+function answer(a){st.ans[st.i]=a;st.i++;if(st.i>=st.items.length){st.result=judge();st.screen="result"}render()}
+
+/* Simulated judge: locked dims from votes; ties use claimed MBTI, else fallback I/N/F/P. Live build sends ties to the LLM. */
+function judge(){
+  const v={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+  st.ans.forEach(a=>{if(a.pole)v[a.pole]++});
+  const pairs=[["E","I",0],["S","N",1],["T","F",2],["J","P",3]],fb="INFP";
+  const type=pairs.map(([a,b,k])=>v[a]>v[b]?a:v[b]>v[a]?b:(st.claimed?st.claimed[k]:fb[k])).join("");
+  const texts=st.ans.filter(a=>a.text).map(a=>a.text);
+  return {type,keywords:keywords(texts),quote:texts.sort((a,b)=>b.length-a.length)[0]||""};
+}
+function keywords(texts){
+  const stop=new Set("the and that this with have just like what when your about from they them then than been were would could really very into some only also more most".split(" "));
+  let out=[];
+  texts.forEach(s=>{
+    s.split(/[，。、,.!！?？;；:：\s"“”'‘’()（）]+/).forEach(w=>{
+      if(/[一-鿿]/.test(w)){if(w.length>=2)out.push(w.length>6?w.slice(0,6):w)}
+      else if(w.length>=4&&!stop.has(w.toLowerCase()))out.push(w.toLowerCase());
+    });
+  });
+  return [...new Set(out)].slice(0,8);
+}
+
+function showResult(){
+  const r=st.result,d=D.desserts.find(x=>x.mbti===r.type);
+  const kw=r.keywords.length?r.keywords:[L(d.name)];
+  const gotcha=st.claimed&&st.claimed!==r.type
+    ?(lang==="zh"?`${t("gotcha")} ${st.claimed}，可你写的${r.quote?`“${esc(r.quote.slice(0,30))}”`:"答案"}出卖了你。你骨子里是一块${esc(d.name.zh)}。`
+                 :`${t("gotcha")} ${st.claimed}. But${r.quote?` "${esc(r.quote.slice(0,40))}"`:" your answers"} gave you away. You're a ${esc(d.name.en)}.`):"";
+  app.innerHTML=`<div class="card"><canvas id="cv" width="900" height="900" aria-label="${esc(L(d.name))}"></canvas>
+   <div class="body" id="rb" hidden>
+    <div class="type"><span class="badge">${r.type}</span><span class="rare">${esc(L(d.rarity_line))}</span></div>
+    <h2>${esc(L(d.name))}</h2>
+    <p class="praise">${esc(L(d.praise))}</p><p class="poke">${esc(L(d.poke))}</p>
+    ${gotcha?`<p class="callout">${gotcha}</p>`:""}
+    <div><p class="hint">${t("yourWords")}</p><div class="chips">${kw.map(k=>`<span>${esc(k)}</span>`).join("")}</div></div>
+   </div></div>
+   <div class="stack" id="acts" hidden>
+    <button class="btn" id="pair">${t("pair")}</button>
+    <button class="btn ghost" id="nm" ${st.reJudged?"disabled":""}>${t("notMe")}</button>
+    <p class="hint" id="msg" aria-live="polite">${st.reJudged?t("notMeDone"):""}</p>
+    <button class="btn ghost" id="again">${t("again")}</button></div>`;
+  const reveal=()=>{document.getElementById("rb").hidden=false;document.getElementById("acts").hidden=false;
+    document.getElementById("rb").classList.add("fade")};
+  bake(document.getElementById("cv"),kw,L(d.name),d.particle.palette,st.revealed?0:1,reveal);
+  st.revealed=true;
+  document.getElementById("again").onclick=()=>{st={screen:"home"};render();scrollTo(0,0)};
+  document.getElementById("nm").onclick=()=>{st.reJudged=true;render()};
+  document.getElementById("pair").onclick=async()=>{
+    const m=document.getElementById("msg");
+    try{await navigator.clipboard.writeText(location.href.split("#")[0]);m.textContent=t("copied")}catch(e){m.textContent=t("copyFail")}};
+}
+
+/* Particles: your words fall into a bowl, burst, and regroup as the dessert's name. */
+let raf=0;
+function bake(cv,words,name,pal,animate,done){
+  cancelAnimationFrame(raf);
+  const W=cv.width,H=cv.height,c=cv.getContext("2d");
+  const css=getComputedStyle(document.documentElement);
+  const bg=css.getPropertyValue("--surface").trim(),ink=css.getPropertyValue("--ink").trim(),muted=css.getPropertyValue("--muted").trim();
+  // target points from the dessert name
+  const off=document.createElement("canvas");off.width=W;off.height=H;const o=off.getContext("2d");
+  let fs=name.length>8?110:150;o.font=`800 ${fs}px "Bricolage Grotesque","Noto Sans SC",sans-serif`;
+  while(o.measureText(name).width>W*.86&&fs>40){fs-=6;o.font=`800 ${fs}px "Bricolage Grotesque","Noto Sans SC",sans-serif`}
+  o.textAlign="center";o.textBaseline="middle";o.fillStyle="#000";o.fillText(name,W/2,H*.44);
+  const data=o.getImageData(0,0,W,H).data,tg=[];
+  for(let y=0;y<H;y+=6)for(let x=0;x<W;x+=6)if(data[(y*W+x)*4+3]>128)tg.push([x,y]);
+  const N=Math.min(tg.length,1400),pts=[];
+  for(let i=0;i<N;i++){const p=tg[(i*tg.length/N)|0],a=Math.random()*Math.PI*2,s=6+Math.random()*16;
+    pts.push({x:W/2,y:H*.62,vx:Math.cos(a)*s,vy:Math.sin(a)*s-6,tx:p[0],ty:p[1],c:pal[i%pal.length],r:2.2+Math.random()*1.8})}
+  const drops=words.map((w,i)=>({w,x:W*(.2+.6*((i*.37)%1)),y:-60-i*70,vy:0}));
+  const bowl=()=>{c.strokeStyle=muted;c.lineWidth=4;c.beginPath();c.arc(W/2,H*.6,190,.12*Math.PI,.88*Math.PI);c.stroke()};
+  const final=()=>{c.fillStyle=bg;c.fillRect(0,0,W,H);pts.forEach(p=>{c.fillStyle=p.c;c.beginPath();c.arc(p.tx,p.ty,p.r,0,7);c.fill()});
+    c.fillStyle=muted;c.font=`500 30px "Inter","Noto Sans SC",sans-serif`;c.textAlign="center";c.fillText(words.slice(0,4).join(" · "),W/2,H*.78)};
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!animate||reduce){final();done();return}
+  const t0=performance.now();
+  const step=now=>{
+    const t=(now-t0)/1000;c.fillStyle=bg;c.fillRect(0,0,W,H);
+    if(t<1.6){ // words fall into the bowl
+      bowl();c.font=`600 40px "Inter","Noto Sans SC",sans-serif`;c.textAlign="center";c.fillStyle=ink;
+      drops.forEach(d=>{d.vy+=1.1;d.y=Math.min(d.y+d.vy,H*.6);d.x+=(W/2-d.x)*.03;c.globalAlpha=d.y>=H*.6?Math.max(0,1-(t-1.2)*3):1;c.fillText(d.w,d.x,d.y)});
+      c.globalAlpha=1;c.fillStyle=muted;c.font=`500 30px "Inter","Noto Sans SC",sans-serif`;c.fillText(T[lang].baking,W/2,H*.86);
+    }else{ // burst, then regroup
+      const k=t-1.6;
+      pts.forEach(p=>{if(k<.7){p.x+=p.vx;p.y+=p.vy;p.vx*=.95;p.vy=p.vy*.95+.25}
+        else{p.x+=(p.tx-p.x)*.11;p.y+=(p.ty-p.y)*.11}
+        c.fillStyle=p.c;c.beginPath();c.arc(p.x,p.y,p.r,0,7);c.fill()});
+      if(k>2.4){final();done();return}
+    }
+    raf=requestAnimationFrame(step)};
+  raf=requestAnimationFrame(step);
+}
+
+Promise.all([fetch("questions.json").then(r=>r.json()),fetch("desserts.json").then(r=>r.json())])
+ .then(([q,d])=>{Q=q;D=d;st={screen:"home"};setLang(lang);
+   Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,1500))]).then(()=>{if(st.screen==="result")render()})})
+ .catch(()=>{app.innerHTML=`<p class="lede">Couldn't load the questions. Refresh to try again.</p>`});
+document.getElementById("demo").textContent=T.en.demo;
+</script>
