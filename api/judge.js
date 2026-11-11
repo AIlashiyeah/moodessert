@@ -63,16 +63,18 @@ module.exports = async function handler(req, res) {
   };
 
   try {
+    const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 8500);
     const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`, {
-      method: "POST",
+      method: "POST", signal: ctl.signal,
       headers: { "Content-Type": "application/json", "x-goog-api-key": key },
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: SYSTEM }] },
         contents: [{ role: "user", parts: [{ text: JSON.stringify(input) }] }],
-        generationConfig: { temperature: 0.8, maxOutputTokens: 700, responseMimeType: "application/json" },
+        generationConfig: { temperature: 0.8, maxOutputTokens: 700, responseMimeType: "application/json", thinkingConfig: { thinkingBudget: 0 } },
       }),
     });
-    if (!r.ok) return res.status(502).json({ error: "AI upstream " + r.status });
+    clearTimeout(timer);
+    if (!r.ok) { console.log("upstream", r.status, (await r.text()).slice(0, 300)); return res.status(502).json({ error: "AI upstream " + r.status }); }
     const j = await r.json();
     const text = j?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("") || "";
     const out = JSON.parse(text.replace(/^```(json)?|```$/g, "").trim());
@@ -92,6 +94,7 @@ module.exports = async function handler(req, res) {
       personal_line: safe(out.personal_line),
     });
   } catch (e) {
+    console.log("judge error", e && e.name, e && e.message);
     return res.status(502).json({ error: "AI failed" });
   }
 };
