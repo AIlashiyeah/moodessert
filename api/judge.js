@@ -4,7 +4,7 @@
 
 const TYPES = new Set(["ISTJ","ISFJ","INFJ","INTJ","ISTP","ISFP","INFP","INTP","ESTP","ESFP","ENFP","ENTP","ESTJ","ESFJ","ENFJ","ENTJ"]);
 const DIMS = ["EI", "SN", "TF", "JP"];
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 const DAILY_CAP = Number(process.env.DAILY_CAP || 1500);
 const PER_IP_PER_HOUR = 20;
 const BLOCK = /(胖|瘦|丑|身材|长相|颜值|恋爱|男朋友|女朋友|对象|约会|性感|性生活|\bugly\b|\bfat\b|\bskinny\b|\bsexy\b|\bdating\b|\bboyfriend\b|\bgirlfriend\b|\bcrush\b)/i;
@@ -77,14 +77,14 @@ module.exports = async function handler(req, res) {
   };
 
   try {
-    const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 8500);
+    const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 9200);
     const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`, {
       method: "POST", signal: ctl.signal,
       headers: { "Content-Type": "application/json", "x-goog-api-key": key },
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: SYSTEM }] },
         contents: [{ role: "user", parts: [{ text: JSON.stringify(input) }] }],
-        generationConfig: { temperature: 0.8, maxOutputTokens: 700, responseMimeType: "application/json", thinkingConfig: { thinkingBudget: 0 } },
+        generationConfig: { temperature: 0.8, maxOutputTokens: 700, responseMimeType: "application/json", thinkingConfig: { thinkingLevel: "minimal" } },
       }),
     });
     clearTimeout(timer);
