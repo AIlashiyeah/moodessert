@@ -10,6 +10,8 @@ GenHacks Open 2026 entry (Open track). Live at https://moodessert.netlify.app
 3. A reading layer tallies which way your answers lean, then asks the model to work like a personality psychologist: find the motive your answers share, the contradiction where they split, and close with praise that follows from both. It must cite your own answers and is not allowed to mention MBTI or star signs.
 4. The words from your answers fall into a bowl, burst into particles, and rise into a 3D point-cloud of your dessert: 16 desserts, 64 flavours.
 
+5. Pairing: your share link carries a two-character code for your dessert and flavour. A friend who opens it and takes the test gets a two-person report: the drink the two desserts make together, what each gives the other, one friction and one tip. They can send the report link back.
+
 This is a reading of five answers, made for fun. It is not a psychological assessment.
 
 ## Files

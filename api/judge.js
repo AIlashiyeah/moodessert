@@ -44,6 +44,54 @@ Write in lang, second person. Output JSON only, fields in this order.
 
 OUTPUT: {"evidence":"...","why":"...","core":"...","tension":"...","personal_line":"...","keywords":["..."],"own_votes":[0]}`;
 
+// One model call with stand-ins: the primary is sometimes overloaded (503), so try it, then two lighter models, inside one 8.5 s budget.
+async function ask(system, input, key, maxTokens) {
+  const models = [MODEL, ...FALLBACKS.filter(m => m !== MODEL), MODEL];
+  const payload = JSON.stringify({
+    systemInstruction: { parts: [{ text: system }] },
+    contents: [{ role: "user", parts: [{ text: JSON.stringify(input) }] }],
+    generationConfig: { temperature: 0.7, maxOutputTokens: maxTokens, responseMimeType: "application/json" },
+  });
+  const deadline = Date.now() + 8500;
+  for (const m of models) {
+    const left = deadline - Date.now();
+    if (left < 1200) break;
+    const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), Math.min(left, 4200)); // a hung model must not eat the whole budget
+    try {
+      const x = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`, {
+        method: "POST", signal: ctl.signal, headers: { "Content-Type": "application/json", "x-goog-api-key": key }, body: payload,
+      });
+      clearTimeout(timer);
+      if (x.ok) {
+        const j = await x.json();
+        const text = j?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("") || "";
+        return JSON.parse(text.replace(/^```(json)?|```$/g, "").trim());
+      }
+      console.log("upstream", m, x.status, (await x.text()).slice(0, 200));
+      if (x.status < 500 && x.status !== 429) break;
+    } catch (e) { clearTimeout(timer); console.log("upstream", m, e.name); }
+  }
+  return null;
+}
+const safe = s => (typeof s === "string" && s.trim() && !BLOCK.test(s) && !LEAK.test(s)) ? s.trim().slice(0, 220) : null;
+
+const SYSTEM_PAIR = `You write the two-person reading for Moodessert, a playful dessert-personality quiz. Two friends each got a dessert; together they make a drink.
+
+INPUT (JSON): a and b (each: dessert, flavour, branch = their way of being, line = the praise on their card, gives_first = true if this person habitually looks after others before themselves), drink (the drink the pair makes, with its idea), lang.
+
+Write three short sentences, in this order:
+1. give: what a's way of being gives b that b does not have, and what b gives a. Concrete, about behaviour between two friends.
+2. friction: the one small, real friction this pairing runs into, said with affection.
+3. tip: one thing to do about it. If exactly one of them has gives_first, the tip is addressed to the other one: tell them what the giver will never ask for. If both have gives_first, tell them to stop competing to give and each take something.
+
+RULES
+- Call them by their desserts ("the Tiramisu", "提拉米苏"), never "a" or "b", never names.
+- Friends, not a couple: nothing romantic. No looks, body, dating, sex, health, mental health, religion, politics, money or family.
+- Never mention MBTI, type letters, star signs or astrology.
+- Plain words, no jargon, no advice beyond the one tip, no predictions.
+- Each sentence at most 40 Chinese characters or 26 English words.
+Write in lang. Output JSON only: {"give":"...","friction":"...","tip":"..."}`;
+
 const hits = new Map();
 let day = "", dayCount = 0;
 
@@ -79,6 +127,17 @@ module.exports = async function handler(req, res) {
 
   // Sanitize input.
   const b = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
+  if (b.mode === "pair") {
+    const side = o => ({ dessert: clip(o && o.dessert, 40), flavour: clip(o && o.flavour, 40), branch: clip(o && o.branch, 60), line: clip(o && o.line, 240), gives_first: !!(o && o.gives_first) });
+    const input = { a: side(b.a), b: side(b.b), drink: clip(b.drink, 200), lang: b.lang === "zh" ? "zh" : "en" };
+    if (!input.a.dessert || !input.b.dessert) return res.status(400).json({ error: "two desserts required" });
+    try {
+      const out = await ask(SYSTEM_PAIR, input, key, 400);
+      if (!out) return res.status(502).json({ error: "AI upstream" });
+      res.setHeader("Cache-Control", "no-store");
+      return res.status(200).json({ give: safe(out.give), friction: safe(out.friction), tip: safe(out.tip) });
+    } catch (e) { console.log("pair error", e && e.name); return res.status(502).json({ error: "AI failed" }); }
+  }
   if (!TYPES.has(b.mbti)) return res.status(400).json({ error: "mbti required" });
   const branches = (Array.isArray(b.branches) ? b.branches : []).slice(0, 4).map(x => clip(x, 80));
   const picks = (Array.isArray(b.picks) ? b.picks : []).slice(0, 5)
@@ -96,35 +155,9 @@ module.exports = async function handler(req, res) {
   if (!input.picks.length) return res.status(400).json({ error: "picks required" });
 
   try {
-    // The primary model is sometimes overloaded (503). Try it, then two lighter stand-ins, inside one 8.5 s budget.
-    const models = [MODEL, ...FALLBACKS.filter(m => m !== MODEL), MODEL];
-    const payload = JSON.stringify({
-      systemInstruction: { parts: [{ text: SYSTEM }] },
-      contents: [{ role: "user", parts: [{ text: JSON.stringify(input) }] }],
-      generationConfig: { temperature: 0.7, maxOutputTokens: 800, responseMimeType: "application/json" },
-    });
-    const deadline = Date.now() + 8500;
-    let r = null, lastStatus = 0;
-    for (const m of models) {
-      const left = deadline - Date.now();
-      if (left < 1200) break;
-      const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), Math.min(left, 4200)); // a hung model must not eat the whole budget
-      try {
-        const x = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`, {
-          method: "POST", signal: ctl.signal, headers: { "Content-Type": "application/json", "x-goog-api-key": key }, body: payload,
-        });
-        clearTimeout(timer);
-        if (x.ok) { r = x; break; }
-        lastStatus = x.status; console.log("upstream", m, x.status, (await x.text()).slice(0, 200));
-        if (x.status < 500 && x.status !== 429) break;
-      } catch (e) { clearTimeout(timer); lastStatus = 504; console.log("upstream", m, e.name); }
-    }
-    if (!r) return res.status(502).json({ error: "AI upstream " + lastStatus });
-    const j = await r.json();
-    const text = j?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("") || "";
-    const out = JSON.parse(text.replace(/^```(json)?|```$/g, "").trim());
+    const out = await ask(SYSTEM, input, key, 800);
+    if (!out) return res.status(502).json({ error: "AI upstream" });
 
-    const safe = s => (typeof s === "string" && s.trim() && !BLOCK.test(s) && !LEAK.test(s)) ? s.trim().slice(0, 200) : null;
     res.setHeader("Cache-Control", "no-store");
     return res.status(200).json({
       why: safe(out.why), core: safe(out.core), tension: safe(out.tension),

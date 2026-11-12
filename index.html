@@ -83,6 +83,16 @@ p{margin:0}
 .callout{padding:12px 14px;border-radius:14px;background:var(--chip);font-size:15px}
 .callout small{display:block;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:2px}
 .rare{font-size:13px;color:var(--muted)}
+.pair{border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;gap:8px;font-size:15px}
+.pair>small{font-size:12px;font-weight:600;color:var(--accent)}
+.pair>b{font-family:var(--display);font-size:17px;line-height:1.3}
+.drink{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+.drink strong{font-family:var(--display);font-size:26px;color:var(--accent);line-height:1.1}
+.drink em{font-style:normal;margin-left:auto;font-variant-numeric:tabular-nums}
+.pair>p{color:var(--muted)}
+.duo{display:grid;grid-template-columns:1fr 1fr}
+.duo figure{margin:0;min-width:0;text-align:center}
+.duo figcaption{font-size:13px;font-weight:600;padding:0 8px 4px}
 .match{border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;gap:2px;font-size:15px}
 .match small{font-size:12px;font-weight:600;color:var(--accent)}
 .match b{font-family:var(--display);font-size:20px}
@@ -121,7 +131,7 @@ const T = {
     guessHint: "No problem. Four quick taps and we'll find your dessert.",
     signQ: "Second ingredient: your star sign", signHint: "It decides the texture of your dessert.", skip: "Skip",
     own: "None of these. I'll write my own", ownPh: "What would you actually do?", ownOk: "That's me",
-    baking: "Preheating the oven…", flavour: "flavour", why: "Why this dessert", whyT: (q, d, n) => `You chose "${q}". That is ${d} all over: ${n}.`, match: "Goes best with", find: (d) => `Find the ${d} in your life`, drive: "What drives you", pull: "Your contradiction", also: (f, n) => `Mostly this, with a streak of ${f}: ${n}.`,
+    baking: "Preheating the oven…", flavour: "flavour", why: "Why this dessert", whyT: (q, d, n) => `You chose "${q}". That is ${d} all over: ${n}.`, invited: "A friend sent you this", invitedLine: (f, d) => `They are a ${f} ${d}. Find out what you are, and which drink the two of you make.`, us: "The two of you", makes: "Together you make", sync: "in sync", give: "What you give each other", friction: "Where you rub", tip: "One thing to try", sendBack: "Send them your two-person report", pairText: (d) => `We tested as a pair. Together we make ${d}. Here is our report:`, me2: "Take the test myself", match: "Goes best with", find: (d) => `Find the ${d} in your life`, drive: "What drives you", pull: "Your contradiction", also: (f, n) => `Mostly this, with a streak of ${f}: ${n}.`,
     share: "Send to a friend", copied: "Link copied. Send it to a friend.", copyFail: "Copy the link from your address bar.", again: "Try another flavour",
     shareText: (f, d, b, m) => `I'm a ${f} ${d} (${b}), and I go best with a ${m}. Which dessert are you?`, loadFail: "Couldn't load the quiz. Refresh to try again." },
   zh: { note: "GenHacks Open 2026 参赛作品。图个开心：这是对五个回答的解读，不是心理测评。",
@@ -131,7 +141,7 @@ const T = {
     guessHint: "没关系，点四下，我们帮你找到你的甜点。",
     signQ: "第二样原料：你的星座", signHint: "它决定这块甜点的口感。", skip: "跳过",
     own: "都不像我，我自己写一句", ownPh: "换成你，你会怎么做？", ownOk: "就这个",
-    baking: "烤箱预热中…", flavour: "口味", why: "为什么是这块", whyT: (q, d, n) => `你选了“${q}”。${d}就是这样：${n}。`, match: "你最配", find: (d) => `找找身边谁是${d}`, drive: "你在乎的", pull: "你的反差", also: (f, n) => `主味之外，你还藏着一点${f}：${n}。`,
+    baking: "烤箱预热中…", flavour: "口味", why: "为什么是这块", whyT: (q, d, n) => `你选了“${q}”。${d}就是这样：${n}。`, invited: "朋友发来的", invitedLine: (f, d) => `TA 是一块${f}${d}。测出你的，看你们俩配成哪杯饮料。`, us: "你们俩", makes: "配成一杯", sync: "默契值", give: "你们互相给的", friction: "小摩擦", tip: "试试这个", sendBack: "把双人报告发回给 TA", pairText: (d) => `我们俩配成了一杯${d}，双人报告在这：`, me2: "我也测一测", match: "你最配", find: (d) => `找找身边谁是${d}`, drive: "你在乎的", pull: "你的反差", also: (f, n) => `主味之外，你还藏着一点${f}：${n}。`,
     share: "发给朋友测一测", copied: "链接已复制，发给朋友吧。", copyFail: "请从地址栏复制链接。", again: "换个口味再测",
     shareText: (f, d, b, m) => `我是一块${f}${d}（${b}），最配${m}。你是哪块甜点？`, loadFail: "题库没加载出来，刷新再试一次。" },
 };
@@ -161,6 +171,25 @@ const SIGNS = [
   ["aquarius", "Aquarius", "水瓶座", "1.20–2.18", "a way of thinking nobody else has", "跟谁都不一样的脑回路"],
   ["pisces", "Pisces", "双鱼座", "2.19–3.20", "one more layer of tenderness and imagination", "比别人多一层的温柔和想象"],
 ];
+// Pair links carry only a two-character code: (dessert index * 4 + flavour) in base 36. No names, no answers.
+const enc = (type, b) => (TYPES.indexOf(type) * 4 + b).toString(36);
+const dec = (c) => { const n = /^[0-9a-z]{1,2}$/.test(c || "") ? parseInt(c, 36) : -1; return n >= 0 && n < 64 ? { type: TYPES[n >> 2], b: n & 3 } : null; };
+const URLQ = new URLSearchParams(location.search);
+let friend = dec(URLQ.get("f"));
+const duo = dec(URLQ.get("a")) && dec(URLQ.get("b")) ? [dec(URLQ.get("a")), dec(URLQ.get("b"))] : null;
+// Two desserts make a drink. "Gives first" = the kinds of people who look after others before themselves.
+const gives = (x) => x[2] === "F" && x[3] === "J";
+const DRINKS = {
+  same: { score: 88, name: { zh: "双倍珍珠奶茶", en: "Double-pearl milk tea" }, line: { zh: "同一种料加了两份：懂得快，吵起来也快。", en: "The same topping, twice: you get each other fast, and clash just as fast." } },
+  lore: { score: 96, name: { zh: "鸳鸯", en: "Yuenyeung" }, line: { zh: "咖啡和茶本来不搭，偏偏混在一起最好喝。", en: "Coffee and tea shouldn't work together. Mixed, they beat either one alone." } },
+  bothGive: { score: 90, name: { zh: "热奶茶", en: "Hot milk tea" }, line: { zh: "两个人都抢着给对方倒，记得也给自己留一杯。", en: "You both keep filling the other's cup. Leave some for yourselves." } },
+  oneGive: { score: 86, name: { zh: "雪顶奶茶", en: "Snow-top milk tea" }, line: { zh: "一个是底下托着的那杯茶，一个是上面的雪顶。别让托着的那个一直在下面。", en: "One is the tea holding everything up, one is the cream on top. Don't leave the tea underneath forever." } },
+  bothE: { score: 85, name: { zh: "气泡果茶", en: "Sparkling fruit tea" }, line: { zh: "两个都停不下来，凑在一起就一直冒泡。", en: "Neither of you can sit still. Together you never stop fizzing." } },
+  bothI: { score: 87, name: { zh: "冷泡茶", en: "Cold-brew tea" }, line: { zh: "不说话也舒服，泡得越久越有味道。", en: "Comfortable in silence. The longer it steeps, the better it gets." } },
+  mixed: { score: 83, name: { zh: "柠檬茶", en: "Lemon tea" }, line: { zh: "一个负责提神，一个负责回甘。", en: "One wakes things up. The other is the sweetness that stays." } },
+};
+const drinkOf = (a, b) => DRINKS[a.type === b.type ? "same" : QUIZ.types[a.type].match.type === b.type ? "lore" : gives(a.type) && gives(b.type) ? "bothGive" : gives(a.type) || gives(b.type) ? "oneGive" : a.type[0] === "E" && b.type[0] === "E" ? "bothE" : a.type[0] === "I" && b.type[0] === "I" ? "bothI" : "mixed"];
+const pairCache = {};
 let lang = (navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en";
 let QUIZ = null, st = { screen: "home" }, oven = null, timer = 0;
 const app = document.getElementById("app"), $ = (id) => document.getElementById(id);
@@ -195,8 +224,11 @@ function render() {
   if (s === "home") {
     app.innerHTML = `<h1 class="fade">${t("title")}</h1><p class="lede">${t("lede")}</p>
       <div class="facts"><span><b>5</b> ${t("f1")}</span><span><b>16</b> ${t("f2")}</span><span><b>64</b> ${t("f3")}</span></div>
+      ${friend ? `<p class="callout"><small>${t("invited")}</small>${esc(t("invitedLine")(L(QUIZ.types[friend.type].branches[friend.b].flavour), L(QUIZ.types[friend.type].name)))}</p>` : ""}
       <button class="btn" id="go">${t("start")}</button>`;
     $("go").onclick = () => go({ screen: "mbti" });
+  } else if (s === "duo") {
+    showDuo();
   } else if (s === "mbti") {
     app.innerHTML = `<h2>${t("mbtiQ")}</h2><p class="hint">${t("mbtiHint")}</p>
       <div class="mbti">${TYPES.map((x) => `<button data-t="${x}">${x}</button>`).join("")}</div>
@@ -315,10 +347,10 @@ function showResult() {
         <div class="chips"><span class="hot">${esc(L(br.flavour))}${lang === "zh" ? t("flavour") : " " + t("flavour")}</span>${tx ? `<span>${esc(L(tx))}</span>` : ""}<span>${esc(L(br.name))}</span></div>
         ${why ? `<p class="callout"><small>${t("why")}</small>${esc(why)}</p>` : ""}
         ${ai && r.line && (r.core || r.tension) ? `${reading}<p class="praise">${esc(r.line)}</p>` : `<p class="praise">${esc(ai && r.line ? r.line : L(br.line))}</p>${reading}`}
-        <div class="match"><small>${t("match")}</small><b>${esc(L(mt.name))}</b><span>${esc(L(ty.match.line))}</span></div>
+        ${friend ? pairBlock(friend, { type: st.type, b: r.branch }) : `<div class="match"><small>${t("match")}</small><b>${esc(L(mt.name))}</b><span>${esc(L(ty.match.line))}</span></div>`}
       </div></div>
     <div class="stack" id="acts" hidden>
-      <button class="btn" id="share">${esc(t("find")(L(mt.name)))}</button>
+      <button class="btn" id="share">${esc(friend ? t("sendBack") : t("find")(L(mt.name)))}</button>
       <button class="btn ghost" id="again">${t("again")}</button>
       <p class="hint" id="msg" role="status"></p></div>`;
   const reveal = () => { const rb = $("rb"), ac = $("acts"); if (!rb) return; rb.hidden = false; ac.hidden = false; rb.classList.add("fade"); ac.classList.add("fade"); };
@@ -327,9 +359,12 @@ function showResult() {
     reducedMotion: st.shown, particles: lowEnd ? 9000 : 18000, onDone: reveal,
   });
   st.shown = true;
+  if (friend) loadPair(friend, { type: st.type, b: r.branch });
   $("again").onclick = () => go({ screen: "mbti", sign: st.sign });
   $("share").onclick = async () => {
-    const url = location.origin + location.pathname, text = t("shareText")(L(br.flavour), L(ty.name), L(br.name), L(mt.name));
+    const base = location.origin + location.pathname, me = { type: st.type, b: r.branch };
+    const url = friend ? `${base}?a=${enc(friend.type, friend.b)}&b=${enc(me.type, me.b)}` : `${base}?f=${enc(me.type, me.b)}`;
+    const text = friend ? t("pairText")(L(drinkOf(friend, me).name)) : t("shareText")(L(br.flavour), L(ty.name), L(br.name), L(mt.name));
     try {
       if (navigator.share) await navigator.share({ title: "Moodessert", text, url });
       else { await navigator.clipboard.writeText(text + " " + url); $("msg").textContent = t("copied"); }
@@ -337,7 +372,43 @@ function showResult() {
   };
 }
 
-fetch("quiz.json").then((r) => r.json()).then((q) => { QUIZ = q; setLang(lang); })
+// ----- two-person report
+const who = (x) => { const ty = QUIZ.types[x.type]; return { ty, br: ty.branches[x.b], label: L(ty.branches[x.b].flavour) + (lang === "zh" ? "" : " ") + L(ty.name) }; };
+function pairBlock(a, b) {
+  const A = who(a), B = who(b), d = drinkOf(a, b), score = d.score + ((TYPES.indexOf(a.type) + TYPES.indexOf(b.type) + a.b + b.b) % 4);
+  return `<div class="pair"><small>${t("us")}</small><b>${esc(A.label)} × ${esc(B.label)}</b>
+    <div class="drink"><span>${t("makes")}</span><strong>${esc(L(d.name))}</strong><em>${t("sync")} ${score}%</em></div>
+    <p>${esc(L(d.line))}</p><div class="stack" id="pairai"></div></div>`;
+}
+function showPair(j) {
+  const el = $("pairai"); if (!el || !j) return;
+  el.innerHTML = [["give", j.give], ["friction", j.friction], ["tip", j.tip]].filter((x) => x[1]).map(([k, v]) => `<p class="callout fade"><small>${t(k)}</small>${esc(v)}</p>`).join("");
+}
+async function loadPair(a, b) {
+  const key = enc(a.type, a.b) + enc(b.type, b.b) + lang;
+  if (pairCache[key]) return showPair(pairCache[key]);
+  const A = who(a), B = who(b), d = drinkOf(a, b), side = (x, X) => ({ dessert: L(X.ty.name), flavour: L(X.br.flavour), branch: L(X.br.name), line: L(X.br.line), gives_first: gives(x.type) });
+  try {
+    const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 9500);
+    const r = await fetch("/api/judge", { method: "POST", headers: { "Content-Type": "application/json" }, signal: ctl.signal,
+      body: JSON.stringify({ mode: "pair", lang, a: side(a, A), b: side(b, B), drink: `${L(d.name)}: ${L(d.line)}` }) });
+    clearTimeout(to);
+    if (r.ok) { pairCache[key] = await r.json(); showPair(pairCache[key]); }
+  } catch (e) { /* the drink line stands on its own */ }
+}
+function showDuo() {
+  const [a, b] = duo, A = who(a), B = who(b);
+  app.innerHTML = `<div class="card"><div class="duo"><figure><div id="sa"></div><figcaption>${esc(A.label)}</figcaption></figure><figure><div id="sb"></div><figcaption>${esc(B.label)}</figcaption></figure></div>
+      <div class="body">${pairBlock(a, b)}</div></div>
+    <div class="stack"><button class="btn" id="me2">${t("me2")}</button></div>`;
+  const mk = (id, x, X) => bakeDessert($(id), { dessert: X.ty.dessert, palette: X.br.palette || undefined, words: [], reducedMotion: true, particles: 7000 });
+  const o1 = mk("sa", a, A), o2 = mk("sb", b, B);
+  oven = { destroy() { o1.destroy(); o2.destroy(); } };
+  loadPair(a, b);
+  $("me2").onclick = () => { friend = null; history.replaceState(null, "", location.pathname); go({ screen: "home" }); };
+}
+
+fetch("quiz.json").then((r) => r.json()).then((q) => { QUIZ = q; if (duo) st = { screen: "duo" }; setLang(lang); })
   .catch(() => { app.innerHTML = `<p class="lede">${t("loadFail")}</p>`; });
 </script>
 </body>
