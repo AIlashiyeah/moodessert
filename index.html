@@ -131,7 +131,7 @@ const T = {
     guessHint: "No problem. Four quick taps and we'll find your dessert.",
     signQ: "Second ingredient: your star sign", signHint: "It decides the texture of your dessert.", skip: "Skip",
     own: "None of these. I'll write my own", ownPh: "What would you actually do?", ownOk: "That's me",
-    baking: "Preheating the oven…", flavour: "flavour", why: "Why this dessert", whyT: (q, d, n) => `You chose "${q}". That is ${d} all over: ${n}.`, invited: "A friend sent you this", invitedLine: (f, d) => `They are a ${f} ${d}. Find out what you are, and which drink the two of you make.`, us: "The two of you", makes: "Together you make", sync: "in sync", give: "What you give each other", friction: "Where you rub", tip: "One thing to try", sendBack: "Send them your two-person report", pairText: (d) => `We tested as a pair. Together we make ${d}. Here is our report:`, me2: "Take the test myself", match: "Goes best with", find: (d) => `Find the ${d} in your life`, drive: "What drives you", pull: "Your contradiction", also: (f, n) => `Mostly this, with a streak of ${f}: ${n}.`,
+    baking: "Preheating the oven…", flavour: "flavour", why: "Why this dessert", whyT: (q, d, n) => `You chose "${q}". That is ${d} all over: ${n}.`, duoGo: "Test how well we match", soloGo: "Just test myself", haveCode: "Got a friend's dessert code?", codePh: "2 characters", codeOk: "Pair up", codeBad: "That code doesn't look right.", myCode: (c) => `Your dessert code: ${c}. A friend can type it on the home page to pair with you.`, invited: "A friend sent you this", invitedLine: (f, d) => `They are a ${f} ${d}. Find out what you are, and which drink the two of you make.`, us: "The two of you", makes: "Together you make", sync: "in sync", give: "What you give each other", friction: "Where you rub", tip: "One thing to try", sendBack: "Send them your two-person report", pairText: (d) => `We tested as a pair. Together we make ${d}. Here is our report:`, me2: "Take the test myself", match: "Goes best with", find: (d) => `Find the ${d} in your life`, drive: "What drives you", pull: "Your contradiction", also: (f, n) => `Mostly this, with a streak of ${f}: ${n}.`,
     share: "Send to a friend", copied: "Link copied. Send it to a friend.", copyFail: "Copy the link from your address bar.", again: "Try another flavour",
     shareText: (f, d, b, m) => `I'm a ${f} ${d} (${b}), and I go best with a ${m}. Which dessert are you?`, loadFail: "Couldn't load the quiz. Refresh to try again." },
   zh: { note: "GenHacks Open 2026 参赛作品。图个开心：这是对五个回答的解读，不是心理测评。",
@@ -141,7 +141,7 @@ const T = {
     guessHint: "没关系，点四下，我们帮你找到你的甜点。",
     signQ: "第二样原料：你的星座", signHint: "它决定这块甜点的口感。", skip: "跳过",
     own: "都不像我，我自己写一句", ownPh: "换成你，你会怎么做？", ownOk: "就这个",
-    baking: "烤箱预热中…", flavour: "口味", why: "为什么是这块", whyT: (q, d, n) => `你选了“${q}”。${d}就是这样：${n}。`, invited: "朋友发来的", invitedLine: (f, d) => `TA 是一块${f}${d}。测出你的，看你们俩配成哪杯饮料。`, us: "你们俩", makes: "配成一杯", sync: "默契值", give: "你们互相给的", friction: "小摩擦", tip: "试试这个", sendBack: "把双人报告发回给 TA", pairText: (d) => `我们俩配成了一杯${d}，双人报告在这：`, me2: "我也测一测", match: "你最配", find: (d) => `找找身边谁是${d}`, drive: "你在乎的", pull: "你的反差", also: (f, n) => `主味之外，你还藏着一点${f}：${n}。`,
+    baking: "烤箱预热中…", flavour: "口味", why: "为什么是这块", whyT: (q, d, n) => `你选了“${q}”。${d}就是这样：${n}。`, duoGo: "测测我们的默契值", soloGo: "只测我自己", haveCode: "有朋友的甜点码？", codePh: "两位代码", codeOk: "配对", codeBad: "这个代码不对，再看一眼。", myCode: (c) => `你的甜点码：${c}。朋友在首页输入它，就能和你测默契。`, invited: "朋友发来的", invitedLine: (f, d) => `TA 是一块${f}${d}。测出你的，看你们俩配成哪杯饮料。`, us: "你们俩", makes: "配成一杯", sync: "默契值", give: "你们互相给的", friction: "小摩擦", tip: "试试这个", sendBack: "把双人报告发回给 TA", pairText: (d) => `我们俩配成了一杯${d}，双人报告在这：`, me2: "我也测一测", match: "你最配", find: (d) => `找找身边谁是${d}`, drive: "你在乎的", pull: "你的反差", also: (f, n) => `主味之外，你还藏着一点${f}：${n}。`,
     share: "发给朋友测一测", copied: "链接已复制，发给朋友吧。", copyFail: "请从地址栏复制链接。", again: "换个口味再测",
     shareText: (f, d, b, m) => `我是一块${f}${d}（${b}），最配${m}。你是哪块甜点？`, loadFail: "题库没加载出来，刷新再试一次。" },
 };
@@ -172,8 +172,8 @@ const SIGNS = [
   ["pisces", "Pisces", "双鱼座", "2.19–3.20", "one more layer of tenderness and imagination", "比别人多一层的温柔和想象"],
 ];
 // Pair links carry only a two-character code: (dessert index * 4 + flavour) in base 36. No names, no answers.
-const enc = (type, b) => (TYPES.indexOf(type) * 4 + b).toString(36);
-const dec = (c) => { const n = /^[0-9a-z]{1,2}$/.test(c || "") ? parseInt(c, 36) : -1; return n >= 0 && n < 64 ? { type: TYPES[n >> 2], b: n & 3 } : null; };
+const enc = (type, b) => (TYPES.indexOf(type) * 4 + b).toString(36).toUpperCase().padStart(2, "0");
+const dec = (c) => { c = String(c || "").trim().toLowerCase(); const n = /^[0-9a-z]{1,2}$/.test(c) ? parseInt(c, 36) : -1; return n >= 0 && n < 64 ? { type: TYPES[n >> 2], b: n & 3 } : null; };
 const URLQ = new URLSearchParams(location.search);
 let friend = dec(URLQ.get("f"));
 const duo = dec(URLQ.get("a")) && dec(URLQ.get("b")) ? [dec(URLQ.get("a")), dec(URLQ.get("b"))] : null;
@@ -225,8 +225,14 @@ function render() {
     app.innerHTML = `<h1 class="fade">${t("title")}</h1><p class="lede">${t("lede")}</p>
       <div class="facts"><span><b>5</b> ${t("f1")}</span><span><b>16</b> ${t("f2")}</span><span><b>64</b> ${t("f3")}</span></div>
       ${friend ? `<p class="callout"><small>${t("invited")}</small>${esc(t("invitedLine")(L(QUIZ.types[friend.type].branches[friend.b].flavour), L(QUIZ.types[friend.type].name)))}</p>` : ""}
-      <button class="btn" id="go">${t("start")}</button>`;
+      ${friend ? `<button class="btn" id="go">${t("duoGo")}</button><button class="btn ghost" id="solo">${t("soloGo")}</button>`
+        : `<button class="btn" id="go">${t("start")}</button>
+           ${st.code ? `<form class="ownf" id="codef"><input id="codei" maxlength="2" autocomplete="off" autocapitalize="characters" aria-label="${t("haveCode")}" placeholder="${t("codePh")}"><button class="btn">${t("codeOk")}</button></form><p class="hint" id="codemsg" role="status"></p>`
+            : `<button class="wide" id="code">${t("haveCode")}</button>`}`}`;
     $("go").onclick = () => go({ screen: "mbti" });
+    if ($("solo")) $("solo").onclick = () => { friend = null; history.replaceState(null, "", location.pathname); go({ screen: "mbti" }); };
+    if ($("code")) $("code").onclick = () => { st.code = true; render(); $("codei").focus(); };
+    if ($("codef")) $("codef").onsubmit = (e) => { e.preventDefault(); const f = dec($("codei").value); if (f && $("codei").value.trim().length === 2) { friend = f; st.code = false; render(); } else $("codemsg").textContent = t("codeBad"); };
   } else if (s === "duo") {
     showDuo();
   } else if (s === "mbti") {
@@ -352,7 +358,8 @@ function showResult() {
     <div class="stack" id="acts" hidden>
       <button class="btn" id="share">${esc(friend ? t("sendBack") : t("find")(L(mt.name)))}</button>
       <button class="btn ghost" id="again">${t("again")}</button>
-      <p class="hint" id="msg" role="status"></p></div>`;
+      <p class="hint" id="msg" role="status"></p>
+      <p class="hint">${esc(t("myCode")(enc(st.type, r.branch)))}</p></div>`;
   const reveal = () => { const rb = $("rb"), ac = $("acts"); if (!rb) return; rb.hidden = false; ac.hidden = false; rb.classList.add("fade"); ac.classList.add("fade"); };
   oven = bakeDessert($("stage"), {
     dessert: ty.dessert, palette: br.palette || undefined, words: r.words.slice(0, 7),
