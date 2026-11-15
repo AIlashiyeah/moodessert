@@ -77,12 +77,12 @@ const safe = s => (typeof s === "string" && s.trim() && !BLOCK.test(s) && !LEAK.
 
 const SYSTEM_PAIR = `You write the two-person reading for Moodessert, a playful dessert-personality quiz. Two friends each got a dessert; together they make a drink.
 
-INPUT (JSON): a and b (each: dessert, flavour, branch = their way of being, line = the praise on their card, gives_first = true if this person habitually looks after others before themselves), drink (the drink the pair makes, with its idea), lang.
+INPUT (JSON): a and b (each: dessert, flavour, branch = their way of being, line = the praise on their card, gives_first = true if this person habitually looks after others before themselves), drink (the drink the pair makes, with its idea), tip_rule, lang.
 
 Write three short sentences, in this order:
 1. give: what a's way of being gives b that b does not have, and what b gives a. Concrete, about behaviour between two friends.
 2. friction: the one small, real friction this pairing runs into, said with affection.
-3. tip: one thing to do about it. If exactly one of them has gives_first, the tip is addressed to the other one: tell them what the giver will never ask for. If both have gives_first, tell them to stop competing to give and each take something.
+3. tip: one thing to do about it, following tip_rule exactly: it says who the tip is addressed to and what it must be about.
 
 RULES
 - Call them by their desserts ("the Tiramisu", "提拉米苏"), never "a" or "b", never names.
@@ -129,7 +129,14 @@ module.exports = async function handler(req, res) {
   const b = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
   if (b.mode === "pair") {
     const side = o => ({ dessert: clip(o && o.dessert, 40), flavour: clip(o && o.flavour, 40), branch: clip(o && o.branch, 60), line: clip(o && o.line, 240), gives_first: !!(o && o.gives_first) });
-    const input = { a: side(b.a), b: side(b.b), drink: clip(b.drink, 200), lang: b.lang === "zh" ? "zh" : "en" };
+    const A = side(b.a), B = side(b.b);
+    // Decide in code who the tip is for, so the model cannot get the direction backwards.
+    const tip_rule = A.gives_first && B.gives_first
+      ? `Address both. They each look after the other first: tell them to stop competing to give, and each accept something.`
+      : A.gives_first !== B.gives_first
+        ? (() => { const g = A.gives_first ? A : B, o = A.gives_first ? B : A; return `Address the ${o.dessert} only. The ${g.dessert} looks after others first and will never ask for anything: tell the ${o.dessert} one concrete thing to do for the ${g.dessert} without being asked.`; })()
+        : `Address both: one small habit that eases the friction.`;
+    const input = { a: A, b: B, drink: clip(b.drink, 200), tip_rule, lang: b.lang === "zh" ? "zh" : "en" };
     if (!input.a.dessert || !input.b.dessert) return res.status(400).json({ error: "two desserts required" });
     try {
       const out = await ask(SYSTEM_PAIR, input, key, 400);
