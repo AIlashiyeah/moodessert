@@ -82,6 +82,7 @@ p{margin:0}
 .praise{font-size:19px;font-weight:600;line-height:1.45;text-wrap:pretty}
 .callout{padding:12px 14px;border-radius:14px;background:var(--chip);font-size:15px}
 .callout small{display:block;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:2px}
+.linkbox{width:100%;margin-top:6px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13px}
 .rare{font-size:13px;color:var(--muted)}
 .pair{border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;gap:8px;font-size:15px}
 .pair>small{font-size:12px;font-weight:600;color:var(--accent)}
@@ -132,7 +133,7 @@ const T = {
     signQ: "Second ingredient: your star sign", signHint: "It decides the texture of your dessert.", skip: "Skip",
     own: "None of these. I'll write my own", ownPh: "What would you actually do?", ownOk: "That's me",
     baking: "Preheating the oven…", flavour: "flavour", why: "Why this dessert", whyT: (q, d, n) => `You chose "${q}". That is ${d} all over: ${n}.`, duoGo: "Test how well we match", soloGo: "Just test myself", haveCode: "Got a friend's dessert code?", codePh: "2 characters", codeOk: "Pair up", codeBad: "That code doesn't look right.", myCode: (c) => `Your dessert code: ${c}. A friend can type it on the home page to pair with you.`, invited: "A friend sent you this", invitedLine: (f, d) => `They are a ${f} ${d}. Find out what you are, and which drink the two of you make.`, us: "The two of you", makes: "Together you make", sync: "in sync", give: "What you give each other", friction: "Where you rub", tip: "One thing to try", sendBack: "Send them your two-person report", pairText: (d) => `We tested as a pair. Together we make ${d}. Here is our report:`, me2: "Take the test myself", match: "Goes best with", find: (d) => `Find the ${d} in your life`, drive: "What drives you", pull: "Your contradiction", also: (f, n) => `Mostly this, with a streak of ${f}: ${n}.`,
-    share: "Send to a friend", copied: "Link copied. Send it to a friend.", copyFail: "Copy the link from your address bar.", again: "Try another flavour",
+    share: "Send to a friend", copiedBtn: "Copied ✓", copied: "Link copied. Paste it wherever you like.", copyFail: "Couldn't copy automatically. Press and hold this link to copy it:", again: "Try another flavour",
     shareText: (f, d, b, m) => `I'm a ${f} ${d} (${b}), and I go best with a ${m}. Which dessert are you?`, loadFail: "Couldn't load the quiz. Refresh to try again." },
   zh: { note: "GenHacks Open 2026 参赛作品。图个开心：这是对五个回答的解读，不是心理测评。",
     title: "你是哪块甜点？", lede: "答五道有点怪的小题，我们读出你的选择背后在乎什么，再把它烤成一块甜点。",
@@ -142,7 +143,7 @@ const T = {
     signQ: "第二样原料：你的星座", signHint: "它决定这块甜点的口感。", skip: "跳过",
     own: "都不像我，我自己写一句", ownPh: "换成你，你会怎么做？", ownOk: "就这个",
     baking: "烤箱预热中…", flavour: "口味", why: "为什么是这块", whyT: (q, d, n) => `你选了“${q}”。${d}就是这样：${n}。`, duoGo: "测测我们的默契值", soloGo: "只测我自己", haveCode: "有朋友的甜点码？", codePh: "两位代码", codeOk: "配对", codeBad: "这个代码不对，再看一眼。", myCode: (c) => `你的甜点码：${c}。朋友在首页输入它，就能和你测默契。`, invited: "朋友发来的", invitedLine: (f, d) => `TA 是一块${f}${d}。测出你的，看你们俩配成哪杯饮料。`, us: "你们俩", makes: "配成一杯", sync: "默契值", give: "你们互相给的", friction: "小摩擦", tip: "试试这个", sendBack: "把双人报告发回给 TA", pairText: (d) => `我们俩配成了一杯${d}，双人报告在这：`, me2: "我也测一测", match: "你最配", find: (d) => `找找身边谁是${d}`, drive: "你在乎的", pull: "你的反差", also: (f, n) => `主味之外，你还藏着一点${f}：${n}。`,
-    share: "发给朋友测一测", copied: "链接已复制，发给朋友吧。", copyFail: "请从地址栏复制链接。", again: "换个口味再测",
+    share: "发给朋友测一测", copiedBtn: "已复制 ✓", copied: "链接已复制，想发哪就粘到哪。", copyFail: "没能自动复制，长按下面的链接复制：", again: "换个口味再测",
     shareText: (f, d, b, m) => `我是一块${f}${d}（${b}），最配${m}。你是哪块甜点？`, loadFail: "题库没加载出来，刷新再试一次。" },
 };
 const TYPES = ["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP"];
@@ -372,10 +373,14 @@ function showResult() {
     const base = location.origin + location.pathname, me = { type: st.type, b: r.branch };
     const url = friend ? `${base}?a=${enc(friend.type, friend.b)}&b=${enc(me.type, me.b)}` : `${base}?f=${enc(me.type, me.b)}`;
     const text = friend ? t("pairText")(L(drinkOf(friend, me).name)) : t("shareText")(L(br.flavour), L(ty.name), L(br.name), L(mt.name));
-    try {
-      if (navigator.share) await navigator.share({ title: "Moodessert", text, url });
-      else { await navigator.clipboard.writeText(text + " " + url); $("msg").textContent = t("copied"); }
-    } catch (e) { if (e && e.name !== "AbortError") $("msg").textContent = t("copyFail"); }
+    // Copy only: people paste it wherever they like. No system share sheet.
+    const full = text + " " + url, btn = $("share"), label = btn.textContent;
+    let ok = false;
+    try { await navigator.clipboard.writeText(full); ok = true; } catch (e) {
+      try { const ta = document.createElement("textarea"); ta.value = full; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(ta); ta.select(); ok = document.execCommand("copy"); ta.remove(); } catch (e2) { ok = false; }
+    }
+    if (ok) { btn.textContent = t("copiedBtn"); $("msg").textContent = t("copied"); clearTimeout(btn._t); btn._t = setTimeout(() => { if ($("share") === btn) btn.textContent = label; }, 1800); }
+    else $("msg").innerHTML = `${t("copyFail")}<br><input class="linkbox" readonly value="${esc(url)}" onfocus="this.select()">`;
   };
 }
 
