@@ -19,6 +19,7 @@ This is a reading of five answers, made for fun. It is not a psychological asses
 - `bake.js`: the reveal animation, Three.js r160, 16 desserts built in code with no image or model files (`demo.html` shows them all; notes in `docs/bake-note.md`)
 - `quiz.json`: the bilingual question bank the app loads. Built by `node tools/build-quiz.mjs` from `docs/questions-v2-draft.md` (Chinese), `docs/questions-v2-en.md` (English) and `desserts.json`
 - `api/judge.js` + `netlify/functions/judge.js`: serverless function that asks Gemini for the personal line and the falling words. The key lives only in the `GEMINI_API_KEY` environment variable
+- `api/tg.js` + `netlify/functions/tg.js`: everything the Telegram Mini App needs from the server (Stars invoices, the bot webhook, public config). Only active inside Telegram; see `docs/telegram-setup.md`
 - `netlify.toml`: hosting config
 
 ## Tools used

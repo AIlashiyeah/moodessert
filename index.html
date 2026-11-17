@@ -82,6 +82,15 @@ p{margin:0}
 .praise{font-size:19px;font-weight:600;line-height:1.45;text-wrap:pretty}
 .callout{padding:12px 14px;border-radius:14px;background:var(--chip);font-size:15px}
 .callout small{display:block;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:2px}
+/* Telegram only: the personal reading waits behind a choice (watch an ad, or pay in Stars) */
+.lock{border:1.5px dashed var(--accent);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.lock>b{font-family:var(--display);font-size:17px;line-height:1.3}
+.lock>p{font-size:14px;color:var(--muted)}
+.lock .sk{display:flex;flex-direction:column;gap:7px;padding:12px 14px;border-radius:14px;background:var(--chip)}
+.lock .sk small{font-size:12px;font-weight:600;color:var(--accent)}
+.lock .sk i{display:block;height:10px;border-radius:5px;background:var(--line)}
+.lock .sk i:last-child{width:62%}
+.lock .btn{padding:13px 16px;font-size:15px}
 .linkbox{width:100%;margin-top:6px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13px}
 .rare{font-size:13px;color:var(--muted)}
 .pair{border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;gap:8px;font-size:15px}
@@ -134,7 +143,10 @@ const T = {
     own: "None of these. I'll write my own", ownPh: "What would you actually do?", ownOk: "That's me",
     baking: "Preheating the oven…", flavour: "flavour", why: "Why this dessert", whyT: (q, d, n) => `You chose "${q}". That is ${d} all over: ${n}.`, duoGo: "Test how well we match", soloGo: "Just test myself", haveCode: "Got a friend's dessert code?", codePh: "2 characters", codeOk: "Pair up", codeBad: "That code doesn't look right.", myCode: (c) => `Your dessert code: ${c}. A friend can type it on the home page to pair with you.`, invited: "A friend sent you this", invitedLine: (f, d) => `They are a ${f} ${d}. Find out what you are, and which drink the two of you make.`, us: "The two of you", makes: "Together you make", sync: "in sync", give: "What you give each other", friction: "Where you rub", tip: "One thing to try", sendBack: "Send them your two-person report", pairText: (d) => `We tested as a pair. Together we make ${d}. Here is our report:`, me2: "Take the test myself", match: "Goes best with", find: (d) => `Find the ${d} in your life`, drive: "What drives you", pull: "Your contradiction", also: (f, n) => `Mostly this, with a streak of ${f}: ${n}.`,
     share: "Send to a friend", copiedBtn: "Copied ✓", copied: "Link copied. Paste it wherever you like.", copyFail: "Couldn't copy automatically. Press and hold this link to copy it:", again: "Try another flavour",
-    shareText: (f, d, b, m) => `I'm a ${f} ${d} (${b}), and I go best with a ${m}. Which dessert are you?`, loadFail: "Couldn't load the quiz. Refresh to try again." },
+    shareText: (f, d, b, m) => `I'm a ${f} ${d} (${b}), and I go best with a ${m}. Which dessert are you?`, loadFail: "Couldn't load the quiz. Refresh to try again.",
+    lockTitle: "Your full reading is out of the oven", lockLine: "What drives you, where you contradict yourself, and one line written only from the five answers you just gave.",
+    adBtn: "Watch a short ad to unlock", starBtn: (n) => `Unlock for ${n} Stars`, adWait: "Loading the ad…", payWait: "Opening payment…",
+    adFail: "The ad didn't finish, or there is no ad to show right now. Try again, or unlock with Stars.", payFail: "The payment didn't go through. No Stars were taken.", payPending: "The payment is still processing. Give it a moment, then try again.", payErr: "Couldn't open the payment. Try again in a moment." },
   zh: { note: "GenHacks Open 2026 参赛作品。图个开心：这是对五个回答的解读，不是心理测评。",
     title: "你是哪块甜点？", lede: "答五道有点怪的小题，我们读出你的选择背后在乎什么，再把它烤成一块甜点。",
     f1: "道题", f2: "种甜点", f3: "种口味", start: "开始",
@@ -144,7 +156,10 @@ const T = {
     own: "都不像我，我自己写一句", ownPh: "换成你，你会怎么做？", ownOk: "就这个",
     baking: "烤箱预热中…", flavour: "口味", why: "为什么是这块", whyT: (q, d, n) => `你选了“${q}”。${d}就是这样：${n}。`, duoGo: "测测我们的默契值", soloGo: "只测我自己", haveCode: "有朋友的甜点码？", codePh: "两位代码", codeOk: "配对", codeBad: "这个代码不对，再看一眼。", myCode: (c) => `你的甜点码：${c}。朋友在首页输入它，就能和你测默契。`, invited: "朋友发来的", invitedLine: (f, d) => `TA 是一块${f}${d}。测出你的，看你们俩配成哪杯饮料。`, us: "你们俩", makes: "配成一杯", sync: "默契值", give: "你们互相给的", friction: "小摩擦", tip: "试试这个", sendBack: "把双人报告发回给 TA", pairText: (d) => `我们俩配成了一杯${d}，双人报告在这：`, me2: "我也测一测", match: "你最配", find: (d) => `找找身边谁是${d}`, drive: "你在乎的", pull: "你的反差", also: (f, n) => `主味之外，你还藏着一点${f}：${n}。`,
     share: "发给朋友测一测", copiedBtn: "已复制 ✓", copied: "链接已复制，想发哪就粘到哪。", copyFail: "没能自动复制，长按下面的链接复制：", again: "换个口味再测",
-    shareText: (f, d, b, m) => `我是一块${f}${d}（${b}），最配${m}。你是哪块甜点？`, loadFail: "题库没加载出来，刷新再试一次。" },
+    shareText: (f, d, b, m) => `我是一块${f}${d}（${b}），最配${m}。你是哪块甜点？`, loadFail: "题库没加载出来，刷新再试一次。",
+    lockTitle: "你的专属解读烤好了", lockLine: "你在乎什么、你的反差在哪，还有只根据你刚才五个回答写的那句话。",
+    adBtn: "看一段广告，免费解锁", starBtn: (n) => `用 ${n} 颗星星解锁`, adWait: "广告加载中…", payWait: "正在打开支付…",
+    adFail: "广告没看完，或者现在没有广告可放。再试一次，或者用星星解锁。", payFail: "支付没有完成，没有扣你的星星。", payPending: "支付还在处理中，稍等一下再试。", payErr: "支付没能打开，稍后再试一次。" },
 };
 const TYPES = ["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP"];
 // For people who never took the MBTI: one everyday habit per axis, two answers each.
@@ -177,7 +192,7 @@ const enc = (type, b) => (TYPES.indexOf(type) * 4 + b).toString(36).toUpperCase(
 const dec = (c) => { c = String(c || "").trim().toLowerCase(); const n = /^[0-9a-z]{1,2}$/.test(c) ? parseInt(c, 36) : -1; return n >= 0 && n < 64 ? { type: TYPES[n >> 2], b: n & 3 } : null; };
 const URLQ = new URLSearchParams(location.search);
 let friend = dec(URLQ.get("f"));
-const duo = dec(URLQ.get("a")) && dec(URLQ.get("b")) ? [dec(URLQ.get("a")), dec(URLQ.get("b"))] : null;
+let duo = dec(URLQ.get("a")) && dec(URLQ.get("b")) ? [dec(URLQ.get("a")), dec(URLQ.get("b"))] : null;
 // Two desserts make a drink. "Gives first" = the kinds of people who look after others before themselves.
 const gives = (x) => x[2] === "F" && x[3] === "J";
 const DRINKS = {
@@ -202,6 +217,51 @@ const lowEnd = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMem
 const signOf = (id) => SIGNS.find((s) => s[0] === id);
 const TEXTURES = [{ zh: "焦香脆顶", en: "crisp, caramelised top" }, { zh: "扎实绵密", en: "dense and rich" }, { zh: "轻盈蓬松", en: "light and airy" }, { zh: "入口即化", en: "melts on the tongue" }];
 const textureOf = (id) => { const i = SIGNS.findIndex((s) => s[0] === id); return i < 0 ? null : TEXTURES[i % 4]; };
+
+// ----- Telegram Mini App. Only wakes up when the page is opened inside Telegram; on the plain web none of this runs.
+const TG = { app: null, on: false, cfg: {}, paid: false, ad: null };
+const loadScript = (src, ms) => new Promise((ok) => {
+  const s = document.createElement("script"), done = (v) => { clearTimeout(tm); ok(v); }, tm = setTimeout(() => done(false), ms);
+  s.src = src; s.async = true; s.onload = () => done(true); s.onerror = () => done(false); document.head.appendChild(s);
+});
+async function tgInit() {
+  try {
+    let launched = false;
+    try { launched = !!(window.Telegram && window.Telegram.WebApp) || !!window.TelegramWebviewProxy || /tgWebAppData=/.test(location.hash) || !!sessionStorage.getItem("__telegram__initParams"); } catch (e) {}
+    if (!launched) return;
+    if (!(window.Telegram && window.Telegram.WebApp)) await loadScript("https://telegram.org/js/telegram-web-app.js", 5000);
+    const tg = window.Telegram && window.Telegram.WebApp;
+    if (!tg || !tg.initData) return; // the script loaded, but this is not a Telegram launch
+    TG.app = tg; TG.on = true;
+    try { tg.ready(); tg.expand(); } catch (e) {}
+    const theme = () => { try { document.documentElement.dataset.theme = tg.colorScheme === "dark" ? "dark" : "light"; const bg = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim(); tg.setHeaderColor(bg); tg.setBackgroundColor(bg); } catch (e) {} };
+    theme(); try { tg.onEvent("themeChanged", theme); } catch (e) {}
+    const data = tg.initDataUnsafe || {};
+    lang = String((data.user || {}).language_code || "").toLowerCase().startsWith("zh") ? "zh" : "en";
+    // Deep links: f12 = a friend's dessert code, d12ab = a finished pair report (same codes the web links carry).
+    const sp = String(data.start_param || "");
+    let m = /^f([0-9a-z]{2})$/i.exec(sp); if (m && dec(m[1])) friend = dec(m[1]);
+    m = /^d([0-9a-z]{2})([0-9a-z]{2})$/i.exec(sp); if (m && dec(m[1]) && dec(m[2])) duo = [dec(m[1]), dec(m[2])];
+    try { TG.paid = sessionStorage.getItem("md_paid") === "1"; } catch (e) {}
+    // Config and the ad SDK load in the background: the quiz itself never waits for them.
+    (async () => {
+      try { const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 5000); const r = await fetch("/api/tg", { signal: ctl.signal }); clearTimeout(to); if (r.ok) TG.cfg = await r.json(); } catch (e) {}
+      if (TG.cfg.ad) {
+        if (!window.Adsgram) await loadScript("https://sad.adsgram.ai/js/sad.min.js", 6000);
+        try { TG.ad = window.Adsgram ? window.Adsgram.init({ blockId: String(TG.cfg.ad) }) : null; } catch (e) { TG.ad = null; }
+        // The ad button belongs on a card that is already showing, too.
+        if (TG.ad && st.screen === "result" && st.result && !st.result.unlocked && !TG.paid) render();
+      }
+    })();
+  } catch (e) { /* any failure here just means the plain web experience */ }
+}
+// One Stars payment opens every reading for this session; an ad opens the reading on the card in front of you.
+function unlock(paid) {
+  if (paid) { TG.paid = true; try { sessionStorage.setItem("md_paid", "1"); } catch (e) {} }
+  if (st.result) st.result.unlocked = true;
+  try { TG.app.HapticFeedback.notificationOccurred("success"); } catch (e) {}
+  if (st.screen === "result") render();
+}
 
 function setLang(l) {
   lang = l; document.documentElement.lang = l === "zh" ? "zh-CN" : "en";
@@ -346,6 +406,15 @@ function showResult() {
   const reading = ai && (r.core || r.tension)
     ? `${r.core ? `<p class="callout"><small>${t("drive")}</small>${esc(r.core)}</p>` : ""}${r.tension ? `<p class="callout"><small>${t("pull")}</small>${esc(r.tension)}</p>` : ""}`
     : sec ? `<p class="callout">${esc(t("also")(L(sec.flavour), L(sec.name)))}</p>` : "";
+  // Inside Telegram the personal reading is locked until the reader watches an ad or pays in Stars.
+  // The dessert, the reveal and the pairing stay free: those are what people share.
+  const locked = TG.on && ai && !!(r.core || r.tension) && !r.unlocked && !TG.paid && !!(TG.cfg.pay || TG.ad);
+  const lockBox = locked ? `<div class="lock"><b>${t("lockTitle")}</b><p>${t("lockLine")}</p>
+        <div class="sk" aria-hidden="true"><small>${t("drive")}</small><i></i><i></i></div>
+        <div class="sk" aria-hidden="true"><small>${t("pull")}</small><i></i><i></i></div>
+        ${TG.ad ? `<button class="btn" id="uad">${t("adBtn")}</button>` : ""}
+        ${TG.cfg.pay ? `<button class="btn${TG.ad ? " ghost" : ""}" id="ustar">${esc(t("starBtn")(TG.cfg.stars))}</button>` : ""}
+        <p class="hint" id="umsg" role="status"></p></div>` : "";
   app.innerHTML = `<div class="card">
       <div id="stage" role="img" aria-label="${esc(L(br.flavour))} ${esc(L(ty.name))}"></div>
       <div class="body" id="rb" hidden>
@@ -353,7 +422,8 @@ function showResult() {
         <h2>${esc(L(ty.name))}</h2>
         <div class="chips"><span class="hot">${esc(L(br.flavour))}${lang === "zh" ? t("flavour") : " " + t("flavour")}</span>${tx ? `<span>${esc(L(tx))}</span>` : ""}<span>${esc(L(br.name))}</span></div>
         ${why ? `<p class="callout"><small>${t("why")}</small>${esc(why)}</p>` : ""}
-        ${ai && r.line && (r.core || r.tension) ? `${reading}<p class="praise">${esc(r.line)}</p>` : `<p class="praise">${esc(ai && r.line ? r.line : L(br.line))}</p>${reading}`}
+        ${locked ? `<p class="praise">${esc(L(br.line))}</p>${lockBox}`
+          : ai && r.line && (r.core || r.tension) ? `${reading}<p class="praise">${esc(r.line)}</p>` : `<p class="praise">${esc(ai && r.line ? r.line : L(br.line))}</p>${reading}`}
         ${friend ? pairBlock(friend, { type: st.type, b: r.branch }) : `<div class="match"><small>${t("match")}</small><b>${esc(L(mt.name))}</b><span>${esc(L(ty.match.line))}</span></div>`}
       </div></div>
     <div class="stack" id="acts" hidden>
@@ -369,10 +439,31 @@ function showResult() {
   st.shown = true;
   if (friend) loadPair(friend, { type: st.type, b: r.branch });
   $("again").onclick = () => go({ screen: "mbti", sign: st.sign });
+  if ($("uad")) $("uad").onclick = async () => {
+    const b = $("uad"), m = $("umsg"); b.disabled = true; m.textContent = t("adWait");
+    try { await TG.ad.show(); unlock(false); }
+    catch (e) { if ($("uad") === b) { b.disabled = false; m.textContent = t("adFail"); } }
+  };
+  if ($("ustar")) $("ustar").onclick = async () => {
+    const b = $("ustar"), m = $("umsg"); b.disabled = true; m.textContent = t("payWait");
+    const back = (k) => { if ($("ustar") === b) { b.disabled = false; m.textContent = k ? t(k) : ""; } };
+    try {
+      const x = await fetch("/api/tg", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ op: "invoice", initData: TG.app.initData, lang }) });
+      const j = x.ok ? await x.json() : null;
+      if (!j || !j.link) return back("payErr");
+      // Telegram reports paid / cancelled / failed / pending. Cancelling is not an error, so it gets no message.
+      TG.app.openInvoice(j.link, (status) => { if (status === "paid") unlock(true); else back(status === "failed" ? "payFail" : status === "pending" ? "payPending" : ""); });
+    } catch (e) { back("payErr"); }
+  };
   $("share").onclick = async () => {
     const base = location.origin + location.pathname, me = { type: st.type, b: r.branch };
     const url = friend ? `${base}?a=${enc(friend.type, friend.b)}&b=${enc(me.type, me.b)}` : `${base}?f=${enc(me.type, me.b)}`;
     const text = friend ? t("pairText")(L(drinkOf(friend, me).name)) : t("shareText")(L(br.flavour), L(ty.name), L(br.name), L(mt.name));
+    // Inside Telegram, hand the link to Telegram's own chat picker; it reopens the Mini App with the same codes.
+    if (TG.on && TG.cfg.link) {
+      const link = `${String(TG.cfg.link).replace(/\/+$/, "")}?startapp=${friend ? `d${enc(friend.type, friend.b)}${enc(me.type, me.b)}` : `f${enc(me.type, me.b)}`}`;
+      try { TG.app.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`); return; } catch (e) { /* fall through to copying */ }
+    }
     // Copy only: people paste it wherever they like. No system share sheet.
     const full = text + " " + url, btn = $("share"), label = btn.textContent;
     let ok = false;
@@ -420,7 +511,7 @@ function showDuo() {
   $("me2").onclick = () => { friend = null; history.replaceState(null, "", location.pathname); go({ screen: "home" }); };
 }
 
-fetch("quiz.json").then((r) => r.json()).then((q) => { QUIZ = q; if (duo) st = { screen: "duo" }; setLang(lang); })
+Promise.all([fetch("quiz.json").then((r) => r.json()), tgInit()]).then(([q]) => { QUIZ = q; if (duo) st = { screen: "duo" }; setLang(lang); })
   .catch(() => { app.innerHTML = `<p class="lede">${t("loadFail")}</p>`; });
 </script>
 </body>
